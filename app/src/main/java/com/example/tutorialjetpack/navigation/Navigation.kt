@@ -32,7 +32,6 @@ fun Navigation(navController: NavHostController) {
             }
 
             FirstScreen(
-//                navController = navController,
                 imtState = viewModel.state,
                 onEvent = viewModel::onEvent
             )
