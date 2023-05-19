@@ -11,11 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.example.tutorialjetpack.utils.Routers
+import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpScreenEvent
 
 @Composable
-fun OfpMainItem(navController: NavController) {
+fun OfpMainItem(
+    onEvent:(OfpScreenEvent) -> Unit
+//    navController: NavController
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -33,7 +35,10 @@ fun OfpMainItem(navController: NavController) {
                 backgroundColor = Color.White,
                 contentColor = Color.Black
             ),
-            onClick = { navController.navigate(Routers.TRAINING.route) }) {
+            onClick = {
+                onEvent.invoke(OfpScreenEvent.BtnTraining)
+//                navController.navigate(Routers.TRAINING.route)
+            }) {
             Text(text = "Training")
         }
         Button(
@@ -46,7 +51,10 @@ fun OfpMainItem(navController: NavController) {
                 backgroundColor = Color.White,
                 contentColor = Color.Black
             ),
-            onClick = { navController.navigate(Routers.JOURNAL.route) }) {
+            onClick = {
+                onEvent.invoke(OfpScreenEvent.BtnJournal)
+//                navController.navigate(Routers.JOURNAL.route)
+            }) {
             Text(text = "Journal")
         }
         Button(
@@ -59,7 +67,9 @@ fun OfpMainItem(navController: NavController) {
                 backgroundColor = Color.White,
                 contentColor = Color.Black
             ),
-            onClick = { navController.navigate("details") }) {
+            onClick = {
+                onEvent.invoke(OfpScreenEvent.BtnDetails)
+            }) {
             Text(text = "details")
         }
 

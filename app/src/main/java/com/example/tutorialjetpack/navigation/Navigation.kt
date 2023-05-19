@@ -13,7 +13,10 @@ import com.example.tutorialjetpack.presentation.TrainingScreen
 import com.example.tutorialjetpack.presentation.screens.first_screen.FirstScreen
 import com.example.tutorialjetpack.presentation.screens.first_screen.FirstViewModel
 import com.example.tutorialjetpack.presentation.screens.first_screen.NavigationFirstScreenEvent
+import com.example.tutorialjetpack.presentation.screens.ofp_screen.NavigationOfpScreen
+import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpViewModel
 import com.example.tutorialjetpack.utils.Routers
+
 
 @Composable
 fun Navigation(navController: NavHostController) {
@@ -21,9 +24,9 @@ fun Navigation(navController: NavHostController) {
 
         composable(Routers.FIRST.route) {
             val viewModel: FirstViewModel = viewModel()
-            LaunchedEffect(true){
-                viewModel.eventFlow.collect{
-                    when (it){
+            LaunchedEffect(true) {
+                viewModel.eventFlow.collect {
+                    when (it) {
                         is NavigationFirstScreenEvent.OfpScreen -> {
                             navController.navigate(Routers.OFP.route)
                         }
@@ -37,14 +40,27 @@ fun Navigation(navController: NavHostController) {
             )
         }
         composable(Routers.OFP.route) {
-            OfpScreen(navController = navController)
-        }
+            val viewModel: OfpViewModel = viewModel()
+
+            LaunchedEffect(true) {
+                viewModel.eventFlow.collect {
+                    when (it) {
+                        is NavigationOfpScreen.OfpScreenNavigation -> {
+                            navController.navigate(it.route)
+                        }
+                    }
+                }
+            }
+
+            OfpScreen(viewModel.state, viewModel::onEvent)
+          }
         composable(Routers.JOURNAL.route) {
             JournalScreen(navController = navController)
         }
+
         composable(Routers.TRAINING.route) {
             TrainingScreen(navController = navController)
-        }
+          }
         composable(Routers.DETAILS.route) {
             DetailsScreen(navController = navController)
         }

@@ -1,6 +1,7 @@
 package com.example.tutorialjetpack.presentation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,13 +16,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
+private const val TAG = "TrainingScreen"
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun TrainingScreen(navController: NavController) {         //вот сюда передали
 
     Scaffold() {
 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-
+    Log.d(TAG, "TrainingScreen: ")
     Button(
         modifier = Modifier.padding(5.dp),
         elevation = ButtonDefaults.elevation(
@@ -35,6 +37,7 @@ Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Spac
         onClick = { navController.popBackStack() }) {
         Text(text = "back")
     }
+    Text(text = "kvjnrkbjve")
 }
 
     }

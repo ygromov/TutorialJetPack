@@ -42,15 +42,15 @@ class FirstViewModel : ViewModel() {
         }
     }
 
-    private fun setWeight(value: Int) {
+    private fun setWeight(value: String) {
         state = state.copy(weight = value)
     }
 
-    private fun setHeight(value: Int) {
+    private fun setHeight(value: String) {
         state = state.copy(height = value)
     }
 
-    private fun setAge(value: Int) {
+    private fun setAge(value: String) {
         state = state.copy(age = value)
     }
 

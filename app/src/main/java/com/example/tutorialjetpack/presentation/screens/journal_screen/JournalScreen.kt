@@ -47,7 +47,9 @@ fun JournalScreen(navController: NavController) {         //вот сюда пе
                     backgroundColor = Color.White,
                     contentColor = Color.Black
                 ),
-                onClick = { navController.popBackStack() }) {
+                onClick = {
+                    navController.popBackStack()
+                }) {
                 Text(text = "back")
             }
         }
