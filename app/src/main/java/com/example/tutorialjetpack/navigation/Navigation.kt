@@ -2,6 +2,7 @@ package com.example.tutorialjetpack.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -23,7 +24,7 @@ fun Navigation(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Routers.FIRST.route) {
 
         composable(Routers.FIRST.route) {
-            val viewModel: FirstViewModel = viewModel()
+            val viewModel: FirstViewModel = hiltViewModel()
             LaunchedEffect(true) {
                 viewModel.eventFlow.collect {
                     when (it) {

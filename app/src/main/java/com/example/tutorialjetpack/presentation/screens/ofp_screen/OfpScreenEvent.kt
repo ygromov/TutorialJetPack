@@ -12,4 +12,5 @@ sealed class OfpScreenEvent{
     object BtnTraining:OfpScreenEvent()
     object BtnJournal:OfpScreenEvent()
     object BtnDetails:OfpScreenEvent()
+
 }

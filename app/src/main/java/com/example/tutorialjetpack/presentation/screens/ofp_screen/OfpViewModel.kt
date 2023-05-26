@@ -5,12 +5,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tutorialjetpack.domain.model.OfpModel
+import com.example.tutorialjetpack.domain.repository.Repository
+import com.example.tutorialjetpack.utils.Resource
 import com.example.tutorialjetpack.utils.Routers
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OfpViewModel : ViewModel() {
+@HiltViewModel
+class OfpViewModel @Inject constructor(
+    private val repository: Repository
+) : ViewModel() {
     var state by mutableStateOf(OfpState())
 
     private val _eventFlow = MutableSharedFlow<NavigationOfpScreen>()
@@ -25,7 +33,7 @@ class OfpViewModel : ViewModel() {
 //                setPush(event.value)
 
             is OfpScreenEvent.BtnAnalize -> {
-                changeNavigation()
+                changeNavigation()                      //add opfData to DB
             }
             is OfpScreenEvent.BtnTraining -> {
                 changeNavigation()
@@ -56,19 +64,30 @@ class OfpViewModel : ViewModel() {
         }
     }
 
-   // private fun changeNavigationToTraining() {
-//        viewModelScope.launch {
-//            _eventFlow.emit(
-//                NavigationOfpScreen.OfpScreenNavigation(Routers.TRAINING.route)
-//            )
-//        }
-    //}
-
     private fun changeNavigation() {
         viewModelScope.launch {
-            _eventFlow.emit(
-                NavigationOfpScreen.OfpScreenNavigation(Routers.TRAINING.route)
-            )
+            repository.addOfpData(
+                ofp = OfpModel(
+                    userId = 1,
+                    push = 1,
+                    pull = 1,
+                    squat = 1,
+                    abc = 1,
+                    extens = 1
+                )
+            ).collect {
+                when (it) {
+                    is Resource.Error -> {
+                    }
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        _eventFlow.emit(
+                            NavigationOfpScreen.OfpScreenNavigation(Routers.TRAINING.route)
+                        )
+                    }
+                }
+            }
+
         }
     }
 
@@ -78,10 +97,6 @@ class OfpViewModel : ViewModel() {
         val element = state.list.get(index) // (0,push)
         state.list.set(index = index, element = element.copy(value = value)) // (10,push)
     }
-
-//    private fun setPush(value: String) {
-//        state = state.copy(push = value)
-//    }
 }
 
 sealed class NavigationOfpScreen {

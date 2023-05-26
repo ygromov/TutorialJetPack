@@ -13,7 +13,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.tutorialjetpack.navigation.Navigation
 import com.example.tutorialjetpack.presentation.*
 import com.example.tutorialjetpack.ui.theme.TutorialJetPackTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,20 +29,15 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     Navigation(navController = navController)
-
-
                 }
-
             }
         }
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     TutorialJetPackTheme {
-
     }
 }

@@ -23,13 +23,19 @@ fun FirstScreen(imtState: ImtState, onEvent: (FirstScreenEvent) -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            OutlinedButton(onClick = { /*TODO*/ }) {
+            OutlinedButton(onClick = { onEvent.invoke(FirstScreenEvent.ChangeGender("male")) }) {
                 Text(text = "Male")
             }
-            OutlinedButton(onClick = { /*TODO*/ }) {
+            OutlinedButton(onClick = { onEvent.invoke(FirstScreenEvent.ChangeGender("female")) }) {
                 Text(text = "Female")
             }
         }
+        TextField(
+            value = imtState.name, onValueChange = {
+                onEvent.invoke(FirstScreenEvent.ChangeName(it))
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
         TextField(
             value = imtState.age, onValueChange = { age ->
                 onEvent.invoke(FirstScreenEvent.ChangeAge(age))
