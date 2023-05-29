@@ -33,7 +33,7 @@ class OfpViewModel @Inject constructor(
 //                setPush(event.value)
 
             is OfpScreenEvent.BtnAnalize -> {
-                changeNavigation()                      //add opfData to DB
+                changeNavigation()                      //add opfData to DB ofpEntity
             }
             is OfpScreenEvent.BtnTraining -> {
                 changeNavigation()
@@ -64,21 +64,20 @@ class OfpViewModel @Inject constructor(
         }
     }
 
-    private fun changeNavigation() {
+    private fun changeNavigation() {                //записываем данные в БД в таблицу OfpEntity
         viewModelScope.launch {
             repository.addOfpData(
                 ofp = OfpModel(
                     userId = 1,
-                    push = 1,
-                    pull = 1,
-                    squat = 1,
-                    abc = 1,
-                    extens = 1
+                    push = state.list.get(index = 0).value.toInt(),
+                    pull = state.list.get(index = 1).value.toInt(),
+                    squat = state.list.get(index = 2).value.toInt(),
+                    abc = state.list.get(index = 3).value.toInt(),
+                    extens = state.list.get(index = 4).value.toInt()
                 )
             ).collect {
                 when (it) {
-                    is Resource.Error -> {
-                    }
+                    is Resource.Error -> {}
                     is Resource.Loading -> {}
                     is Resource.Success -> {
                         _eventFlow.emit(
