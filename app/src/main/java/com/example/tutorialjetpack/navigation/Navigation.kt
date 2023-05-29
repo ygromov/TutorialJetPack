@@ -34,14 +34,13 @@ fun Navigation(navController: NavHostController) {
                     }
                 }
             }
-
             FirstScreen(
                 imtState = viewModel.state,
                 onEvent = viewModel::onEvent
             )
         }
         composable(Routers.OFP.route) {
-            val viewModel: OfpViewModel = viewModel()
+            val viewModel: OfpViewModel = hiltViewModel()
 
             LaunchedEffect(true) {
                 viewModel.eventFlow.collect {
