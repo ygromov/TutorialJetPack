@@ -8,16 +8,23 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import com.example.tutorialjetpack.data.datastore.AppDataStoreManager
 
 
 @Composable
-fun FirstScreen(imtState: ImtState, onEvent: (FirstScreenEvent) -> Unit) {
+fun FirstScreen(
+    imtState: ImtState,
+    onEvent: (FirstScreenEvent) -> Unit,
+    appDataStoreManager: AppDataStoreManager
+) {
 //    val test = remember {
 //        imtState
 //    }
+    //val coroutine = rememberCoroutineScope()
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -56,9 +63,9 @@ fun FirstScreen(imtState: ImtState, onEvent: (FirstScreenEvent) -> Unit) {
         )
 
         OutlinedButton(onClick = {
-//            navController.navigate(Routers.OFP.route)
             onEvent.invoke(FirstScreenEvent.Complete)
-        }) {
+        })
+        {
             Text(text = "Complete")
         }
     }

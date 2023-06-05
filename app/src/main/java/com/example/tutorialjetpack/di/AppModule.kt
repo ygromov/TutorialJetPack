@@ -2,9 +2,11 @@ package com.example.tutorialjetpack.di
 
 import android.app.Application
 import androidx.room.Room
+import com.example.tutorialjetpack.data.datastore.AppDataStore
+import com.example.tutorialjetpack.data.datastore.AppDataStoreManager
 import com.example.tutorialjetpack.domain.repository.Repository
-import com.example.tutorialjetpack.local.OfpDatabase
-import com.example.tutorialjetpack.local.repositoryImpl.RepositoryImpl
+import com.example.tutorialjetpack.data.local.OfpDatabase
+import com.example.tutorialjetpack.data.repositoryImpl.RepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,8 +29,17 @@ object AppModule {
     @Provides
     @Singleton
     fun provideRepository(
-        ofpDatabase: OfpDatabase
+        ofpDatabase: OfpDatabase,
+        appDataStoreManager: AppDataStore
     ): Repository {
-        return RepositoryImpl(ofpDatabase.ofpDao)
+        return RepositoryImpl(appDataStoreManager,ofpDatabase.ofpDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppDataStore(
+        app: Application
+    ): AppDataStore {
+        return AppDataStoreManager(app)
     }
 }

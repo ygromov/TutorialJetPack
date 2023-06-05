@@ -17,12 +17,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OfpViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: Repository,
+    //private val savedStateHandle: SavedStateHandle,
+    //sharedPref
 ) : ViewModel() {
     var state by mutableStateOf(OfpState())
 
     private val _eventFlow = MutableSharedFlow<NavigationOfpScreen>()
     val eventFlow = _eventFlow.asSharedFlow()
+
+    init {
+        viewModelScope.launch {
+            val id = repository.getId()
+            state = state.copy(userId = id!!.toInt())
+        }
+    }
 
     fun onEvent(event: OfpScreenEvent) {
         when (event) {
@@ -33,14 +42,17 @@ class OfpViewModel @Inject constructor(
 //                setPush(event.value)
 
             is OfpScreenEvent.BtnAnalize -> {
-                changeNavigation()                      //add opfData to DB ofpEntity
+                changeNavigation()                      //add opfData to DB
             }
+
             is OfpScreenEvent.BtnTraining -> {
                 changeNavigation()
             }
+
             is OfpScreenEvent.BtnJournal -> {
                 changeNavigationToJournal()
             }
+
             is OfpScreenEvent.BtnDetails -> {
                 changeNavigationToDetails()
             }
@@ -64,24 +76,26 @@ class OfpViewModel @Inject constructor(
         }
     }
 
-    private fun changeNavigation() {                //записываем данные в БД в таблицу OfpEntity
+    private fun changeNavigation() {
         viewModelScope.launch {
             repository.addOfpData(
                 ofp = OfpModel(
-                    userId = 1,
-                    push = state.list.get(index = 0).value.toInt(),
-                    pull = state.list.get(index = 1).value.toInt(),
-                    squat = state.list.get(index = 2).value.toInt(),
-                    abc = state.list.get(index = 3).value.toInt(),
-                    extens = state.list.get(index = 4).value.toInt()
+                    userId = state.userId, //TODO get id from shared pref
+                    push = state.list.get(0).value.toInt(),
+                    pull = state.list.get(1).value.toInt(),
+                    squat = state.list.get(2).value.toInt(),
+                    abc = state.list.get(3).value.toInt(),
+                    extens = state.list.get(4).value.toInt()
                 )
             ).collect {
                 when (it) {
-                    is Resource.Error -> {}
+                    is Resource.Error -> {
+                    }
+
                     is Resource.Loading -> {}
                     is Resource.Success -> {
                         _eventFlow.emit(
-                            NavigationOfpScreen.OfpScreenNavigation(Routers.TRAINING.route)
+                            NavigationOfpScreen.OfpScreenNavigation(Routers.EXERCISE.route)
                         )
                     }
                 }
