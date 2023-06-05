@@ -11,5 +11,10 @@ interface Repository {
 
     fun addOfpData(ofp: OfpModel): Flow<Resource<OfpModel>>
 
+    suspend fun getId():Long?
+
+    suspend fun getUserOfp(): Flow<Resource<OfpModel>>
+
+
     //fun getUserData(id:Int): Flow<Resource<UserModel>>
 }
