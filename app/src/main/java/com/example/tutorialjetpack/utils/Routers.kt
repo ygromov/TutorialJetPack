@@ -6,4 +6,5 @@ sealed class Routers(val route: String){
     object TRAINING: Routers("training")
     object DETAILS: Routers("details")
     object FIRST: Routers("first")
+    object EXERCISE: Routers("exercise")
 }

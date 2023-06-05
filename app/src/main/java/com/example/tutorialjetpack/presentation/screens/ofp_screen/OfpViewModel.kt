@@ -81,11 +81,11 @@ class OfpViewModel @Inject constructor(
             repository.addOfpData(
                 ofp = OfpModel(
                     userId = state.userId, //TODO get id from shared pref
-                    push = state.list.get(0).value.toInt(),
-                    pull = state.list.get(1).value.toInt(),
-                    squat = state.list.get(2).value.toInt(),
-                    abc = state.list.get(3).value.toInt(),
-                    extens = state.list.get(4).value.toInt()
+                    push = state.list[0].value.toInt(),
+                    pull = state.list[1].value.toInt(),
+                    squat = state.list[2].value.toInt(),
+                    abc = state.list[3].value.toInt(),
+                    extens = state.list[4].value.toInt()
                 )
             ).collect {
                 when (it) {

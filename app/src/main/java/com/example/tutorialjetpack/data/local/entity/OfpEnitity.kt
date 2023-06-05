@@ -15,6 +15,7 @@ data class OfpEntity(
     val squat:Int,
     val abc:Int,
     val extens:Int
+    //TODO datetime object
 )
 
 fun OfpEntity.toOfpModel(): OfpModel{

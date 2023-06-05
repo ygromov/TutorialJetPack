@@ -1,9 +1,9 @@
-package com.example.tutorialjetpack.local.relation
+package com.example.tutorialjetpack.data.local.relation
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.example.tutorialjetpack.data.local.entity.UserEntity
 import com.example.tutorialjetpack.local.OfpEntity
-import com.example.tutorialjetpack.local.entity.UserEntity
 
 data class UserWithOfp(
     @Embedded val user: UserEntity,

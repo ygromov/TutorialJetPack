@@ -22,23 +22,23 @@ private const val TAG = "TrainingScreen"
 fun TrainingScreen(navController: NavController) {         //вот сюда передали
 
     Scaffold() {
-Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-    Log.d(TAG, "TrainingScreen: ")
-    Button(
-        modifier = Modifier.padding(5.dp),
-        elevation = ButtonDefaults.elevation(
-            defaultElevation = 8.dp,
-            pressedElevation = 16.dp
-        ),
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color.White,
-            contentColor = Color.Black
-        ),
-        onClick = { navController.popBackStack() }) {
-        Text(text = "back")
-    }
-    Text(text = "kvjnrkbjve")
-}
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Log.d(TAG, "TrainingScreen: ")
+            Button(
+                modifier = Modifier.padding(5.dp),
+                elevation = ButtonDefaults.elevation(
+                    defaultElevation = 8.dp,
+                    pressedElevation = 16.dp
+                ),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.White,
+                    contentColor = Color.Black
+                ),
+                onClick = { navController.popBackStack() }) {
+                Text(text = "back")
+            }
+            Text(text = "kvjnrkbjve")
+        }
 
     }
 }

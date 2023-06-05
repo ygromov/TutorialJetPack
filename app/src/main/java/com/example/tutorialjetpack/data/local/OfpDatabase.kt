@@ -1,13 +1,14 @@
-package com.example.tutorialjetpack.local
+package com.example.tutorialjetpack.data.local
 
 
 import androidx.room.Database
 
 import androidx.room.RoomDatabase
-import com.example.tutorialjetpack.local.entity.UserEntity
+import com.example.tutorialjetpack.local.OfpEntity
+import com.example.tutorialjetpack.data.local.entity.UserEntity
 
 @Database(
-    entities = [UserEntity::class ,OfpEntity::class],
+    entities = [UserEntity::class , OfpEntity::class],
     version = 1
 )
 abstract class OfpDatabase : RoomDatabase() {

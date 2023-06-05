@@ -44,10 +44,7 @@ class FirstViewModel @Inject constructor(
                 setName(event.value)
             }
         }
-
     }
-
-
 
     private fun onComplete() {
         viewModelScope.launch {
@@ -62,18 +59,17 @@ class FirstViewModel @Inject constructor(
             ).collect{
                 when(it){
                     is Resource.Error -> {
-
+                        TODO("если данные пустые, обработать ошибку" +
+                                    "если отрицательные или строковые")
                     }
                     is Resource.Loading -> {
 
                     }
                     is Resource.Success -> {
-                        _eventFlow.emit(NavigationFirstScreenEvent.OfpScreen)
+                        _eventFlow.emit(NavigationFirstScreenEvent.OfpScreen )
                     }
                 }
             }
-
-
         }
     }
     private fun setName(value: String) {

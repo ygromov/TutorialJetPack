@@ -1,4 +1,4 @@
-package com.example.tutorialjetpack.local.entity
+package com.example.tutorialjetpack.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -26,7 +26,7 @@ fun UserEntity.toUserModel():UserModel{
     )
 }
 
-fun UserModel.toUserEntity():UserEntity{
+fun UserModel.toUserEntity(): UserEntity {
     return UserEntity(
         name = name,
         age = age,
