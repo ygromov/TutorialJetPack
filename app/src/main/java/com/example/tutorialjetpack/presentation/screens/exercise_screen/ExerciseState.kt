@@ -5,9 +5,9 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.example.tutorialjetpack.R
 import com.example.tutorialjetpack.domain.model.ExerciseFieldModel
 
-data class ExerciseState (
-val UserId: Int = -1,
-val list: SnapshotStateList<ExerciseFieldModel> = mutableStateListOf(
+data class ExerciseState(
+    val UserId: Int = -1,
+    val list: SnapshotStateList<ExerciseFieldModel> = mutableStateListOf(
     ExerciseFieldModel(
         icon = R.drawable.ic_launcher_foreground,
         nameExerscise = "pushUp",
@@ -36,3 +36,4 @@ val list: SnapshotStateList<ExerciseFieldModel> = mutableStateListOf(
 
 )
 )
+//error commit

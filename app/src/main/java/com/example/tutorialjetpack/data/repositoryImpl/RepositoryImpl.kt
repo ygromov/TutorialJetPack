@@ -5,6 +5,7 @@ import com.example.tutorialjetpack.data.datastore.AppDataStore
 import com.example.tutorialjetpack.data.local.OfpDao
 import com.example.tutorialjetpack.data.local.entity.toUserEntity
 import com.example.tutorialjetpack.data.local.entity.toUserModel
+import com.example.tutorialjetpack.domain.model.MonthValue
 import com.example.tutorialjetpack.domain.model.OfpModel
 import com.example.tutorialjetpack.domain.model.UserModel
 import com.example.tutorialjetpack.domain.repository.Repository
@@ -54,7 +55,6 @@ class RepositoryImpl @Inject constructor(
         return appDataStoreManager.readValue("userId")
     }
 
-    // здесь переопределенный метод из repository, в котором по id нужно получить список с данными
     override suspend fun getUserOfp(): Flow<Resource<OfpModel>> = flow {
         emit(Resource.Loading())
 
@@ -64,19 +64,18 @@ class RepositoryImpl @Inject constructor(
 
             Log.d(TAG, "getUserOfp: $ofpEntity")
             emit(Resource.Success(ofpEntity.toOfpModel()))
-//            val userWithOfp = userWithOfpList.firstOrNull() //проверили на нулл
+            Log.d(TAG, "getUserOfp2: ${ofpEntity.toOfpModel()}")
 
-//            if (userWithOfp != null) {
-//                val ofpModelList = userWithOfp.ofps.map { it.toOfpModel() } // данные конвертировали в ofpModel и положили в ЛИСТ
-//
-//                emit(Resource.Success(ofpModelList)) // отправили ЛИСТ во флоу по id
-//            } else {
-//                emit(Resource.Error(message = "User with id $id not found"))
-//            }
         } catch (ex: Exception) {
             emit(Resource.Error(message = "Error"))
         } finally {
             emit(Resource.Loading(isLoading = false))
         }
     }
+
+    override suspend fun getPullUp(): List<MonthValue> {
+        Log.d(TAG, "getPullUp: ${ofpDao.maxPullUp()}")
+        return listOf()//ofpDao.maxPullUp()
+    }
 }
+//error commit

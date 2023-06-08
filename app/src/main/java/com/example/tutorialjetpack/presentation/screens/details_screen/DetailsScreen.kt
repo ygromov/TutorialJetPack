@@ -34,3 +34,4 @@ fun DetailsScreen(navController: NavController) {         //вот сюда пе
         }
     }
 }
+//error commit

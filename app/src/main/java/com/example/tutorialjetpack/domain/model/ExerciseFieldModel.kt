@@ -5,3 +5,4 @@ data class ExerciseFieldModel(
     val nameExerscise: String = "",
     var value: Int = -1
 )
+//error commit

@@ -4,13 +4,17 @@ package com.example.tutorialjetpack.data.local
 import androidx.room.Database
 
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.tutorialjetpack.data.local.converter.TimeStamp
 import com.example.tutorialjetpack.local.OfpEntity
 import com.example.tutorialjetpack.data.local.entity.UserEntity
+
 
 @Database(
     entities = [UserEntity::class , OfpEntity::class],
     version = 1
 )
+@TypeConverters(TimeStamp::class)
 abstract class OfpDatabase : RoomDatabase() {
     //abstract val characterDao: OfpDao
 
@@ -33,3 +37,4 @@ abstract class OfpDatabase : RoomDatabase() {
 //    }
 
 }
+//error commit

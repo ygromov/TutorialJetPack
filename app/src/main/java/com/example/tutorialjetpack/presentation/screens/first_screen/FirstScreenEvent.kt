@@ -8,3 +8,4 @@ sealed class FirstScreenEvent {
     data class ChangeWeight(val value: String) : FirstScreenEvent()
     object Complete : FirstScreenEvent()
 }
+//error commit

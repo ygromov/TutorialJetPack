@@ -1,5 +1,6 @@
 package com.example.tutorialjetpack.domain.repository
 
+import com.example.tutorialjetpack.domain.model.MonthValue
 import com.example.tutorialjetpack.domain.model.OfpModel
 import com.example.tutorialjetpack.domain.model.UserModel
 import com.example.tutorialjetpack.utils.Resource
@@ -15,6 +16,9 @@ interface Repository {
 
     suspend fun getUserOfp(): Flow<Resource<OfpModel>>
 
+    suspend fun getPullUp():List<MonthValue>
+
 
     //fun getUserData(id:Int): Flow<Resource<UserModel>>
 }
+//error commit

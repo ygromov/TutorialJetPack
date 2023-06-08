@@ -95,7 +95,7 @@ class OfpViewModel @Inject constructor(
                     is Resource.Loading -> {}
                     is Resource.Success -> {
                         _eventFlow.emit(
-                            NavigationOfpScreen.OfpScreenNavigation(Routers.EXERCISE.route)
+                            NavigationOfpScreen.OfpScreenNavigation(Routers.TRAINING.route)
                         )
                     }
                 }
@@ -115,3 +115,4 @@ class OfpViewModel @Inject constructor(
 sealed class NavigationOfpScreen {
     data class OfpScreenNavigation(val route: String) : NavigationOfpScreen()
 }
+//error commit

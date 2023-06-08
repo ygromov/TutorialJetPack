@@ -54,4 +54,4 @@ fun JournalScreen(navController: NavController) {         //вот сюда пе
             }
         }
     }
-}
+}//error commit

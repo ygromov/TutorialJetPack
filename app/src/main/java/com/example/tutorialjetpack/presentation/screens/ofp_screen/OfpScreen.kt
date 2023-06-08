@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.tutorialjetpack.presentation.screens.ProgressBar
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpScreenEvent
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpState
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.components.*
@@ -57,3 +58,4 @@ fun analize(push, pull, squat, abc, extens) {}  //с турником
 fun analize(push, squat, abc, extens) {}        //без турника
 }
  */
+//error commit

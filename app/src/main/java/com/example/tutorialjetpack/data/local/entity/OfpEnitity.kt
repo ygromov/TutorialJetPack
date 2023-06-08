@@ -3,6 +3,7 @@ package com.example.tutorialjetpack.local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.tutorialjetpack.domain.model.OfpModel
+import java.util.Date
 
 
 @Entity(tableName = "ofpEntity")
@@ -14,7 +15,8 @@ data class OfpEntity(
     val pull:Int,
     val squat:Int,
     val abc:Int,
-    val extens:Int
+    val extens:Int,
+    val created: Date = Date()
     //TODO datetime object
 )
 
@@ -39,3 +41,4 @@ fun OfpModel.toOfpEntity(): OfpEntity{
         extens = extens
     )
 }
+//error commit

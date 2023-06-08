@@ -17,8 +17,10 @@ import com.example.tutorialjetpack.presentation.screens.exercise_screen.Exercise
 import com.example.tutorialjetpack.presentation.screens.first_screen.FirstScreen
 import com.example.tutorialjetpack.presentation.screens.first_screen.FirstViewModel
 import com.example.tutorialjetpack.presentation.screens.first_screen.NavigationFirstScreenEvent
+import com.example.tutorialjetpack.presentation.screens.journal_screen.JournalViewModel
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.NavigationOfpScreen
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpViewModel
+import com.example.tutorialjetpack.presentation.screens.training_screen.TrainingViewModel
 import com.example.tutorialjetpack.utils.Routers
 
 
@@ -66,11 +68,13 @@ fun Navigation(navController: NavHostController,
             OfpScreen(viewModel.state, viewModel::onEvent)
         }
         composable(Routers.JOURNAL.route) {
+            val viewModel:JournalViewModel = hiltViewModel()
             JournalScreen(navController = navController)
         }
 
         composable(Routers.TRAINING.route) {
-            TrainingScreen(navController = navController)
+            val viewModel:TrainingViewModel = hiltViewModel()
+            TrainingScreen(viewModel.state, navController = navController, onEvent = viewModel::OnEvent)
         }
         composable(Routers.DETAILS.route) {
             DetailsScreen(navController = navController)
@@ -85,3 +89,4 @@ fun Navigation(navController: NavHostController,
         }
     }
 }
+//error commit

@@ -98,3 +98,4 @@ class FirstViewModel @Inject constructor(
 sealed class NavigationFirstScreenEvent {
     object OfpScreen : NavigationFirstScreenEvent()
 }
+//error commit
