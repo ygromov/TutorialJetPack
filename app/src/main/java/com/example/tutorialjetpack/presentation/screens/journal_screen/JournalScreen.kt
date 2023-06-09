@@ -9,11 +9,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.tutorialjetpack.domain.model.MonthValue
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun JournalScreen(navController: NavController) {         //вот сюда передали
+fun JournalScreen(navController: NavController, state:MonthValue) {         //вот сюда передали
 
     Scaffold() {
 
@@ -21,9 +22,22 @@ fun JournalScreen(navController: NavController) {         //вот сюда пе
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "January")
+            Row() {
+                Text(text = state.created)
+                Text(text = "push")
+                Text(text =state.maxPush.toString() )
+                Text(text = "pull")
+                Text(text = state.maxPull.toString())
+                Text(text = "squat")
+                Text(text = state.maxSquat.toString())
+                Text(text = "abc")
+                Text(text = state.maxAbc.toString())
+                Text(text = "extens")
+                Text(text = state.maxExtens.toString())
             }
+
+
+
             Card(modifier = Modifier.fillMaxWidth()) {
                 Text(text = "February")
             }
