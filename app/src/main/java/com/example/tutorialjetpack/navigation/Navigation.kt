@@ -69,7 +69,7 @@ fun Navigation(navController: NavHostController,
         }
         composable(Routers.JOURNAL.route) {
             val viewModel:JournalViewModel = hiltViewModel()
-            JournalScreen(navController = navController)
+            JournalScreen(navController = navController, viewModel.state)
         }
 
         composable(Routers.TRAINING.route) {
