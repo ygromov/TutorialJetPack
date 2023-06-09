@@ -75,7 +75,7 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun getPullUp(): List<MonthValue> {
         Log.d(TAG, "getPullUp: ${ofpDao.maxPullUp()}")
-        return listOf()//ofpDao.maxPullUp()
+        return ofpDao.maxPullUp()
     }
 }
 //error commit
