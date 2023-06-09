@@ -57,7 +57,7 @@ interface OfpDao {
 
     @Query(
         """
-            SELECT strftime('%m-%Y', pull.created / 1000, 'unixepoch') as created, pull.maxPull, push.maxPush,squat.maxSquat
+            SELECT strftime('%m-%Y', pull.created / 1000, 'unixepoch') as created, pull.maxPull, push.maxPush, squat.maxSquat, abc.maxAbc, extens.maxExtens
             FROM (
                     SELECT created, MAX(pull) as maxPull
                     FROM ofpEntity 
@@ -69,12 +69,28 @@ interface OfpDao {
                     GROUP BY strftime('%m-%Y', created / 1000, 'unixepoch')
             ) as push
             ON strftime('%m-%Y', pull.created/ 1000, 'unixepoch') = strftime('%m-%Y', push.created / 1000, 'unixepoch')
+            
             INNER JOIN (
              SELECT created, MAX(squat) as maxSquat
                     FROM ofpEntity 
                     GROUP BY strftime('%m-%Y', created / 1000, 'unixepoch')
             ) as squat
              ON strftime('%m-%Y', pull.created/ 1000, 'unixepoch') = strftime('%m-%Y', squat.created / 1000, 'unixepoch')
+              
+            INNER JOIN (
+             SELECT created, MAX(abc) as maxAbc
+                    FROM ofpEntity 
+                    GROUP BY strftime('%m-%Y', created / 1000, 'unixepoch')
+            ) as abc
+             ON strftime('%m-%Y', pull.created/ 1000, 'unixepoch') = strftime('%m-%Y', abc.created / 1000, 'unixepoch')
+             
+             INNER JOIN (
+             SELECT created, MAX(extens) as maxExtens
+                    FROM ofpEntity 
+                    GROUP BY strftime('%m-%Y', created / 1000, 'unixepoch')
+            ) as extens
+             ON strftime('%m-%Y', pull.created/ 1000, 'unixepoch') = strftime('%m-%Y', extens.created / 1000, 'unixepoch')
+              
               """
     )
     suspend fun maxPullUp(): List<MonthValue>
