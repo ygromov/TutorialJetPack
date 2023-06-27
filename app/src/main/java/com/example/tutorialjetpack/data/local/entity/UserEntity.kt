@@ -12,8 +12,8 @@ data class UserEntity(
     val age: Int,
     val name:String,
     val gender:String,
-    val height: Int,
-    val weight:Int,
+    val height: Double,
+    val weight:Double,
 )
 
 fun UserEntity.toUserModel():UserModel{
