@@ -2,6 +2,8 @@ package com.example.tutorialjetpack.di
 
 import android.app.Application
 import androidx.room.Room
+import com.example.tutorialjetpack.data.analize.Analyze
+import com.example.tutorialjetpack.data.analize.AnalyzeImpl
 import com.example.tutorialjetpack.data.datastore.AppDataStore
 import com.example.tutorialjetpack.data.datastore.AppDataStoreManager
 import com.example.tutorialjetpack.domain.repository.Repository
@@ -41,6 +43,14 @@ object AppModule {
         app: Application
     ): AppDataStore {
         return AppDataStoreManager(app)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAnalyze(
+        ofpDatabase: OfpDatabase
+    ): Analyze {
+        return AnalyzeImpl(ofpDatabase.ofpDao)
     }
 }
 //error commit

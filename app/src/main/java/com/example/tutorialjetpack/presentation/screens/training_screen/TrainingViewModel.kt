@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tutorialjetpack.data.analize.Analyze
 import com.example.tutorialjetpack.domain.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,7 +16,8 @@ private const val TAG = "TrainingViewModel"
 
 @HiltViewModel
 class TrainingViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: Repository,
+    private val analize: Analyze
 ) : ViewModel() {
     var state by mutableStateOf(TrainingState())
 
@@ -28,19 +30,25 @@ class TrainingViewModel @Inject constructor(
         when (event) {
             is TrainingEvent.CompleteSet -> {
                 getTrainPrograms()
+                Log.d(TAG, "OnEvent: ${getTrainPrograms()}")
             }
         }
     }
 
-    private fun getTrainPrograms() {            //тестовый вариант
-        state = state.copy(
-            push = state.push - 2,
-            pull = state.pull - 2,
-            squat = state.squat - 2,
-            abc = state.abc - 2,
-            extens = state.extens - 2,
-            headText = "2 set"
-        )
+    private fun getTrainPrograms() {            //делает первый подход в тренировочной программе
+        viewModelScope.launch {
+            analize.createTrain().map {
+                Log.d(TAG, "getTrainPrograms: ${it}")
+                //для полной тренировочной программы, нужно расширить state
+                state = state.copy(
+                    push = it.pushUpReps,
+                    pull =  it.pullUpReps,
+                    squat = it.squatReps,
+                    abc = it.sitUpReps,
+                    extens = it.extens
+                )
+            }
+        }
     }
 
     private fun getUserOfpData() {
@@ -59,6 +67,4 @@ class TrainingViewModel @Inject constructor(
             }
         }
     }
-
 }
-//error commit

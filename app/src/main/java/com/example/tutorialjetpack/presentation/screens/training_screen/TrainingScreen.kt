@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Scaffold
@@ -89,6 +90,7 @@ fun TrainingScreen(state: TrainingState, navController: NavController, onEvent: 
             }
 
             Button(
+                shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.padding(5.dp),
                 elevation = ButtonDefaults.elevation(
                     defaultElevation = 8.dp,
