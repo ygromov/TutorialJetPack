@@ -19,6 +19,8 @@ class FirstViewModel @Inject constructor(
     private val repository: Repository
 ): ViewModel() {
     var state by mutableStateOf(ImtState())
+//    private val _name = MutableStateFlow("")
+//    val name = _name.asStateFlow()
 
     private val _eventFlow = MutableSharedFlow<NavigationFirstScreenEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -52,15 +54,15 @@ class FirstViewModel @Inject constructor(
                 user = UserModel(
                     name = state.name,
                     age = state.age.toInt(),
-                    height = state.height.toInt(),
-                    weight = state.weight.toInt(),
+                    height = state.height.toDouble(),
+                    weight = state.weight.toDouble(),
                     gender = state.gender
                 )
             ).collect{
                 when(it){
                     is Resource.Error -> {
-                        TODO("если данные пустые, обработать ошибку" +
-                                    "если отрицательные или строковые")
+                        //"если данные пустые, обработать ошибку" +
+                                  //  "если отрицательные или строковые")
                     }
                     is Resource.Loading -> {
 

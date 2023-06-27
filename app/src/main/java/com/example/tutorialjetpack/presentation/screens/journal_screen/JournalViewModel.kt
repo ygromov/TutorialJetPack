@@ -23,7 +23,7 @@ class JournalViewModel @Inject constructor(private val repository: Repository) :
         viewModelScope.launch {
             Log.d(TAG, "${repository.getPullUp()}")
             getMaxOfp()
-            TODO( "сделать journalEvent")
+                // "сделать journalEvent")
 
         }
     }
@@ -39,7 +39,7 @@ class JournalViewModel @Inject constructor(private val repository: Repository) :
                     maxAbc = it.maxAbc,
                     maxExtens = it.maxExtens
                 )
-                TODO( "автозаполнение экрана по количеству приходящих created")
+               //  "автозаполнение экрана по количеству приходящих created")
             }
         }
     }

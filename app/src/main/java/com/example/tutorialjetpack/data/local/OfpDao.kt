@@ -33,6 +33,12 @@ interface OfpDao {
     @Query("SELECT * FROM ofpEntity where userId = :userId ORDER BY id DESC LIMIT 1")
     suspend fun getUserOfp(userId: Int): OfpEntity
 
+    @Query("SELECT * FROM ofpEntity ORDER BY id DESC LIMIT 1")
+    suspend fun forCreateTrain(): OfpEntity
+
+    @Query("SELECT * FROM userEntity ORDER BY id DESC LIMIT 1")
+    suspend fun forCreateTrainUser(): UserEntity
+
 
 //    SELECT strftime('%m-%Y', age.timestamp / 1000, 'unixepoch') as monthYear, maxAge, textLength
 //    FROM (

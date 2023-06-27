@@ -14,7 +14,7 @@ import androidx.navigation.NavController
 fun DetailsScreen(navController: NavController) {         //вот сюда передали
 
     Scaffold() {
-
+Text(text = "Здесь будет изменение веса, роста, возраста")
         Button(
             modifier = Modifier.padding(5.dp),
             elevation = ButtonDefaults.elevation(

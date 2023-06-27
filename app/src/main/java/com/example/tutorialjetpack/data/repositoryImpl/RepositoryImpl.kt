@@ -18,8 +18,7 @@ import javax.inject.Inject
 
 private const val TAG = "RepositoryImpl"
 
-class RepositoryImpl @Inject constructor(
-    //sharefPref
+class RepositoryImpl @Inject constructor(               //реализация интерфейса из domain слоя
     private val appDataStoreManager: AppDataStore,
     private val ofpDao: OfpDao
 ) : Repository {

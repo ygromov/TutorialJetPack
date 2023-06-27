@@ -14,7 +14,7 @@ import com.example.tutorialjetpack.domain.model.MonthValue
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun JournalScreen(navController: NavController, state:MonthValue) {         //вот сюда передали
+fun JournalScreen(navController: NavController, state: MonthValue) {         //вот сюда передали
 
     Scaffold() {
 
@@ -22,17 +22,20 @@ fun JournalScreen(navController: NavController, state:MonthValue) {         //в
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row() {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
                 Text(text = state.created)
-                Text(text = "push")
-                Text(text =state.maxPush.toString() )
-                Text(text = "pull")
+                //Text(text = "push")
+                Text(text = state.maxPush.toString())
+                //Text(text = "pull")
                 Text(text = state.maxPull.toString())
-                Text(text = "squat")
+                //Text(text = "squat")
                 Text(text = state.maxSquat.toString())
-                Text(text = "abc")
+                //Text(text = "abc")
                 Text(text = state.maxAbc.toString())
-                Text(text = "extens")
+                //Text(text = "extens")
                 Text(text = state.maxExtens.toString())
             }
 
