@@ -1,6 +1,5 @@
 package com.example.tutorialjetpack.presentation.screens.training_screen
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -23,14 +22,25 @@ class TrainingViewModel @Inject constructor(
 
     init {
         getUserOfpData()
-        Log.d(TAG, "getUserOfpData1: ${getUserOfpData()}") // ме
+        //Log.d(TAG, "getUserOfpData1: ${getUserOfpData()}") // ме
     }
 
     fun OnEvent(event: TrainingEvent) {
         when (event) {
             is TrainingEvent.CompleteSet -> {
                 getTrainPrograms()
-                Log.d(TAG, "OnEvent: ${getTrainPrograms()}")
+            }
+
+            is TrainingEvent.TwoSet -> {
+                getTwoSetTrainPrograms()
+            }
+
+            is TrainingEvent.ThreeSet -> {
+                getThreeSetTrainPrograms()
+            }
+
+            is TrainingEvent.FourSet -> {
+                getFourSetTrainPrograms()
             }
         }
     }
@@ -38,14 +48,83 @@ class TrainingViewModel @Inject constructor(
     private fun getTrainPrograms() {            //делает первый подход в тренировочной программе
         viewModelScope.launch {
             analize.createTrain().map {
-                Log.d(TAG, "getTrainPrograms: ${it}")
+                //Log.d(TAG, "getTrainPrograms: ${it}")
                 //для полной тренировочной программы, нужно расширить state
                 state = state.copy(
                     push = it.pushUpReps,
-                    pull =  it.pullUpReps,
+                    pull = it.pullUpReps,
                     squat = it.squatReps,
                     abc = it.sitUpReps,
-                    extens = it.extens
+                    extens = it.extensReps,
+                    pushUpSets = it.pushUpSets,
+                    pullUpSets = it.pullUpSets,
+                    squatSets = it.squatSets,
+                    sitUpSets = it.sitUpSets,
+                    extensSets = it.extensSets,
+                    headText = "1 set: rest 1 minute"
+                )
+            }
+        }
+    }
+
+    private fun getTwoSetTrainPrograms() {            //делает второй подход в тренировочной программе
+        viewModelScope.launch {
+            analize.createTwoSetTrain().map {
+                //Log.d(TAG, "getTrainPrograms: ${it}")
+                state = state.copy(
+                    push = it.pushUpReps,
+                    pull = it.pullUpReps,
+                    squat = it.squatReps,
+                    abc = it.sitUpReps,
+                    extens = it.extensReps,
+                    pushUpSets = it.pushUpSets,
+                    pullUpSets = it.pullUpSets,
+                    squatSets = it.squatSets,
+                    sitUpSets = it.sitUpSets,
+                    extensSets = it.extensSets,
+                    headText = "2 set: rest 1,5 minute"
+                )
+            }
+        }
+    }
+
+    private fun getThreeSetTrainPrograms() {            //делает третий подход в тренировочной программе
+        viewModelScope.launch {
+            analize.createThreeSetTrain().map {
+                //Log.d(TAG, "getTrainPrograms: ${it}")
+                state = state.copy(
+                    push = it.pushUpReps,
+                    pull = it.pullUpReps,
+                    squat = it.squatReps,
+                    abc = it.sitUpReps,
+                    extens = it.extensReps,
+                    pushUpSets = it.pushUpSets,
+                    pullUpSets = it.pullUpSets,
+                    squatSets = it.squatSets,
+                    sitUpSets = it.sitUpSets,
+                    extensSets = it.extensSets,
+                    headText = "3 set: rest 1,5 minute"
+                )
+            }
+        }
+    }
+
+    private fun getFourSetTrainPrograms() {            //делает четвертый подход в тренировочной программе
+        viewModelScope.launch {
+            analize.createFourSetTrain().map {
+                //Log.d(TAG, "getTrainPrograms: ${it}")
+                state = state.copy(
+                    push = it.pushUpReps,
+                    pull = it.pullUpReps,
+                    squat = it.squatReps,
+                    abc = it.sitUpReps,
+                    extens = it.extensReps,
+                    pushUpSets = it.pushUpSets,
+                    pullUpSets = it.pullUpSets,
+                    squatSets = it.squatSets,
+                    sitUpSets = it.sitUpSets,
+                    extensSets = it.extensSets,
+                    headText = "4 set: rest 1,5 minute"
                 )
             }
         }
@@ -54,7 +133,7 @@ class TrainingViewModel @Inject constructor(
     private fun getUserOfpData() {
         viewModelScope.launch {
             repository.getUserOfp().collect { resource ->
-                Log.d(TAG, "getUserOfpData2: ${resource.data?.push}")
+                //Log.d(TAG, "getUserOfpData2: ${resource.data?.push}")
                 resource.data?.let { ofpModel ->
                     state = state.copy(
                         push = ofpModel.push,
