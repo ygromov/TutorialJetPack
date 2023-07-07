@@ -44,4 +44,3 @@ class JournalViewModel @Inject constructor(private val repository: Repository) :
         }
     }
 }
-//error commit

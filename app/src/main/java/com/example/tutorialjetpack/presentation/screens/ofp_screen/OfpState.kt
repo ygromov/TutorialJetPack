@@ -10,34 +10,28 @@ data class OfpState(
     val list: SnapshotStateList<OfpFieldModel> = mutableStateListOf(
         OfpFieldModel(
             icon = R.drawable.ic_launcher_foreground,
-            textNameExersize = "push",
+            textNameExersize = "push up",
             value = "0"
         ),
         OfpFieldModel(
             icon = R.drawable.ic_launcher_foreground,
-            textNameExersize = "pull",
+            textNameExersize = "pull up",
             value = "0"
         ),
         OfpFieldModel(
             icon = R.drawable.ic_launcher_foreground,
-            textNameExersize = "squat",
+            textNameExersize = "squats",
             value = "0"
         ),
         OfpFieldModel(
             icon = R.drawable.ic_launcher_foreground,
-            textNameExersize = "abc",
+            textNameExersize = "sit up",
             value = "0"
         ),
         OfpFieldModel(
             icon = R.drawable.ic_launcher_foreground,
-            textNameExersize = "extens",
+            textNameExersize = "back extension",
             value = "0"
         )
     )
-//    val push: String="0",
-//    val pull: String="0",
-//    val squat: String="0",
-//    val abc: String="0",
-//    val extens: String="0"
 )
-//error commit

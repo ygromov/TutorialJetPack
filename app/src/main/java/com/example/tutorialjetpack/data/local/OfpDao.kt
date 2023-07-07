@@ -69,6 +69,7 @@ interface OfpDao {
                     FROM ofpEntity 
                     GROUP BY strftime('%m-%Y', created / 1000, 'unixepoch')
                 )as pull
+                
             INNER JOIN (
              SELECT created, MAX(push) as maxPush
                     FROM ofpEntity 
@@ -112,4 +113,3 @@ interface OfpDao {
 
 // 1 - 1,Usmon, 123,12312 ,123123
 // 2 - 2.Yuriy,123123,123123123,123
-//error commit

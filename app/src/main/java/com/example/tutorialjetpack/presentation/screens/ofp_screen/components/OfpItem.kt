@@ -4,9 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.runtime.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.example.tutorialjetpack.domain.model.OfpFieldModel
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpScreenEvent
 
@@ -17,7 +17,7 @@ fun OfpItem(ofp: List<OfpFieldModel>, onEvent: (OfpScreenEvent) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             //.padding(horizontal = 8.dp, vertical = 8.dp)
-            .background(Color.White)
+            .background(MaterialTheme.colors.background)
     ) {
         itemsIndexed(ofp) { index, ofpModel ->
             OfpField(
@@ -26,4 +26,3 @@ fun OfpItem(ofp: List<OfpFieldModel>, onEvent: (OfpScreenEvent) -> Unit) {
         }
     }
 }
-//error commit

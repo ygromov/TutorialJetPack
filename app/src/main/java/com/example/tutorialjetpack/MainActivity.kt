@@ -25,12 +25,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             val viewModel:MainViewModel = hiltViewModel()
             TutorialJetPackTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
+                Surface(modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
                     val navController = rememberNavController()
-                    if(viewModel.state.id!=-1){
+                    if(viewModel.state.id != -1){
                         Navigation(navController = navController,
                             startDestination = viewModel.state.route
                         )
@@ -47,4 +46,3 @@ fun DefaultPreview() {
     TutorialJetPackTheme {
     }
 }
-//error commit

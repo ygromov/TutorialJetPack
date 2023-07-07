@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpScreenEvent
 
@@ -32,8 +32,8 @@ fun OfpMainItem(
                 pressedElevation = 16.dp
             ),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.White,
-                contentColor = Color.Black
+                backgroundColor = MaterialTheme.colors.secondary,
+                contentColor = MaterialTheme.colors.primary
             ),
             onClick = {
                 onEvent.invoke(OfpScreenEvent.BtnTraining)
@@ -48,8 +48,8 @@ fun OfpMainItem(
                 pressedElevation = 16.dp
             ),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.White,
-                contentColor = Color.Black
+                backgroundColor = MaterialTheme.colors.secondary,
+                contentColor = MaterialTheme.colors.primary
             ),
             onClick = {
                 onEvent.invoke(OfpScreenEvent.BtnJournal)
@@ -64,8 +64,8 @@ fun OfpMainItem(
                 pressedElevation = 16.dp
             ),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.White,
-                contentColor = Color.Black
+                backgroundColor = MaterialTheme.colors.secondary,
+                contentColor = MaterialTheme.colors.primary
             ),
             onClick = {
                 onEvent.invoke(OfpScreenEvent.BtnDetails)

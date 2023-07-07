@@ -1,8 +1,18 @@
 package com.example.tutorialjetpack.presentation
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -10,20 +20,34 @@ import androidx.compose.ui.unit.dp
 import com.example.tutorialjetpack.presentation.screens.ProgressBar
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpScreenEvent
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpState
-import com.example.tutorialjetpack.presentation.screens.ofp_screen.components.*
+import com.example.tutorialjetpack.presentation.screens.ofp_screen.components.OfpItem
+import com.example.tutorialjetpack.presentation.screens.ofp_screen.components.OfpMainItem
+import com.example.tutorialjetpack.presentation.screens.ofp_screen.components.Timer
 
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+//@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun OfpScreen(state: OfpState, onEvent: (OfpScreenEvent) -> Unit) {
-    Scaffold() {
-        Column {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colors.background
+    ) {
+        Column(
+
+        ) {
+            Text(text = "Hello, Name")
             ProgressBar()                   //иконки с тренировочным прогрессом
             OfpMainItem(onEvent)      //переходы на тренировки, журнал, офпТест
             Column() {
                 OfpItem(ofp = state.list, onEvent = onEvent) //заполняются textField из списка
                 BtnAnalize(onEvent)   //здесь кнопка обработки введенных данных и создание трен программы в training
-                timer()                     //таймер
+                Timer(
+                    totalTime = 60L * 1000L,
+                    handleColor = Color.Red,
+                    inactiveBarColor = Color.DarkGray,
+                    activeBarColor = Color.Red,    //(0xFF37B900),
+                    modifier = Modifier.size(200.dp)
+                )                     //таймер
             }
         }
     }
@@ -32,30 +56,30 @@ fun OfpScreen(state: OfpState, onEvent: (OfpScreenEvent) -> Unit) {
 @Composable
 fun BtnAnalize(
     onEvent: (OfpScreenEvent) -> Unit
-//    navController: NavController
 ) {
-    Button(modifier = Modifier.padding(5.dp),
-        elevation = ButtonDefaults.elevation(
-            defaultElevation = 8.dp,
-            pressedElevation = 16.dp
-        ),
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color.White,
-            contentColor = Color.Black
-        ),
-        onClick = {
-            onEvent.invoke(OfpScreenEvent.BtnAnalize)
-        }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 20.dp, end = 20.dp)
+            .background(MaterialTheme.colors.background),
+        horizontalArrangement = Arrangement.Center
     ) {
-        Text(text = "Analize")
+
+        Button(modifier = Modifier.padding(5.dp),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = MaterialTheme.colors.secondary,
+                contentColor = MaterialTheme.colors.primary
+            ),
+            elevation = ButtonDefaults.elevation(
+                defaultElevation = 8.dp,
+                pressedElevation = 16.dp
+            ),
+
+            onClick = {
+                onEvent.invoke(OfpScreenEvent.BtnAnalize)
+            }
+        ) {
+            Text(text = "Analize")
+        }
     }
 }
-
-
-/*
-class ofpAnalize(){
-fun analize(push, pull, squat, abc, extens) {}  //с турником
-fun analize(push, squat, abc, extens) {}        //без турника
-}
- */
-//error commit

@@ -6,7 +6,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.tutorialjetpack.domain.model.MonthValue
@@ -22,47 +21,37 @@ fun JournalScreen(navController: NavController, state: MonthValue) {         //Ð
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+
+            Text(modifier = Modifier.padding(top = 16.dp), text = "Your top score:")
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(text = state.created)
-                //Text(text = "push")
-                Text(text = state.maxPush.toString())
-                //Text(text = "pull")
-                Text(text = state.maxPull.toString())
-                //Text(text = "squat")
-                Text(text = state.maxSquat.toString())
-                //Text(text = "abc")
-                Text(text = state.maxAbc.toString())
-                //Text(text = "extens")
-                Text(text = state.maxExtens.toString())
-            }
 
+                Text(modifier = Modifier.padding(top=8.dp), text = "Push ups: ${ state.maxPush.toString() }")
 
+                Text(modifier = Modifier.padding(top=8.dp),text = "Pull ups: ${state.maxPull.toString()}")
 
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "February")
-            }
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "March")
-            }
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "April")
-            }
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "May")
+                Text(modifier = Modifier.padding(top=8.dp),text = "Squats: ${state.maxSquat.toString()}")
+
+                Text(modifier = Modifier.padding(top=8.dp),text = "Sit ups: ${state.maxAbc.toString()}")
+
+                Text(modifier = Modifier.padding(top=8.dp),text = "Back extension: ${state.maxExtens.toString()}")
             }
 
             Button(
-                modifier = Modifier.padding(5.dp),
+                modifier = Modifier.padding(16.dp),
                 elevation = ButtonDefaults.elevation(
                     defaultElevation = 8.dp,
                     pressedElevation = 16.dp
                 ),
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.White,
-                    contentColor = Color.Black
+                    backgroundColor = MaterialTheme.colors.secondary,
+                    contentColor = MaterialTheme.colors.primary
                 ),
                 onClick = {
                     navController.popBackStack()
@@ -71,4 +60,4 @@ fun JournalScreen(navController: NavController, state: MonthValue) {         //Ð
             }
         }
     }
-}//error commit
+}
