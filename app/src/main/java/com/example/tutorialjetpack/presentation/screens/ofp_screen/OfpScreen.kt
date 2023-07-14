@@ -35,7 +35,7 @@ fun OfpScreen(state: OfpState, onEvent: (OfpScreenEvent) -> Unit) {
         Column(
 
         ) {
-            Text(text = "Hello, Name")
+            Text(text = "Hello, Name" )
             ProgressBar()                   //иконки с тренировочным прогрессом
             OfpMainItem(onEvent)      //переходы на тренировки, журнал, офпТест
             Column() {

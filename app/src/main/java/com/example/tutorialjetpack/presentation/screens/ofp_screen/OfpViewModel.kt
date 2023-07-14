@@ -46,7 +46,7 @@ class OfpViewModel @Inject constructor(
             }
 
             is OfpScreenEvent.BtnTraining -> {
-                changeNavigation()
+                toTrainingScreen()
             }
 
             is OfpScreenEvent.BtnJournal -> {
@@ -57,6 +57,14 @@ class OfpViewModel @Inject constructor(
                 changeNavigationToDetails()
             }
 
+        }
+    }
+
+    private fun toTrainingScreen() {
+        viewModelScope.launch {
+            _eventFlow.emit(
+                NavigationOfpScreen.OfpScreenNavigation(Routers.TRAINING.route)
+            )
         }
     }
 
@@ -95,7 +103,7 @@ class OfpViewModel @Inject constructor(
                     is Resource.Loading -> {}
                     is Resource.Success -> {
                         _eventFlow.emit(
-                            NavigationOfpScreen.OfpScreenNavigation(Routers.TRAINING.route)
+                            NavigationOfpScreen.OfpScreenNavigation(Routers.INTERMEDIATEANALIZE.route)
                         )
                     }
                 }
@@ -115,4 +123,3 @@ class OfpViewModel @Inject constructor(
 sealed class NavigationOfpScreen {
     data class OfpScreenNavigation(val route: String) : NavigationOfpScreen()
 }
-//error commit
