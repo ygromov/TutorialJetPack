@@ -63,7 +63,7 @@ fun TrainingScreen(
                         backgroundColor = MaterialTheme.colors.secondary,
                         contentColor = MaterialTheme.colors.primary
                     ),
-                    onClick = { onEvent.invoke(TrainingEvent.CompleteSet) }) {
+                    onClick = { onEvent.invoke(TrainingEvent.OneSet) }) {
                     Text(text = "1 set")
                 }
 

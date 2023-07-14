@@ -1,4 +1,4 @@
-package com.example.tutorialjetpack.data.analize
+package com.example.tutorialjetpack.domain.analize
 
 import com.example.tutorialjetpack.domain.model.TrainingValue
 

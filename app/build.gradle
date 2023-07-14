@@ -84,4 +84,7 @@ dependencies {
     //DataStore
     def dataStore = "1.0.0"
     implementation "androidx.datastore:datastore-preferences:$dataStore"
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:1.4.0")
 }

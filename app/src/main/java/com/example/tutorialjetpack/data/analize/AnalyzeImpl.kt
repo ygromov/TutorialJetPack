@@ -2,6 +2,7 @@ package com.example.tutorialjetpack.data.analize
 
 import android.util.Log
 import com.example.tutorialjetpack.data.local.OfpDao
+import com.example.tutorialjetpack.domain.analize.Analyze
 import com.example.tutorialjetpack.domain.model.TrainingValue
 import javax.inject.Inject
 

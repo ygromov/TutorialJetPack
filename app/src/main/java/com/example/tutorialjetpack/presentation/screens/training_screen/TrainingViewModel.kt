@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tutorialjetpack.data.analize.Analyze
+import com.example.tutorialjetpack.domain.analize.Analyze
 import com.example.tutorialjetpack.domain.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,13 +21,14 @@ class TrainingViewModel @Inject constructor(
     var state by mutableStateOf(TrainingState())
 
     init {
-        getUserOfpData()
+        getTrainPrograms()
+        //getUserOfpData()
         //Log.d(TAG, "getUserOfpData1: ${getUserOfpData()}") // ме
     }
 
     fun OnEvent(event: TrainingEvent) {
         when (event) {
-            is TrainingEvent.CompleteSet -> {
+            is TrainingEvent.OneSet -> {
                 getTrainPrograms()
             }
 
@@ -130,7 +131,7 @@ class TrainingViewModel @Inject constructor(
         }
     }
 
-    private fun getUserOfpData() {
+    private fun getUserOfpData() {                      //чистые данные с офптеста из БД
         viewModelScope.launch {
             repository.getUserOfp().collect { resource ->
                 //Log.d(TAG, "getUserOfpData2: ${resource.data?.push}")

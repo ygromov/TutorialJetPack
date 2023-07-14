@@ -16,6 +16,7 @@ fun DetailsScreen(navController: NavController) {         //вот сюда пе
 
     Surface(modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background) {
+
         Column() {
             Text(text = "Здесь будет изменение веса, роста, возраста")
             Button(
@@ -38,4 +39,3 @@ fun DetailsScreen(navController: NavController) {         //вот сюда пе
         }
     }
 }
-//error commit

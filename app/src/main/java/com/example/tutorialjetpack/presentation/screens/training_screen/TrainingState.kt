@@ -15,4 +15,3 @@ data class TrainingState(
     var sitUpSets: Int = -1,
     var extensSets: Int = -1
 )
-//error commit
