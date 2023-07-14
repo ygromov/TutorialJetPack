@@ -7,5 +7,6 @@ sealed class Routers(val route: String){
     object DETAILS: Routers("details")
     object FIRST: Routers("first")
     object EXERCISE: Routers("exercise")
+    object INTERMEDIATEANALIZE: Routers("intermediateanalize")
+    object INTERMEDIATEFIRST: Routers("intermediatefirst")
 }
-//error commit
