@@ -17,6 +17,8 @@ import com.example.tutorialjetpack.presentation.screens.exercise_screen.Exercise
 import com.example.tutorialjetpack.presentation.screens.first_screen.FirstScreen
 import com.example.tutorialjetpack.presentation.screens.first_screen.FirstViewModel
 import com.example.tutorialjetpack.presentation.screens.first_screen.NavigationFirstScreenEvent
+import com.example.tutorialjetpack.presentation.screens.intermediate_analize_screen.IntermediateAnalizeScreen
+import com.example.tutorialjetpack.presentation.screens.intermediate_first_screen.IntermediateFirstScreen
 import com.example.tutorialjetpack.presentation.screens.journal_screen.JournalViewModel
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.NavigationOfpScreen
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpViewModel
@@ -40,6 +42,9 @@ fun Navigation(navController: NavHostController,
                     when (it) {
                         is NavigationFirstScreenEvent.OfpScreen -> {
                             navController.navigate(Routers.OFP.route)
+                        }
+                        is NavigationFirstScreenEvent.IntermediateFirstScreen -> {
+                            navController.navigate(Routers.INTERMEDIATEFIRST.route)
                         }
                     }
                 }
@@ -86,6 +91,12 @@ fun Navigation(navController: NavHostController,
                 viewModel.state,
                 //viewModel.userOfpData,
                 navController = navController)
+        }
+        composable(Routers.INTERMEDIATEFIRST.route){
+            IntermediateFirstScreen(navController = navController)
+        }
+        composable(Routers.INTERMEDIATEANALIZE.route){
+            IntermediateAnalizeScreen(navController = navController)
         }
     }
 }
