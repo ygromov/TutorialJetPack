@@ -68,7 +68,7 @@ class FirstViewModel @Inject constructor(
 
                     }
                     is Resource.Success -> {
-                        _eventFlow.emit(NavigationFirstScreenEvent.OfpScreen )
+                        _eventFlow.emit(NavigationFirstScreenEvent.IntermediateFirstScreen )
                     }
                 }
             }
@@ -93,11 +93,9 @@ class FirstViewModel @Inject constructor(
     private fun setGender(value: String) {
         state = state.copy(gender = value)
     }
-
-
 }
 
 sealed class NavigationFirstScreenEvent {
     object OfpScreen : NavigationFirstScreenEvent()
+    object IntermediateFirstScreen : NavigationFirstScreenEvent()
 }
-//error commit
