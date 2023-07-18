@@ -114,7 +114,7 @@ fun Timer(
             )
             Button(
                 onClick = {
-                    if (currentTime <= 0L) {
+                    if (currentTime <= 0L || currentTime< 60000L) {
                         currentTime = totalTime
                         isTimerRunning = true
                     } else {
