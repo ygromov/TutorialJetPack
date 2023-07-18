@@ -19,8 +19,6 @@ class FirstViewModel @Inject constructor(
     private val repository: Repository
 ): ViewModel() {
     var state by mutableStateOf(ImtState())
-//    private val _name = MutableStateFlow("")
-//    val name = _name.asStateFlow()
 
     private val _eventFlow = MutableSharedFlow<NavigationFirstScreenEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
