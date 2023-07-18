@@ -17,9 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OfpViewModel @Inject constructor(
-    private val repository: Repository,
-    //private val savedStateHandle: SavedStateHandle,
-    //sharedPref
+    private val repository: Repository
 ) : ViewModel() {
     var state by mutableStateOf(OfpState())
 
