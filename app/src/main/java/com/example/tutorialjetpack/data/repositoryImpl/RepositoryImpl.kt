@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 private const val TAG = "RepositoryImpl"
 
-class RepositoryImpl @Inject constructor(               //реализация интерфейса из domain слоя
+ class RepositoryImpl @Inject constructor(               //реализация интерфейса из domain слоя
     private val appDataStoreManager: AppDataStore,
     private val ofpDao: OfpDao
 ) : Repository {
@@ -76,5 +76,18 @@ class RepositoryImpl @Inject constructor(               //реализация �
         Log.d(TAG, "getPullUp: ${ofpDao.maxPullUp()}")
         return ofpDao.maxPullUp()
     }
-}
-//error commit
+
+     override fun getUserData(): Flow<Resource<UserModel>> = flow {
+         emit(Resource.Loading())
+         try {
+             val userId = appDataStoreManager.readValue("userId")
+             val userEntity = ofpDao.getUserInfoById(id = userId!!.toInt())
+             emit(Resource.Success(userEntity.toUserModel()))
+         }
+         catch (ex: Exception) {
+             emit(Resource.Error(message = "Error"))
+         } finally {
+             emit(Resource.Loading(isLoading = false))
+         }
+     }
+ }

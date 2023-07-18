@@ -19,6 +19,5 @@ interface Repository {
     suspend fun getPullUp():List<MonthValue>
 
 
-    //fun getUserData(id:Int): Flow<Resource<UserModel>>
+    fun getUserData(): Flow<Resource<UserModel>>
 }
-//error commit
