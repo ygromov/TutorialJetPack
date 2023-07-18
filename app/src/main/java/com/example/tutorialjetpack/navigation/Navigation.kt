@@ -12,6 +12,8 @@ import com.example.tutorialjetpack.presentation.DetailsScreen
 import com.example.tutorialjetpack.presentation.JournalScreen
 import com.example.tutorialjetpack.presentation.OfpScreen
 import com.example.tutorialjetpack.presentation.TrainingScreen
+import com.example.tutorialjetpack.presentation.screens.details_screen.DetailsViewModel
+import com.example.tutorialjetpack.presentation.screens.details_screen.NavigationDetailsScreen
 import com.example.tutorialjetpack.presentation.screens.exercise_screen.ExerciseScreen
 import com.example.tutorialjetpack.presentation.screens.exercise_screen.ExerciseViewModel
 import com.example.tutorialjetpack.presentation.screens.first_screen.FirstScreen
@@ -82,7 +84,17 @@ fun Navigation(navController: NavHostController,
             TrainingScreen(viewModel.state, navController = navController, onEvent = viewModel::OnEvent)
         }
         composable(Routers.DETAILS.route) {
-            DetailsScreen(navController = navController)
+            val viewModel: DetailsViewModel = hiltViewModel()
+            LaunchedEffect(true) {
+                viewModel.eventFlow.collect {
+                    when (it) {
+                        is NavigationDetailsScreen.DetailsScreenNavigation -> {
+                            navController.navigate(it.route)
+                        }
+                    }
+                }
+            }
+            DetailsScreen(viewModel.state,viewModel::onEvent)
         }
         composable(Routers.EXERCISE.route) {
             val viewModel: ExerciseViewModel = hiltViewModel()
