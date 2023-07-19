@@ -1,6 +1,7 @@
 package com.example.tutorialjetpack.presentation.screens.training_screen
 
 data class TrainingState(
+    val name: String = "",
     val headText: String = "Please, press button: 1 set",
     val UserId: Int = -1,
     val push: Int=-1,
