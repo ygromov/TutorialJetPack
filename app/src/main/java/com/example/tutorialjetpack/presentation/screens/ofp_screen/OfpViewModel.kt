@@ -29,6 +29,13 @@ class OfpViewModel @Inject constructor(
             val id = repository.getId()
             state = state.copy(userId = id!!.toInt())
         }
+        viewModelScope.launch {
+            val name = repository.getUserData().collect {
+                it.data?.let {
+                    state = state.copy(name = it.name)
+                }
+            }
+        }
     }
 
     fun onEvent(event: OfpScreenEvent) {
