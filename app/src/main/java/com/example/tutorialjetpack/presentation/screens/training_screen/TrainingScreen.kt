@@ -45,6 +45,7 @@ fun TrainingScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(text = "Hello, ${state.name}")
             ProgressBar()
 
             Row(
@@ -116,7 +117,11 @@ fun TrainingScreen(
                 modifier = Modifier.padding(top = 16.dp), text = state.headText
             )
 
-            Card(modifier = Modifier.padding(start = 10.dp, top = 10.dp, end = 10.dp).background(MaterialTheme.colors.secondary)) {
+            Card(
+                modifier = Modifier
+                    .padding(start = 10.dp, top = 10.dp, end = 10.dp)
+                    .background(MaterialTheme.colors.secondary)
+            ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -133,7 +138,11 @@ fun TrainingScreen(
                     Text(text = state.push.toString())
                 }
             }
-            Card(modifier = Modifier.padding(start = 10.dp, top = 8.dp, end = 10.dp).background(MaterialTheme.colors.secondary)) {
+            Card(
+                modifier = Modifier
+                    .padding(start = 10.dp, top = 8.dp, end = 10.dp)
+                    .background(MaterialTheme.colors.secondary)
+            ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -149,7 +158,11 @@ fun TrainingScreen(
                     Text(text = state.pull.toString())
                 }
             }
-            Card(modifier = Modifier.padding(start = 10.dp, top = 8.dp, end = 10.dp).background(MaterialTheme.colors.secondary)) {
+            Card(
+                modifier = Modifier
+                    .padding(start = 10.dp, top = 8.dp, end = 10.dp)
+                    .background(MaterialTheme.colors.secondary)
+            ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -165,7 +178,11 @@ fun TrainingScreen(
                     Text(text = state.squat.toString())
                 }
             }
-            Card(modifier = Modifier.padding(start = 10.dp, top = 8.dp, end = 10.dp).background(MaterialTheme.colors.secondary)) {
+            Card(
+                modifier = Modifier
+                    .padding(start = 10.dp, top = 8.dp, end = 10.dp)
+                    .background(MaterialTheme.colors.secondary)
+            ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -186,8 +203,7 @@ fun TrainingScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(MaterialTheme.colors.secondary)
-                        .padding(start = 20.dp, end = 20.dp)
-                        ,
+                        .padding(start = 20.dp, end = 20.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Icon(
