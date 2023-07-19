@@ -22,6 +22,13 @@ class TrainingViewModel @Inject constructor(
 
     init {
         getTrainPrograms()
+        viewModelScope.launch {
+            val name = repository.getUserData().collect {
+                it.data?.let {
+                    state = state.copy(name = it.name)
+                }
+            }
+        }
         //getUserOfpData()
         //Log.d(TAG, "getUserOfpData1: ${getUserOfpData()}") // ме
     }
