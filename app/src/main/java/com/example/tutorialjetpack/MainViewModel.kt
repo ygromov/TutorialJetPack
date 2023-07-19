@@ -25,7 +25,7 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
             val id = repository.getId()
             Log.d(TAG, "$id ")
             if (id != null) {
-                state = state.copy(id = id.toInt(), route = Routers.OFP.route)
+                state = state.copy(id = id.toInt(), route = Routers.DETAILS.route)
             }
             else state = state.copy(id = 0)
         }
