@@ -32,10 +32,8 @@ fun OfpScreen(state: OfpState, onEvent: (OfpScreenEvent) -> Unit) {
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
     ) {
-        Column(
-
-        ) {
-            Text(text = "Hello, Name" )
+        Column(modifier = Modifier.padding(start = 8.dp, top = 8.dp,end = 8.dp) ) {
+            Text(text = "Hello, ${state.name}" )
             ProgressBar()                   //иконки с тренировочным прогрессом
             OfpMainItem(onEvent)      //переходы на тренировки, журнал, офпТест
             Column() {

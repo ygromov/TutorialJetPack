@@ -15,18 +15,15 @@ import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpScreenEven
 
 @Composable
 fun OfpMainItem(
-    onEvent:(OfpScreenEvent) -> Unit
-//    navController: NavController
+    onEvent: (OfpScreenEvent) -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
-            //.background(color = Color.Gray)
-            .padding(start = 10.dp, top = 10.dp, end = 10.dp)
+            .padding(top = 8.dp)
     ) {
         Button(
-            modifier = Modifier.padding(5.dp),
             elevation = ButtonDefaults.elevation(
                 defaultElevation = 8.dp,
                 pressedElevation = 16.dp
@@ -37,28 +34,10 @@ fun OfpMainItem(
             ),
             onClick = {
                 onEvent.invoke(OfpScreenEvent.BtnTraining)
-//                navController.navigate(Routers.TRAINING.route)
             }) {
             Text(text = "Training")
         }
         Button(
-            modifier = Modifier.padding(5.dp),
-            elevation = ButtonDefaults.elevation(
-                defaultElevation = 8.dp,
-                pressedElevation = 16.dp
-            ),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.secondary,
-                contentColor = MaterialTheme.colors.primary
-            ),
-            onClick = {
-                onEvent.invoke(OfpScreenEvent.BtnJournal)
-//                navController.navigate(Routers.JOURNAL.route)
-            }) {
-            Text(text = "Journal")
-        }
-        Button(
-            modifier = Modifier.padding(5.dp),
             elevation = ButtonDefaults.elevation(
                 defaultElevation = 8.dp,
                 pressedElevation = 16.dp
@@ -70,9 +49,23 @@ fun OfpMainItem(
             onClick = {
                 onEvent.invoke(OfpScreenEvent.BtnDetails)
             }) {
-            Text(text = "details")
+            Text(text = "Main")
         }
+        Button(
+            elevation = ButtonDefaults.elevation(
+                defaultElevation = 8.dp,
+                pressedElevation = 16.dp
+            ),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = MaterialTheme.colors.secondary,
+                contentColor = MaterialTheme.colors.primary
+            ),
+            onClick = {
+                onEvent.invoke(OfpScreenEvent.BtnJournal)
+            }) {
+            Text(text = "Journal")
+        }
+
 
     }
 }
-//error commit
