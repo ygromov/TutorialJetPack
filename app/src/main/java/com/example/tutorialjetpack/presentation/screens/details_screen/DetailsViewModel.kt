@@ -21,6 +21,7 @@ class DetailsViewModel @Inject constructor(
     val eventFlow = _eventFlow.asSharedFlow()
 
     var state by mutableStateOf(DetailsState())
+
     init {
         getOfp()
         getUserInfo()
@@ -41,12 +42,28 @@ class DetailsViewModel @Inject constructor(
             }
 
             is DetailsScreenEvent.ToTrainingScreen -> {
-
+                toTrainingScreen()
             }
 
             is DetailsScreenEvent.ToJournalScreen -> {
-
+                toJournalScreen()
             }
+        }
+    }
+
+    private fun toJournalScreen() {
+        viewModelScope.launch {
+            _eventFlow.emit(
+                NavigationDetailsScreen.DetailsScreenNavigation(Routers.JOURNAL.route)
+            )
+        }
+    }
+
+    private fun toTrainingScreen() {
+        viewModelScope.launch {
+            _eventFlow.emit(
+                NavigationDetailsScreen.DetailsScreenNavigation(Routers.TRAINING.route)
+            )
         }
     }
 
@@ -86,12 +103,13 @@ class DetailsViewModel @Inject constructor(
                         height = userModel.height,
                         gender = userModel.gender,
 
-                    )
+                        )
                 }
             }
         }
     }
 }
+
 sealed class NavigationDetailsScreen {
     data class DetailsScreenNavigation(val route: String) : NavigationDetailsScreen()
 }
