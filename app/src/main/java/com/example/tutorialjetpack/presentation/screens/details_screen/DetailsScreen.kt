@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.tutorialjetpack.presentation.screens.details_screen.DetailsScreenEvent
 import com.example.tutorialjetpack.presentation.screens.details_screen.DetailsState
 
@@ -44,17 +45,21 @@ fun DetailsScreen(state: DetailsState, onEvent: (DetailsScreenEvent) -> Unit) {
                     pressedElevation = 16.dp
                 ),
                     colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.secondary,
+                        backgroundColor = MaterialTheme.colors.primaryVariant,
                         contentColor = MaterialTheme.colors.primary
                     ), onClick = { onEvent.invoke(DetailsScreenEvent.ToOfpScreen) }) {
-                    Text(text = "OfpTest")
+                    Column() {
+                        Text(text = "OfpTest")
+                        //Text(text = "Change you results", Modifier.size(2.dp))
+                    }
+
                 }
                 Button(elevation = ButtonDefaults.elevation(
                     defaultElevation = 8.dp,
                     pressedElevation = 16.dp
                 ),
                     colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.secondary,
+                        backgroundColor = MaterialTheme.colors.primaryVariant,
                         contentColor = MaterialTheme.colors.primary
                     ), onClick = { onEvent.invoke(DetailsScreenEvent.ToTrainingScreen) }) {
                     Text(text = "Training")
@@ -65,7 +70,7 @@ fun DetailsScreen(state: DetailsState, onEvent: (DetailsScreenEvent) -> Unit) {
                     pressedElevation = 16.dp
                 ),
                     colors = ButtonDefaults.buttonColors(
-                        backgroundColor = MaterialTheme.colors.secondary,
+                        backgroundColor = MaterialTheme.colors.primaryVariant,
                         contentColor = MaterialTheme.colors.primary
                     ), onClick = { onEvent.invoke(DetailsScreenEvent.ToJournalScreen) }) {
                     Text(text = "Journal")
@@ -96,81 +101,159 @@ fun DetailsScreen(state: DetailsState, onEvent: (DetailsScreenEvent) -> Unit) {
                     .fillMaxWidth()
                     .padding(start = 16.dp, top = 8.dp)
             ) {
-                Text(text = "my Ofp goal:")
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(end = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "my Ofp goal:")
+                    Text(text = "My/Goal")
+                }
                 Row() {
-                    Card(modifier = Modifier
-                        .width(80.dp)
-                        .height(20.dp)) {
-                        Text(text = "pull ups: ")
+                    Card(
+                        modifier = Modifier
+                            .width(70.dp)
+                            .height(20.dp)
+                    ) {
+                        Text(
+                            text = "pull ups: ",
+                            fontSize = 14.sp,
+                            modifier = Modifier
+                                .background(MaterialTheme.colors.secondary)
+                        )
                     }
 
                     LinearProgressIndicator(
-                        progress = state.pull.toFloat() / (state.pull + 2),
+                        progress = state.pull.toFloat() / (state.pullGoal),
                         color = Color.Red,
-                        backgroundColor = Color.White,
-                        modifier = Modifier.fillMaxHeight(0.015f).align(Alignment.CenterVertically)
+                        backgroundColor = MaterialTheme.colors.secondary,
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                            .fillMaxHeight(0.015f)
+                            .align(Alignment.CenterVertically)
                     )
-                    Text(text = "${state.pull} / ${state.pull + 2}")
+                    Text(
+                        text = "${state.pull} / ${state.pullGoal}",
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                    )
                     //will add a result of analizeMax
                 }
                 Row() {
-                    Card(modifier = Modifier
-                        .width(80.dp)
-                        .height(20.dp)) {
-                        Text(text = "push ups: ")
+                    Card(
+                        modifier = Modifier
+                            .width(70.dp)
+                            .height(20.dp)
+                    ) {
+                        Text(
+                            text = "push ups: ",
+                            fontSize = 14.sp,
+                            modifier = Modifier
+                                .background(MaterialTheme.colors.secondary)
+                        )
                     }
                     LinearProgressIndicator(
-                        progress = state.push.toFloat() / (state.push + 5),
+                        progress = state.push.toFloat() / (state.pushGoal),
                         color = Color.Red,
-                        backgroundColor = Color.White,
-                        modifier = Modifier.fillMaxHeight(0.015f).align(Alignment.CenterVertically)
+                        backgroundColor = MaterialTheme.colors.secondary,
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                            .fillMaxHeight(0.015f)
+                            .align(Alignment.CenterVertically)
                     )
-                    Text(text = "${state.push} / ${state.push + 5}")
+                    Text(
+                        text = "${state.push} / ${state.pushGoal}",
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                    )
                     //will add a result of analizeMax
                 }
                 Row() {
-                    Card(modifier = Modifier
-                        .width(80.dp)
-                        .height(20.dp)) {
-                        Text(text = "squats: ")
+                    Card(
+                        modifier = Modifier
+                            .width(70.dp)
+                            .height(20.dp)
+                    ) {
+                        Text(
+                            text = "squats: ",
+                            fontSize = 14.sp,
+                            modifier = Modifier
+                                .background(MaterialTheme.colors.secondary)
+                        )
                     }
                     LinearProgressIndicator(
-                        progress = state.squat.toFloat() / (state.squat + 7),
+                        progress = state.squat.toFloat() / (state.squatGoal),
                         color = Color.Red,
-                        backgroundColor = Color.White,
-                        modifier = Modifier.fillMaxHeight(0.015f).align(Alignment.CenterVertically)
+                        backgroundColor = MaterialTheme.colors.secondary,
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                            .fillMaxHeight(0.015f)
+                            .align(Alignment.CenterVertically)
                     )
-                    Text(text = "${state.squat} / ${state.squat + 7}")
+                    Text(
+                        text = "${state.squat} / ${state.squatGoal}",
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                    )
                     //will add a result of analizeMax
                 }
                 Row() {
-                    Card(modifier = Modifier
-                        .width(80.dp)
-                        .height(20.dp)) {
-                        Text(text = "sit ups: ")
+                    Card(
+                        modifier = Modifier
+                            .width(70.dp)
+                            .height(20.dp)
+                    ) {
+                        Text(
+                            text = "sit ups: ",
+                            fontSize = 14.sp,
+                            modifier = Modifier
+                                .background(MaterialTheme.colors.secondary)
+                        )
                     }
                     LinearProgressIndicator(
-                        progress = state.abs.toFloat() / (state.abs + 10),
+                        progress = state.abs.toFloat() / (state.absGoal),
                         color = Color.Red,
-                        backgroundColor = Color.White,
-                        modifier = Modifier.fillMaxHeight(0.015f).align(Alignment.CenterVertically)
+                        backgroundColor = MaterialTheme.colors.secondary,
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                            .fillMaxHeight(0.015f)
+                            .align(Alignment.CenterVertically)
                     )
-                    Text(text = "${state.abs} / ${state.abs + 10}")
+                    Text(
+                        text = "${state.abs} / ${state.absGoal}",
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                    )
                     //will add a result of analizeMax
                 }
                 Row() {
-                    Card(modifier = Modifier
-                        .width(80.dp)
-                        .height(20.dp)) {
-                        Text(text = "back ext: ")
+                    Card(
+                        modifier = Modifier
+                            .width(70.dp)
+                            .height(20.dp)
+                    ) {
+                        Text(
+                            text = "back ext: ",
+                            fontSize = 14.sp,
+                            modifier = Modifier
+                                .background(MaterialTheme.colors.secondary)
+                        )
                     }
                     LinearProgressIndicator(
-                        progress = state.extens.toFloat() / (state.extens + 10),
+                        progress = state.extens.toFloat() / (state.extensGoal),
                         color = Color.Red,
-                        backgroundColor = Color.White,
-                        modifier = Modifier.fillMaxHeight(0.015f).align(Alignment.CenterVertically)
+                        backgroundColor = MaterialTheme.colors.secondary,
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                            .fillMaxHeight(0.015f)
+                            .align(Alignment.CenterVertically)
                     )
-                    Text(text = "${state.extens} / ${state.extens + 10}")
+                    Text(
+                        text = "${state.extens} / ${state.extensGoal}",
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                    )
                     //will add a result of analizeMax
                 }
             }
