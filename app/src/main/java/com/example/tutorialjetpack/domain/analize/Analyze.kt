@@ -1,5 +1,6 @@
 package com.example.tutorialjetpack.domain.analize
 
+import com.example.tutorialjetpack.domain.model.OfpGoal
 import com.example.tutorialjetpack.domain.model.TrainingValue
 
 interface Analyze {
@@ -13,4 +14,5 @@ interface Analyze {
     suspend fun createThreeSetTrain() : List<TrainingValue>
 
     suspend fun createFourSetTrain() : List<TrainingValue>
+    suspend fun analizeOfpToGoal() : List<OfpGoal>
 }

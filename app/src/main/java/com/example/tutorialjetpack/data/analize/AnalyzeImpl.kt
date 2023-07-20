@@ -3,6 +3,7 @@ package com.example.tutorialjetpack.data.analize
 import android.util.Log
 import com.example.tutorialjetpack.data.local.OfpDao
 import com.example.tutorialjetpack.domain.analize.Analyze
+import com.example.tutorialjetpack.domain.model.OfpGoal
 import com.example.tutorialjetpack.domain.model.TrainingValue
 import javax.inject.Inject
 
@@ -233,6 +234,26 @@ class AnalyzeImpl @Inject constructor(
             )
         )
         return exercisePlan
+    }
+
+    override suspend fun analizeOfpToGoal(): List<OfpGoal> {
+        val responseBD = ofpDao.forCreateTrain()
+        val goalPlan: MutableList<OfpGoal> = mutableListOf()
+        var push: Int = (responseBD.push * 1.2).toInt()
+        var pullG: Int = (responseBD.pull * 1.2).toInt()
+        var squat: Int = (responseBD.squat * 1.2).toInt()
+        var abs: Int = (responseBD.abc * 1.25).toInt()
+        var extens: Int = (responseBD.extens * 1.25).toInt()
+        goalPlan.add(
+            OfpGoal(
+                push = push,
+                pull = pullG,
+                squat = squat,
+                abs = abs,
+                extens = extens
+            )
+        )
+        return goalPlan
     }
 
     fun calculateSets(count: Int, exerciseLevel: ExerciseLevel): Int {
