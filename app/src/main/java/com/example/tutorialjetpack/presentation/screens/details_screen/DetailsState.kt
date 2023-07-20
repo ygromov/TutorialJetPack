@@ -10,5 +10,10 @@ data class DetailsState(
     val pull: Int = 0,
     val squat: Int = 0,
     val abs: Int = 0,
-    val extens: Int = 0
+    val extens: Int = 0,
+    val pushGoal: Int = 0,
+    val pullGoal: Int = 0,
+    val squatGoal: Int = 0,
+    val absGoal: Int = 0,
+    val extensGoal: Int = 0
 )
