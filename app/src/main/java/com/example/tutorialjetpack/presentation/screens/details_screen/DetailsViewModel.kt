@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tutorialjetpack.domain.analize.Analyze
 import com.example.tutorialjetpack.domain.repository.Repository
 import com.example.tutorialjetpack.utils.Routers
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,9 +14,12 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "DetailsViewModel"
+
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: Repository,
+    private val analize: Analyze
 ) : ViewModel() {
     private val _eventFlow = MutableSharedFlow<NavigationDetailsScreen>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -25,6 +29,7 @@ class DetailsViewModel @Inject constructor(
     init {
         getOfp()
         getUserInfo()
+        getOfpGoal()
     }
 
     fun onEvent(event: DetailsScreenEvent) {
@@ -47,6 +52,20 @@ class DetailsViewModel @Inject constructor(
 
             is DetailsScreenEvent.ToJournalScreen -> {
                 toJournalScreen()
+            }
+        }
+    }
+
+    private fun getOfpGoal() {
+        viewModelScope.launch {
+            analize.analizeOfpToGoal().map {
+                state = state.copy(
+                    pushGoal = it.push,
+                    pullGoal = it.pull,
+                    squatGoal = it.squat,
+                    absGoal = it.abs,
+                    extensGoal = it.extens
+                )
             }
         }
     }
