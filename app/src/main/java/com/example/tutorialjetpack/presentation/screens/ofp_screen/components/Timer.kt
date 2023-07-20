@@ -124,7 +124,7 @@ fun Timer(
                 modifier = Modifier.align(Alignment.BottomCenter),
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = if (!isTimerRunning || currentTime <= 0L) {
-                        MaterialTheme.colors.secondary
+                        MaterialTheme.colors.primaryVariant
                     } else {
                         Color.Red
                     }
