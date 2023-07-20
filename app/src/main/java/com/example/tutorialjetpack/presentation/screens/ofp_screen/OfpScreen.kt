@@ -45,7 +45,7 @@ fun OfpScreen(state: OfpState, onEvent: (OfpScreenEvent) -> Unit) {
                     inactiveBarColor = Color.DarkGray,
                     activeBarColor = Color.Red,    //(0xFF37B900),
                     modifier = Modifier.size(200.dp)
-                )                     //таймер
+                )
             }
         }
     }
@@ -65,7 +65,7 @@ fun BtnAnalize(
 
         Button(modifier = Modifier.padding(5.dp),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.secondary,
+                backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.primary
             ),
             elevation = ButtonDefaults.elevation(

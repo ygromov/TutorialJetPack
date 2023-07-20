@@ -56,14 +56,13 @@ private const val TAG = "RepositoryImpl"
 
     override suspend fun getUserOfp(): Flow<Resource<OfpModel>> = flow {
         emit(Resource.Loading())
-
         try {
             val userId = appDataStoreManager.readValue("userId")
             val ofpEntity = ofpDao.getUserOfp(userId = userId!!.toInt()) //взяли данные из БД, это офпЭнтити
 
-            Log.d(TAG, "getUserOfp: $ofpEntity")
+            Log.d(TAG, "getUserOfp5: $ofpEntity")
             emit(Resource.Success(ofpEntity.toOfpModel()))
-            Log.d(TAG, "getUserOfp2: ${ofpEntity.toOfpModel()}")
+            Log.d(TAG, "getUserOfp6: ${ofpEntity.toOfpModel()}")
 
         } catch (ex: Exception) {
             emit(Resource.Error(message = "Error"))
@@ -82,7 +81,9 @@ private const val TAG = "RepositoryImpl"
          try {
              val userId = appDataStoreManager.readValue("userId")
              val userEntity = ofpDao.getUserInfoById(id = userId!!.toInt())
+             Log.d(TAG, "getUserData5: $userEntity")
              emit(Resource.Success(userEntity.toUserModel()))
+             Log.d(TAG, "getUserData6: ${userEntity.toUserModel()}")
          }
          catch (ex: Exception) {
              emit(Resource.Error(message = "Error"))

@@ -29,7 +29,7 @@ fun OfpMainItem(
                 pressedElevation = 16.dp
             ),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.secondary,
+                backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.primary
             ),
             onClick = {
@@ -43,7 +43,7 @@ fun OfpMainItem(
                 pressedElevation = 16.dp
             ),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.secondary,
+                backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.primary
             ),
             onClick = {
@@ -57,7 +57,7 @@ fun OfpMainItem(
                 pressedElevation = 16.dp
             ),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.secondary,
+                backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.primary
             ),
             onClick = {
