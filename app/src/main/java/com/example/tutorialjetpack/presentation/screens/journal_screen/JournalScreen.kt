@@ -50,7 +50,7 @@ fun JournalScreen(navController: NavController, state: MonthValue) {         //Ð
                     pressedElevation = 16.dp
                 ),
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colors.secondary,
+                    backgroundColor = MaterialTheme.colors.primaryVariant,
                     contentColor = MaterialTheme.colors.primary
                 ),
                 onClick = {
