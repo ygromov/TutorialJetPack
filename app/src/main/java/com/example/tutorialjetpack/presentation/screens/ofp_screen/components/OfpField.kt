@@ -56,11 +56,8 @@ fun OfpField(
                 },
                 maxLines = 1,
                 modifier = Modifier
-                    //.defaultMinSize(40.dp)
                     .height(50.dp)
-                    .width(60.dp)
-                    //.align(Alignment.Bottom)
-                ,
+                    .width(60.dp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 colors = TextFieldDefaults.textFieldColors(textColor = MaterialTheme.colors.primary, backgroundColor = MaterialTheme.colors.secondary)         //(textColor = Color.Red)
             )

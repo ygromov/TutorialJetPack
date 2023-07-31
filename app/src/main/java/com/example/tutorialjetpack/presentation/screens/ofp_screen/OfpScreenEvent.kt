@@ -14,4 +14,3 @@ sealed class OfpScreenEvent{
     object BtnDetails:OfpScreenEvent()
 
 }
-//error commit

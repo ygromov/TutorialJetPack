@@ -46,7 +46,9 @@ fun IntermediateAnalizeScreen(navController: NavController) {
                 }
             }
             Text(text = "Your results are more than 70% of users!", modifier = Modifier.padding(top = 10.dp))
-            Button(onClick = { navController.navigate(Routers.TRAINING.route)}, modifier = Modifier.padding(top = 10.dp)) {
+            Button(onClick = {
+                navController.navigate(Routers.TRAINING.route)
+                             }, modifier = Modifier.padding(top = 10.dp)) {
                 Text(text = "create training")
             }
         }

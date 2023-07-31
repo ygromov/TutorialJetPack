@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tutorialjetpack.data.datastore.AppDataStore
 import com.example.tutorialjetpack.domain.model.OfpModel
 import com.example.tutorialjetpack.domain.repository.Repository
 import com.example.tutorialjetpack.utils.Resource
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OfpViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: Repository,
+    private val dataStore: AppDataStore
 ) : ViewModel() {
     var state by mutableStateOf(OfpState())
 
@@ -35,6 +37,7 @@ class OfpViewModel @Inject constructor(
                     state = state.copy(name = it.name)
                 }
             }
+            state = state.copy(userPhysLevel =  dataStore.readValue("UserPhysActiv") ?: 35L)
         }
     }
 

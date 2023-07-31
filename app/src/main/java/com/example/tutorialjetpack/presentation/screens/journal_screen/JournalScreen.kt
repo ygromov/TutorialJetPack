@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.tutorialjetpack.domain.model.MonthValue
+import com.example.tutorialjetpack.utils.Routers
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -57,6 +58,9 @@ fun JournalScreen(navController: NavController, state: MonthValue) {         //Ð
                     navController.popBackStack()
                 }) {
                 Text(text = "back")
+            }
+            Button(onClick = {navController.navigate(Routers.EXERCISE.route) }) {
+                Text(text = "test")
             }
         }
     }
