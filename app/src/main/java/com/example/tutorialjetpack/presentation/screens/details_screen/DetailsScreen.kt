@@ -1,6 +1,8 @@
 package com.example.tutorialjetpack.presentation
 
 import android.annotation.SuppressLint
+import android.graphics.Paint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,17 +17,24 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.tutorialjetpack.R
 import com.example.tutorialjetpack.presentation.screens.details_screen.DetailsScreenEvent
 import com.example.tutorialjetpack.presentation.screens.details_screen.DetailsState
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DetailsScreen(state: DetailsState, onEvent: (DetailsScreenEvent) -> Unit) {
+
+    //var progress by remember { mutableStateOf((state.pullMax % 10).toFloat()) }
+    val max = 10f
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -86,14 +95,29 @@ fun DetailsScreen(state: DetailsState, onEvent: (DetailsScreenEvent) -> Unit) {
                         .size(100.dp)
                         .padding(start = 16.dp), elevation = 8.dp
                 ) {
-                    Box(modifier = Modifier.background(Color.White))
+                    Box(modifier = Modifier.background(Color.White)) {
+                        Image(
+                            painter = painterResource(id = R.drawable.pullup),
+                            contentDescription = ""
+                        )
+                    }
                 }
                 Column(modifier = Modifier.padding(start = 16.dp)) {
-                    Text(text = "name: ${state.name}", modifier = Modifier.padding(top = 4.dp))
+                    Text(text = "name: ${state.name}", modifier = Modifier.padding(top = 4.dp), color = Color.White)
                     Text(text = "age: ${state.age}", modifier = Modifier.padding(top = 4.dp))
                     Text(text = "height: ${state.height}", modifier = Modifier.padding(top = 4.dp))
                     Text(text = "weight: ${state.weight}", modifier = Modifier.padding(top = 4.dp))
                     Text(text = "gender: ${state.gender}", modifier = Modifier.padding(top = 4.dp))
+                }
+                Column(
+                    modifier = Modifier
+                        .padding(start = 16.dp)
+                        .background(MaterialTheme.colors.secondary)
+                ) {
+                    Text(text = "${state.countTraining}/5", fontSize = 40.sp)
+                    if (state.countTraining == 5L) {
+                        Text(text = "get tested: Ofp Test", color = Color.Red)
+                    } else Text(text = "completed workouts")
                 }
             }
             Column(
@@ -107,158 +131,158 @@ fun DetailsScreen(state: DetailsState, onEvent: (DetailsScreenEvent) -> Unit) {
                         .padding(end = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "my Ofp goal:")
-                    Text(text = "My/Goal")
+                    Text(text = "my Ofp level:")
+                    Text(text = "Level")
                 }
-                Row() {
+                Row(modifier = Modifier.padding(top =10.dp)) {
                     Card(
                         modifier = Modifier
                             .width(70.dp)
                             .height(20.dp)
                     ) {
                         Text(
-                            text = "pull ups: ",
-                            fontSize = 14.sp,
+                            text = "Pull ups: ",
+                            fontSize = 15.sp,
                             modifier = Modifier
                                 .background(MaterialTheme.colors.secondary)
                         )
                     }
+                    CustomLinearProgressIndicator(
+                        progress = (state.pullMax % 10).toFloat(),
+                        max = max
+                    )
 
-                    LinearProgressIndicator(
-                        progress = state.pull.toFloat() / (state.pullGoal),
-                        color = Color.Red,
-                        backgroundColor = MaterialTheme.colors.secondary,
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                            .fillMaxHeight(0.015f)
-                            .align(Alignment.CenterVertically)
-                    )
                     Text(
-                        text = "${state.pull} / ${state.pullGoal}",
+                        text = "${state.pullMax / 10}",
                         modifier = Modifier
                             .padding(start = 4.dp)
                     )
                     //will add a result of analizeMax
                 }
-                Row() {
+                Row(modifier = Modifier.padding(top =10.dp)) {
                     Card(
                         modifier = Modifier
                             .width(70.dp)
                             .height(20.dp)
                     ) {
                         Text(
-                            text = "push ups: ",
-                            fontSize = 14.sp,
+                            text = "Push ups: ",
+                            fontSize = 15.sp,
                             modifier = Modifier
                                 .background(MaterialTheme.colors.secondary)
                         )
                     }
-                    LinearProgressIndicator(
-                        progress = state.push.toFloat() / (state.pushGoal),
-                        color = Color.Red,
-                        backgroundColor = MaterialTheme.colors.secondary,
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                            .fillMaxHeight(0.015f)
-                            .align(Alignment.CenterVertically)
+                    CustomLinearProgressIndicator(
+                        progress = (state.pushMax % 10).toFloat(),
+                        max = max
                     )
                     Text(
-                        text = "${state.push} / ${state.pushGoal}",
+                        text = "${state.pushMax / 10}",
                         modifier = Modifier
                             .padding(start = 4.dp)
                     )
                     //will add a result of analizeMax
                 }
-                Row() {
+                Row(modifier = Modifier.padding(top =10.dp)) {
                     Card(
                         modifier = Modifier
                             .width(70.dp)
                             .height(20.dp)
                     ) {
                         Text(
-                            text = "squats: ",
-                            fontSize = 14.sp,
+                            text = "Squats: ",
+                            fontSize = 15.sp,
                             modifier = Modifier
                                 .background(MaterialTheme.colors.secondary)
                         )
                     }
-                    LinearProgressIndicator(
-                        progress = state.squat.toFloat() / (state.squatGoal),
-                        color = Color.Red,
-                        backgroundColor = MaterialTheme.colors.secondary,
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                            .fillMaxHeight(0.015f)
-                            .align(Alignment.CenterVertically)
+                    CustomLinearProgressIndicator(
+                        progress = (state.squatMax % 10).toFloat(),
+                        max = max
                     )
                     Text(
-                        text = "${state.squat} / ${state.squatGoal}",
+                        text = "${state.squatMax/10}",
                         modifier = Modifier
                             .padding(start = 4.dp)
                     )
                     //will add a result of analizeMax
                 }
-                Row() {
+                Row(modifier = Modifier.padding(top =10.dp)) {
                     Card(
                         modifier = Modifier
                             .width(70.dp)
                             .height(20.dp)
                     ) {
                         Text(
-                            text = "sit ups: ",
-                            fontSize = 14.sp,
+                            text = "Sit ups: ",
+                            fontSize = 15.sp,
                             modifier = Modifier
                                 .background(MaterialTheme.colors.secondary)
                         )
                     }
-                    LinearProgressIndicator(
-                        progress = state.abs.toFloat() / (state.absGoal),
-                        color = Color.Red,
-                        backgroundColor = MaterialTheme.colors.secondary,
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                            .fillMaxHeight(0.015f)
-                            .align(Alignment.CenterVertically)
+                    CustomLinearProgressIndicator(
+                        progress = (state.absMax % 10).toFloat(),
+                        max = max
                     )
                     Text(
-                        text = "${state.abs} / ${state.absGoal}",
+                        text = "${state.absMax/10}",
                         modifier = Modifier
                             .padding(start = 4.dp)
                     )
                     //will add a result of analizeMax
                 }
-                Row() {
+                Row(modifier = Modifier.padding(top =10.dp)) {
                     Card(
                         modifier = Modifier
                             .width(70.dp)
                             .height(20.dp)
                     ) {
                         Text(
-                            text = "back ext: ",
-                            fontSize = 14.sp,
+                            text = "Back ext: ",
+                            fontSize = 15.sp,
                             modifier = Modifier
                                 .background(MaterialTheme.colors.secondary)
                         )
                     }
-                    LinearProgressIndicator(
-                        progress = state.extens.toFloat() / (state.extensGoal),
-                        color = Color.Red,
-                        backgroundColor = MaterialTheme.colors.secondary,
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                            .fillMaxHeight(0.015f)
-                            .align(Alignment.CenterVertically)
+                    CustomLinearProgressIndicator(
+                        progress = (state.extensMax % 10).toFloat(),
+                        max = max
                     )
                     Text(
-                        text = "${state.extens} / ${state.extensGoal}",
+                        text = "${state.extensMax/10}",
                         modifier = Modifier
                             .padding(start = 4.dp)
                     )
+
                     //will add a result of analizeMax
                 }
             }
-
-
         }
     }
+}
+
+@Composable
+fun CustomLinearProgressIndicator(
+    progress: Float,
+    max: Float,
+    modifier: Modifier = Modifier
+) {
+    LinearProgressIndicator(
+        progress = progress / max,
+        modifier = modifier
+            .padding(start = 15.dp, end = 12.dp)
+            .drawWithContent {
+                drawContent()
+                val paint = Paint().apply {
+                    isAntiAlias = true
+                    color = Color.Black.toArgb()
+                    textSize = 50f
+                }
+                val text = "to the next level: $progress / $max"
+                drawContext.canvas.nativeCanvas.drawText(text, 0f, size.height / 2f, paint)
+            }
+            .fillMaxHeight(0.05f),
+        color = Color.Green,
+        backgroundColor = MaterialTheme.colors.secondary
+    )
 }
