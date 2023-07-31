@@ -9,4 +9,5 @@ sealed class Routers(val route: String){
     object EXERCISE: Routers("exercise")
     object INTERMEDIATEANALIZE: Routers("intermediateanalize")
     object INTERMEDIATEFIRST: Routers("intermediatefirst")
+    object RETRYOFP: Routers("retryofp")
 }
