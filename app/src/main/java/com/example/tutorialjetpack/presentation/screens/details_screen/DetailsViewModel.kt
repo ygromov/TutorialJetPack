@@ -1,10 +1,12 @@
 package com.example.tutorialjetpack.presentation.screens.details_screen
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tutorialjetpack.data.datastore.AppDataStore
 import com.example.tutorialjetpack.domain.analize.Analyze
 import com.example.tutorialjetpack.domain.repository.Repository
 import com.example.tutorialjetpack.utils.Routers
@@ -19,7 +21,8 @@ private const val TAG = "DetailsViewModel"
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     private val repository: Repository,
-    private val analize: Analyze
+    private val analize: Analyze,
+    private val datastore: AppDataStore
 ) : ViewModel() {
     private val _eventFlow = MutableSharedFlow<NavigationDetailsScreen>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -29,7 +32,18 @@ class DetailsViewModel @Inject constructor(
     init {
         getOfp()
         getUserInfo()
-        getOfpGoal()
+        //getOfpGoal()
+        viewModelScope.launch {
+           state = state.copy(countTraining = datastore.readValue("countTraining") ?: 0)
+            state = state.copy(pushMax = datastore.readValue("pushMax") ?: 0)
+            state = state.copy(pullMax = datastore.readValue("pullMax") ?: 0)
+            state = state.copy(squatMax = datastore.readValue("squatMax") ?: 0)
+            state = state.copy(absMax = datastore.readValue("abcMax") ?: 0)
+            state = state.copy(extensMax = datastore.readValue("extensMax") ?: 0)
+            state = state.copy(maxPush = maxPush())
+        }
+
+        Log.d(TAG, "test: ${state.pushMax}")
     }
 
     fun onEvent(event: DetailsScreenEvent) {
@@ -56,15 +70,20 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
+    suspend fun maxPush(): Int{
+        val test = analize.sumOneTrainPush(state.pushMax.toInt())
+        return test
+    }
+
     private fun getOfpGoal() {
         viewModelScope.launch {
             analize.analizeOfpToGoal().map {
                 state = state.copy(
-                    pushGoal = it.push,
-                    pullGoal = it.pull,
-                    squatGoal = it.squat,
-                    absGoal = it.abs,
-                    extensGoal = it.extens
+                    pushMax = it.push.toLong(),
+                    pullMax = it.pull.toLong(),
+                    squatMax = it.squat.toLong(),
+                    absMax = it.abs.toLong(),
+                    extensMax = it.extens.toLong()
                 )
             }
         }
@@ -89,7 +108,7 @@ class DetailsViewModel @Inject constructor(
     private fun toOfpScreen() {
         viewModelScope.launch {
             _eventFlow.emit(
-                NavigationDetailsScreen.DetailsScreenNavigation(Routers.OFP.route)
+                NavigationDetailsScreen.DetailsScreenNavigation(Routers.RETRYOFP.route)
             )
         }
     }
