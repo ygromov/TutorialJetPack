@@ -5,4 +5,5 @@ sealed class TrainingEvent{
     object TwoSet: TrainingEvent()
     object ThreeSet: TrainingEvent()
     object FourSet: TrainingEvent()
+    object TrainingCount: TrainingEvent()
 }

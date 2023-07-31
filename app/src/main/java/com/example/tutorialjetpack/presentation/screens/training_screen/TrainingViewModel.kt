@@ -1,10 +1,12 @@
 package com.example.tutorialjetpack.presentation.screens.training_screen
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tutorialjetpack.data.datastore.AppDataStore
 import com.example.tutorialjetpack.domain.analize.Analyze
 import com.example.tutorialjetpack.domain.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,9 +18,11 @@ private const val TAG = "TrainingViewModel"
 @HiltViewModel
 class TrainingViewModel @Inject constructor(
     private val repository: Repository,
-    private val analize: Analyze
+    private val analize: Analyze,
+     private val dataStore: AppDataStore
 ) : ViewModel() {
     var state by mutableStateOf(TrainingState())
+    var count = mutableStateOf(0)
 
     init {
         getTrainPrograms()
@@ -27,8 +31,17 @@ class TrainingViewModel @Inject constructor(
                 it.data?.let {
                     state = state.copy(name = it.name)
                 }
+
             }
+
         }
+        viewModelScope.launch{
+            val cos = dataStore.readValue("countTraining")
+            count.value = cos?.toInt() ?: 0
+            Log.d(TAG, "trainingCount: $cos")
+        }
+
+        //Log.d(TAG, "count: $count")
         //getUserOfpData()
         //Log.d(TAG, "getUserOfpData1: ${getUserOfpData()}") // ме
     }
@@ -50,28 +63,47 @@ class TrainingViewModel @Inject constructor(
             is TrainingEvent.FourSet -> {
                 getFourSetTrainPrograms()
             }
+            is TrainingEvent.TrainingCount -> {
+                trainingCount()
+            }
         }
+    }
+
+    private fun trainingCount() {
+        count.value++
+        viewModelScope.launch {
+            dataStore.setValue(key = "countTraining", value = count.value.toLong())
+
+        }
+
     }
 
     private fun getTrainPrograms() {            //делает первый подход в тренировочной программе
         viewModelScope.launch {
             analize.createTrain().map {
-                //Log.d(TAG, "getTrainPrograms: ${it}")
-                //для полной тренировочной программы, нужно расширить state
                 state = state.copy(
                     push = it.pushUpReps,
                     pull = it.pullUpReps,
                     squat = it.squatReps,
                     abc = it.sitUpReps,
                     extens = it.extensReps,
-                    pushUpSets = it.pushUpSets,
-                    pullUpSets = it.pullUpSets,
-                    squatSets = it.squatSets,
-                    sitUpSets = it.sitUpSets,
-                    extensSets = it.extensSets,
-                    headText = "1 set: rest 1 minute"
+                    headText = "1 set"
                 )
             }
+            val pull: Long = dataStore.readValue("pullMax") ?: 0
+            dataStore.setValue("pullMax", pull + state.pull.toLong())
+
+            val push = dataStore.readValue("pushMax") ?: 0
+            dataStore.setValue("pushMax", push + state.push.toLong())
+
+            val squat = dataStore.readValue("squatMax") ?: 0
+            dataStore.setValue("squatMax", squat + state.squat.toLong())
+
+            val abc = dataStore.readValue("abcMax") ?: 0
+            dataStore.setValue("abcMax", abc + state.abc.toLong())
+
+            val extens = dataStore.readValue("extensMax") ?: 0
+            dataStore.setValue("extensMax", extens + state.extens.toLong())
         }
     }
 
@@ -85,56 +117,86 @@ class TrainingViewModel @Inject constructor(
                     squat = it.squatReps,
                     abc = it.sitUpReps,
                     extens = it.extensReps,
-                    pushUpSets = it.pushUpSets,
-                    pullUpSets = it.pullUpSets,
-                    squatSets = it.squatSets,
-                    sitUpSets = it.sitUpSets,
-                    extensSets = it.extensSets,
-                    headText = "2 set: rest 1,5 minute"
+                    headText = "2 set"
                 )
             }
+            val pull: Long = dataStore.readValue("pullMax") ?: 0
+            dataStore.setValue("pullMax", pull + state.pull.toLong())
+
+            val push = dataStore.readValue("pushMax") ?: 0
+            dataStore.setValue("pushMax", push + state.push.toLong())
+
+            val squat = dataStore.readValue("squatMax") ?: 0
+            dataStore.setValue("squatMax", squat + state.squat.toLong())
+
+            val abc = dataStore.readValue("abcMax") ?: 0
+            dataStore.setValue("abcMax", abc + state.abc.toLong())
+
+            val extens = dataStore.readValue("extensMax") ?: 0
+            dataStore.setValue("extensMax", extens + state.extens.toLong())
         }
     }
 
     private fun getThreeSetTrainPrograms() {            //делает третий подход в тренировочной программе
         viewModelScope.launch {
             analize.createThreeSetTrain().map {
-                //Log.d(TAG, "getTrainPrograms: ${it}")
                 state = state.copy(
                     push = it.pushUpReps,
                     pull = it.pullUpReps,
                     squat = it.squatReps,
                     abc = it.sitUpReps,
                     extens = it.extensReps,
-                    pushUpSets = it.pushUpSets,
-                    pullUpSets = it.pullUpSets,
-                    squatSets = it.squatSets,
-                    sitUpSets = it.sitUpSets,
-                    extensSets = it.extensSets,
-                    headText = "3 set: rest 1,5 minute"
+                    headText = "3 set"
                 )
             }
+            val pull: Long = dataStore.readValue("pullMax") ?: 0
+            dataStore.setValue("pullMax", pull + state.pull.toLong())
+
+            val push = dataStore.readValue("pushMax") ?: 0
+            dataStore.setValue("pushMax", push + state.push.toLong())
+
+            val squat = dataStore.readValue("squatMax") ?: 0
+            dataStore.setValue("squatMax", squat + state.squat.toLong())
+
+            val abc = dataStore.readValue("abcMax") ?: 0
+            dataStore.setValue("abcMax", abc + state.abc.toLong())
+
+            val extens = dataStore.readValue("extensMax") ?: 0
+            dataStore.setValue("extensMax", extens + state.extens.toLong())
         }
     }
 
     private fun getFourSetTrainPrograms() {            //делает четвертый подход в тренировочной программе
         viewModelScope.launch {
             analize.createFourSetTrain().map {
-                //Log.d(TAG, "getTrainPrograms: ${it}")
                 state = state.copy(
                     push = it.pushUpReps,
                     pull = it.pullUpReps,
                     squat = it.squatReps,
                     abc = it.sitUpReps,
                     extens = it.extensReps,
-                    pushUpSets = it.pushUpSets,
-                    pullUpSets = it.pullUpSets,
-                    squatSets = it.squatSets,
-                    sitUpSets = it.sitUpSets,
-                    extensSets = it.extensSets,
-                    headText = "4 set: rest 1,5 minute"
+//                    pushUpSets = it.pushUpSets,
+//                    pullUpSets = it.pullUpSets,
+//                    squatSets = it.squatSets,
+//                    sitUpSets = it.sitUpSets,
+//                    extensSets = it.extensSets,
+                    headText = "4 set"
                 )
             }
+            val pull: Long = dataStore.readValue("pullMax") ?: 0
+            dataStore.setValue("pullMax", pull + state.pull.toLong())
+
+            val push = dataStore.readValue("pushMax") ?: 0
+            dataStore.setValue("pushMax", push + state.push.toLong())
+
+            val squat = dataStore.readValue("squatMax") ?: 0
+            dataStore.setValue("squatMax", squat + state.squat.toLong())
+
+            val abc = dataStore.readValue("abcMax") ?: 0
+            dataStore.setValue("abcMax", abc + state.abc.toLong())
+
+            val extens = dataStore.readValue("extensMax") ?: 0
+            dataStore.setValue("extensMax", extens + state.extens.toLong())
         }
     }
 
