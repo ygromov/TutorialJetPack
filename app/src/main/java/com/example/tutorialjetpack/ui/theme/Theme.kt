@@ -7,17 +7,18 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
 private val DarkColorPalette = darkColors(
-    primary = Orange200,         //text
+    primary = Platinum200,         //text
     primaryVariant = Grey300,   //button
-    secondary = Platinum200,    //field
+    secondary = Yellow400,    //field
     background = Black900        //background
 )
 
 private val LightColorPalette = lightColors(
-    primary = Black900,         //text
-    primaryVariant = Red200,   //button
+    primary = Platinum200,         //text
+    primaryVariant = Blue900,   //button
     secondary = Yellow400,    //field
-    background = Orange200       //background
+    background = Grey200       //background
+
 
     /* Other default colors to override
     background = Color.White,
