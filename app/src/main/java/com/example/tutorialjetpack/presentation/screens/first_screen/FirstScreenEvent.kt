@@ -6,5 +6,8 @@ sealed class FirstScreenEvent {
     data class ChangeAge(val value: String) : FirstScreenEvent()
     data class ChangeHeight(val value: String) : FirstScreenEvent()
     data class ChangeWeight(val value: String) : FirstScreenEvent()
+    data class ChangeBody(val value: String) : FirstScreenEvent()
+    data class ChangeActiv(val value: String) : FirstScreenEvent()
+    data class ChangePhysiqLevel(val value: Long) : FirstScreenEvent()
     object Complete : FirstScreenEvent()
 }

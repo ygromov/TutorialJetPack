@@ -5,6 +5,7 @@ data class ImtState(
     val age:String="",
     val height:String="",
     val weight:String="",
-    val gender: String = ""
+    val gender: String = "",
+    val body: String = "",
+    val activ: String = ""
 )
-//error commit
