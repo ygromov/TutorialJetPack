@@ -23,22 +23,22 @@ class AnalyzeImpl @Inject constructor(
 
         // Вычисление количества подходов
         // Будет нужно при усложнении генерации тренировочных программ
-        val pushUpSets = calculateSets(
-            responseBD.push,
-            determineExerciseLevel(responseBDUser.weight, responseBDUser.height)
-        )
-        val pullUpSets = calculateSets(
-            responseBD.pull,
-            determineExerciseLevel(responseBDUser.weight, responseBDUser.height)
-        )
-        val squatSets = calculateSets(
-            responseBD.squat,
-            determineExerciseLevel(responseBDUser.weight, responseBDUser.height)
-        )
-        val sitUpSets = calculateSets(
-            responseBD.abc,
-            determineExerciseLevel(responseBDUser.weight, responseBDUser.height)
-        )
+//        val pushUpSets = calculateSets(
+//            responseBD.push,
+//            determineExerciseLevel(responseBDUser.weight, responseBDUser.height)
+//        )
+//        val pullUpSets = calculateSets(
+//            responseBD.pull,
+//            determineExerciseLevel(responseBDUser.weight, responseBDUser.height)
+//        )
+//        val squatSets = calculateSets(
+//            responseBD.squat,
+//            determineExerciseLevel(responseBDUser.weight, responseBDUser.height)
+//        )
+//        val sitUpSets = calculateSets(
+//            responseBD.abc,
+//            determineExerciseLevel(responseBDUser.weight, responseBDUser.height)
+//        )
 
         // Вычисление количества повторений
         val pushUpReps = calculateReps(
@@ -69,10 +69,10 @@ class AnalyzeImpl @Inject constructor(
 
         exercisePlan.add(
             TrainingValue(
-                pushUpSets = pushUpSets,
-                pullUpSets = pullUpSets,
-                squatSets = squatSets,
-                sitUpSets = sitUpSets,
+//                pushUpSets = pushUpSets,
+//                pullUpSets = pullUpSets,
+//                squatSets = squatSets,
+//                sitUpSets = sitUpSets,
 
                 pushUpReps = pushUpReps,
                 pullUpReps = pullUpReps,
@@ -256,11 +256,18 @@ class AnalyzeImpl @Inject constructor(
         return goalPlan
     }
 
+    override suspend fun sumOneTrainPush(number: Int): Int {
+        val divided: Int = number / 10
+        val multiplied: Int = (divided + 1) * 10
+        return multiplied
+
+    }
+
     fun calculateSets(count: Int, exerciseLevel: ExerciseLevel): Int {
         return when (exerciseLevel) {
             ExerciseLevel.FAT_LOSS -> 3//(count * 0.5).toInt()
-            ExerciseLevel.MUSCLE_GAIN -> 5 //(count * 1.5).toInt()
-            ExerciseLevel.NORMAL -> 4 //(count * 1.0).toInt()
+            ExerciseLevel.NORMAL -> 5 //(count * 1.5).toInt()
+            ExerciseLevel.SKINNY -> 4 //(count * 1.0).toInt()
         }
     }
 
@@ -274,7 +281,7 @@ class AnalyzeImpl @Inject constructor(
                 }
             }
 
-            ExerciseLevel.MUSCLE_GAIN -> {
+            ExerciseLevel.NORMAL -> {
                 when {
                     age < 30 -> (count * 0.95).toInt() // Молодой возраст
                     age < 50 -> (count * 0.95).toInt() // Средний возраст
@@ -282,7 +289,7 @@ class AnalyzeImpl @Inject constructor(
                 }
             }
 
-            ExerciseLevel.NORMAL -> {
+            ExerciseLevel.SKINNY -> {
                 when {
                     age < 30 -> (count * 0.9).toInt() // Молодой возраст
                     age < 50 -> (count * 0.9).toInt() // Средний возраст
@@ -296,7 +303,7 @@ class AnalyzeImpl @Inject constructor(
         val bodyMassIndex = weight / (height * height / 10000) // Расчет индекса массы тела (ИМТ)
 
         return when {
-            bodyMassIndex < 18.5 -> ExerciseLevel.MUSCLE_GAIN // Худой человек
+            bodyMassIndex < 18.5 -> ExerciseLevel.SKINNY // Худой человек
             bodyMassIndex > 25 -> ExerciseLevel.FAT_LOSS // Толстый человек
             else -> ExerciseLevel.NORMAL // Обычный человек
         }
@@ -304,7 +311,7 @@ class AnalyzeImpl @Inject constructor(
 
     enum class ExerciseLevel {
         FAT_LOSS,
-        MUSCLE_GAIN,
-        NORMAL
+        NORMAL,
+        SKINNY
     }
 }
