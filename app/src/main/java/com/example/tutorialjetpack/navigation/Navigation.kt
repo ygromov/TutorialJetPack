@@ -11,6 +11,7 @@ import com.example.tutorialjetpack.data.datastore.AppDataStoreManager
 import com.example.tutorialjetpack.presentation.DetailsScreen
 import com.example.tutorialjetpack.presentation.JournalScreen
 import com.example.tutorialjetpack.presentation.OfpScreen
+import com.example.tutorialjetpack.presentation.RetryOfpScreen
 import com.example.tutorialjetpack.presentation.TrainingScreen
 import com.example.tutorialjetpack.presentation.screens.details_screen.DetailsViewModel
 import com.example.tutorialjetpack.presentation.screens.details_screen.NavigationDetailsScreen
@@ -24,6 +25,8 @@ import com.example.tutorialjetpack.presentation.screens.intermediate_first_scree
 import com.example.tutorialjetpack.presentation.screens.journal_screen.JournalViewModel
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.NavigationOfpScreen
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpViewModel
+import com.example.tutorialjetpack.presentation.screens.retry_ofp.NavigationRetryOfpScreen
+import com.example.tutorialjetpack.presentation.screens.retry_ofp.RetryOfpViewModel
 import com.example.tutorialjetpack.presentation.screens.training_screen.TrainingViewModel
 import com.example.tutorialjetpack.utils.Routers
 
@@ -72,13 +75,26 @@ fun Navigation(navController: NavHostController,
                 }
             }
 
-            OfpScreen(viewModel.state, viewModel::onEvent)
+            OfpScreen(viewModel.state, viewModel::onEvent,
+                dataStore = AppDataStoreManager(Application()))
+        }
+        composable(Routers.RETRYOFP.route) {
+            val viewModel:RetryOfpViewModel = hiltViewModel()
+            LaunchedEffect(true) {
+                viewModel.eventFlow.collect {
+                    when (it) {
+                        is NavigationRetryOfpScreen.RetryOfpScreenNavigation -> {
+                            navController.navigate(it.route)
+                        }
+                    }
+                }
+            }
+            RetryOfpScreen(viewModel.state, viewModel::onEvent)
         }
         composable(Routers.JOURNAL.route) {
             val viewModel:JournalViewModel = hiltViewModel()
             JournalScreen(navController = navController, viewModel.state)
         }
-
         composable(Routers.TRAINING.route) {
             val viewModel:TrainingViewModel = hiltViewModel()
             TrainingScreen(viewModel.state, navController = navController, onEvent = viewModel::OnEvent)
@@ -98,11 +114,11 @@ fun Navigation(navController: NavHostController,
         }
         composable(Routers.EXERCISE.route) {
             val viewModel: ExerciseViewModel = hiltViewModel()
-            //ExerciseScreen(state = , navController = )
             ExerciseScreen(
                 viewModel.state,
                 //viewModel.userOfpData,
-                navController = navController)
+                navController = navController,
+                onEvent = viewModel::onEvent,)
         }
         composable(Routers.INTERMEDIATEFIRST.route){
             IntermediateFirstScreen(navController = navController)
