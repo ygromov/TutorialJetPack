@@ -12,7 +12,7 @@ private const val TAG = "AnalyzeImpl"
 class AnalyzeImpl @Inject constructor(
     val ofpDao: OfpDao
 ) : Analyze {
-    override suspend fun createTrain(): List<TrainingValue> {
+    override suspend fun createTrain(): List<TrainingValue> {       //добавить обработку BMI для контроля веса юзера
 
         //запрос офпДао и получение ПОСЛЕДНИХ значений
         val responseBD = ofpDao.forCreateTrain()

@@ -3,7 +3,7 @@ package com.example.tutorialjetpack.domain.analize
 import com.example.tutorialjetpack.domain.model.OfpGoal
 import com.example.tutorialjetpack.domain.model.TrainingValue
 
-interface Analyze {
+interface Analyze {                                         //добавить обработку BMI для контроля веса юзера
 
     //метод который принимает из БД последние значения ОФП, обрабатывает и возвращает список с данными
     //список по модели(количество подходов и повторений
