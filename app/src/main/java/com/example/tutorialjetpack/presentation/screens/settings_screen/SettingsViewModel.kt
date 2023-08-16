@@ -1,4 +1,4 @@
-package com.example.tutorialjetpack.presentation.screens.journal_screen
+package com.example.tutorialjetpack.presentation.screens.settings_screen
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -16,7 +16,7 @@ import javax.inject.Inject
 private const val TAG = "JournalViewModel"
 
 @HiltViewModel
-class JournalViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+class SettingsViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
     var state by mutableStateOf(MonthValue())
 
     init {
