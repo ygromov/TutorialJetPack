@@ -15,11 +15,13 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "FirstViewModel"
+
 @HiltViewModel
 class FirstViewModel @Inject constructor(
     private val repository: Repository,
     private val dataStore: AppDataStore
-): ViewModel() {
+) : ViewModel() {
     var state by mutableStateOf(ImtState())
 
     private val _eventFlow = MutableSharedFlow<NavigationFirstScreenEvent>()
@@ -30,27 +32,35 @@ class FirstViewModel @Inject constructor(
             is FirstScreenEvent.ChangeGender -> {
                 setGender(event.value)
             }
+
             is FirstScreenEvent.ChangeAge -> {
                 setAge(event.value)
             }
+
             is FirstScreenEvent.ChangeHeight -> {
                 setHeight(event.value)
             }
+
             is FirstScreenEvent.ChangeWeight -> {
                 setWeight(event.value)
             }
+
             is FirstScreenEvent.Complete -> {
                 onComplete()
             }
+
             is FirstScreenEvent.ChangeName -> {
                 setName(event.value)
             }
+
             is FirstScreenEvent.ChangeBody -> {
                 setBody(event.value)
             }
-            is FirstScreenEvent.ChangeActiv ->{
+
+            is FirstScreenEvent.ChangeActiv -> {
                 setActiv(event.value)
             }
+
             is FirstScreenEvent.ChangePhysiqLevel -> {
                 setPhysAct(event.value)
             }
@@ -59,7 +69,7 @@ class FirstViewModel @Inject constructor(
 
     private fun setPhysAct(value: Long) {
         viewModelScope.launch {
-            dataStore.setValue("UserPhysActiv", value)
+            dataStore.setValue("UserPhysLevel", value)
         }
     }
 
@@ -89,34 +99,38 @@ class FirstViewModel @Inject constructor(
                     if (ageInt <= 0 || heightDouble <= 0.0 || weightDouble <= 0.0) {
                         // Обработка ошибки: "Возраст, рост и вес должны быть положительными числами"
                     } else {
-                }
-            repository.addUserData(
-                user = UserModel(
-                    name = state.name,
-                    age = state.age.toInt(),
-                    height = state.height.toDouble(),
-                    weight = state.weight.toDouble(),
-                    gender = state.gender
-                )
-            ).collect{
-                when(it){
-                    is Resource.Error -> {
-                        //"если данные пустые, обработать ошибку" +
-                                  //  "если отрицательные или строковые")
                     }
-                    is Resource.Loading -> {
+                    repository.addUserData(
+                        user = UserModel(
+                            name = state.name,
+                            age = state.age.toInt(),
+                            height = state.height.toDouble(),
+                            weight = state.weight.toDouble(),
+                            gender = state.gender
+                        )
+                    ).collect {
+                        when (it) {
+                            is Resource.Error -> {
+                                //"если данные пустые, обработать ошибку" +
+                                //  "если отрицательные или строковые")
+                            }
 
+                            is Resource.Loading -> {
+
+                            }
+
+                            is Resource.Success -> {
+                                _eventFlow.emit(NavigationFirstScreenEvent.IntermediateFirstScreen)
+                            }
+                        }
                     }
-                    is Resource.Success -> {
-                        _eventFlow.emit(NavigationFirstScreenEvent.IntermediateFirstScreen )
-                    }
+                } catch (e: NumberFormatException) {
+                    // Обработка ошибки: "Возраст, рост и вес должны быть числами"
                 }
             }
-          } catch (e: NumberFormatException) {
-            // Обработка ошибки: "Возраст, рост и вес должны быть числами"
         }
-        }
-    }}
+    }
+
     private fun setName(value: String) {
         state = state.copy(name = value)
     }
