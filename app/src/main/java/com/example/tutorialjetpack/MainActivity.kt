@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
@@ -17,20 +19,30 @@ import com.example.tutorialjetpack.ui.theme.TutorialJetPackTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MainActivity"
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val viewModel:MainViewModel = hiltViewModel()
+            val viewModel: MainViewModel = hiltViewModel()
             TutorialJetPackTheme {
-                Surface(modifier = Modifier.fillMaxSize(),
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
+                    androidx.compose.foundation.Image(
+                        painter = painterResource(id = R.drawable.background_gradient),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize(),
+                        alpha = 0.4f
+                    )
                     val navController = rememberNavController()
-                    if(viewModel.state.id != -1){
-                        Navigation(navController = navController,
+                    if (viewModel.state.id != -1) {
+                        Navigation(
+                            navController = navController,
                             startDestination = viewModel.state.route
                         )
                     }
