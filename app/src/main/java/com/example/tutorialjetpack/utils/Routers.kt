@@ -10,4 +10,5 @@ sealed class Routers(val route: String){
     object INTERMEDIATEANALIZE: Routers("intermediateanalize")
     object INTERMEDIATEFIRST: Routers("intermediatefirst")
     object RETRYOFP: Routers("retryofp")
+    object TRAININGREPAIR: Routers("trainingrepair")
 }

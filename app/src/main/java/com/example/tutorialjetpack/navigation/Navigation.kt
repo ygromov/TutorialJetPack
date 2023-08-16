@@ -22,11 +22,12 @@ import com.example.tutorialjetpack.presentation.screens.first_screen.FirstViewMo
 import com.example.tutorialjetpack.presentation.screens.first_screen.NavigationFirstScreenEvent
 import com.example.tutorialjetpack.presentation.screens.intermediate_analize_screen.IntermediateAnalizeScreen
 import com.example.tutorialjetpack.presentation.screens.intermediate_first_screen.IntermediateFirstScreen
-import com.example.tutorialjetpack.presentation.screens.journal_screen.JournalViewModel
+import com.example.tutorialjetpack.presentation.screens.settings_screen.SettingsViewModel
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.NavigationOfpScreen
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpViewModel
 import com.example.tutorialjetpack.presentation.screens.retry_ofp.NavigationRetryOfpScreen
 import com.example.tutorialjetpack.presentation.screens.retry_ofp.RetryOfpViewModel
+import com.example.tutorialjetpack.presentation.screens.training_screen.TrainingRepair
 import com.example.tutorialjetpack.presentation.screens.training_screen.TrainingViewModel
 import com.example.tutorialjetpack.utils.Routers
 
@@ -92,7 +93,7 @@ fun Navigation(navController: NavHostController,
             RetryOfpScreen(viewModel.state, viewModel::onEvent)
         }
         composable(Routers.JOURNAL.route) {
-            val viewModel:JournalViewModel = hiltViewModel()
+            val viewModel:SettingsViewModel = hiltViewModel()
             JournalScreen(navController = navController, viewModel.state)
         }
         composable(Routers.TRAINING.route) {
@@ -125,6 +126,9 @@ fun Navigation(navController: NavHostController,
         }
         composable(Routers.INTERMEDIATEANALIZE.route){
             IntermediateAnalizeScreen(navController = navController)
+        }
+        composable(Routers.TRAININGREPAIR.route){
+            TrainingRepair(navController = navController)
         }
     }
 }
