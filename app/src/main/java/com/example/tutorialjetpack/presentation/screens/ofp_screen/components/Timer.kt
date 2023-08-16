@@ -110,11 +110,11 @@ fun Timer(
                 text = (currentTime / 1000L).toString(),
                 fontSize = 44.sp,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colors.primary
+                color = Color.Black
             )
             Button(
                 onClick = {
-                    if (currentTime <= 0L || currentTime< 60000L) {
+                    if (currentTime <= 0L || currentTime < 60000L) {
                         currentTime = totalTime
                         isTimerRunning = true
                     } else {

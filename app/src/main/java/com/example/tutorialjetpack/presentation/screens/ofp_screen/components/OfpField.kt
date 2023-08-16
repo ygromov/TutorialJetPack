@@ -35,38 +35,42 @@ fun OfpField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 10.dp, top = 8.dp, end = 10.dp)
-            .background(MaterialTheme.colors.background)
-        ,
+            .background(MaterialTheme.colors.background),
         horizontalArrangement = Arrangement.SpaceBetween,
 
-    ) {
+        ) {
         Icon(
-            modifier = Modifier.weight(1f).align(Alignment.CenterVertically),
+            modifier = Modifier
+                .weight(1f)
+                .align(Alignment.CenterVertically),
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_test_ofp4),
             contentDescription = "ic_test",
 
-        )
+            )
         Card(
             modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 8.dp), elevation = 5.dp
         ) {
             TextField(
                 value = ofpModel.value,
                 onValueChange = { newValue ->
-                    onEvent.invoke(OfpScreenEvent.ChangeOfpItem(newValue,index))
+                    onEvent.invoke(OfpScreenEvent.ChangeOfpItem(newValue, index))
                 },
                 maxLines = 1,
                 modifier = Modifier
                     .height(50.dp)
                     .width(60.dp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                colors = TextFieldDefaults.textFieldColors(textColor = MaterialTheme.colors.primary, backgroundColor = MaterialTheme.colors.secondary)         //(textColor = Color.Red)
+                colors = TextFieldDefaults.textFieldColors(
+                    textColor = MaterialTheme.colors.primary,
+                    backgroundColor = MaterialTheme.colors.secondary
+                )         //(textColor = Color.Red)
             )
         }
         Text(
             modifier = Modifier
-                .weight(1f).align(Alignment.CenterVertically),
-            text = ofpModel.textNameExersize,
-            color = MaterialTheme.colors.primary
+                .weight(1f)
+                .align(Alignment.CenterVertically),
+            text = ofpModel.textNameExersize, color = MaterialTheme.colors.primary
         )
     }
 }

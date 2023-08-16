@@ -1,5 +1,6 @@
 package com.example.tutorialjetpack.presentation.screens.ofp_screen
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -15,6 +16,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+private const val TAG = "OfpViewModel"
 
 @HiltViewModel
 class OfpViewModel @Inject constructor(
@@ -37,7 +40,11 @@ class OfpViewModel @Inject constructor(
                     state = state.copy(name = it.name)
                 }
             }
-            state = state.copy(userPhysLevel =  dataStore.readValue("UserPhysActiv") ?: 35L)
+        }
+        viewModelScope.launch {
+            val value = dataStore.readValue("UserPhysLevel") ?: 35L
+            state = state.copy(userPhysLevel = value)
+            Log.d(TAG, "viewModelOfp: $value")
         }
     }
 
@@ -65,7 +72,47 @@ class OfpViewModel @Inject constructor(
                 changeNavigationToDetails()
             }
 
+            is OfpScreenEvent.ChangePush -> {
+                changePush(event.value)
+            }
+
+            is OfpScreenEvent.ChangePull -> {
+                changePull(event.value)
+            }
+
+            is OfpScreenEvent.ChangeSquat -> {
+                changeSquat(event.value)
+            }
+
+            is OfpScreenEvent.ChangeAbs -> {
+                changeAbs(event.value)
+            }
+
+            is OfpScreenEvent.ChangeExtens -> {
+                changeExtens(event.value)
+            }
+
         }
+    }
+
+    private fun changeExtens(value: Int) {
+        state = state.copy(extens = value)
+    }
+
+    private fun changeAbs(value: Int) {
+        state = state.copy(abs = value)
+    }
+
+    private fun changeSquat(value: Int) {
+        state = state.copy(squat = value)
+    }
+
+    private fun changePull(value: Int) {
+        state = state.copy(pull = value)
+    }
+
+    private fun changePush(value: Int) {
+        state = state.copy(push = value)
     }
 
     private fun toTrainingScreen() {

@@ -36,13 +36,14 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
-fun RetryTimer( totalTime: Long,
-handleColor: Color,
-inactiveBarColor: Color,
-activeBarColor: Color,
-modifier: Modifier = Modifier,
-initialValue: Float = 1f,
-strokeWidth: Dp = 5.dp
+fun RetryTimer(
+    totalTime: Long,
+    handleColor: Color,
+    inactiveBarColor: Color,
+    activeBarColor: Color,
+    modifier: Modifier = Modifier,
+    initialValue: Float = 1f,
+    strokeWidth: Dp = 5.dp
 ) {
     var size by remember {
         mutableStateOf(IntSize.Zero)
@@ -63,6 +64,8 @@ strokeWidth: Dp = 5.dp
             value = currentTime / totalTime.toFloat()
         }
     }
+
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -107,12 +110,12 @@ strokeWidth: Dp = 5.dp
                 )
             }
 
-            Column(){
+            Column() {
                 Text(
                     text = (currentTime / 1000L).toString(),
                     fontSize = 44.sp,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colors.primary,
+                    color = Color.Black,
                     modifier = Modifier.padding(top = 60.dp)
                 )
                 Button(
@@ -134,7 +137,7 @@ strokeWidth: Dp = 5.dp
                     )
                 ) {
                     Text(
-                        text = if (isTimerRunning && currentTime >= 0L) "Stop"
+                        text = if (isTimerRunning && currentTime >= 0L) "Try"
                         else if (!isTimerRunning && currentTime >= 0L) "Start"
                         else "Restart"
                     )
@@ -143,8 +146,7 @@ strokeWidth: Dp = 5.dp
                     onClick = {
 
                         isTimerRunning = false
-                        currentTime = 60000L
-
+                        currentTime = totalTime
                     },
                     //modifier = Modifier.align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(

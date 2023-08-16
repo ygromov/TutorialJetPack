@@ -19,7 +19,7 @@ private const val TAG = "TrainingViewModel"
 class TrainingViewModel @Inject constructor(
     private val repository: Repository,
     private val analize: Analyze,
-     private val dataStore: AppDataStore
+    private val dataStore: AppDataStore
 ) : ViewModel() {
     var state by mutableStateOf(TrainingState())
     var count = mutableStateOf(0)
@@ -35,7 +35,7 @@ class TrainingViewModel @Inject constructor(
             }
 
         }
-        viewModelScope.launch{
+        viewModelScope.launch {
             val cos = dataStore.readValue("countTraining")
             count.value = cos?.toInt() ?: 0
             Log.d(TAG, "trainingCount: $cos")
@@ -63,6 +63,7 @@ class TrainingViewModel @Inject constructor(
             is TrainingEvent.FourSet -> {
                 getFourSetTrainPrograms()
             }
+
             is TrainingEvent.TrainingCount -> {
                 trainingCount()
             }
@@ -87,7 +88,8 @@ class TrainingViewModel @Inject constructor(
                     squat = it.squatReps,
                     abc = it.sitUpReps,
                     extens = it.extensReps,
-                    headText = "1 set"
+                    headText = "1 set",
+                    flag = 2
                 )
             }
             val pull: Long = dataStore.readValue("pullMax") ?: 0
@@ -117,7 +119,8 @@ class TrainingViewModel @Inject constructor(
                     squat = it.squatReps,
                     abc = it.sitUpReps,
                     extens = it.extensReps,
-                    headText = "2 set"
+                    headText = "2 set",
+                    flag = 3
                 )
             }
             val pull: Long = dataStore.readValue("pullMax") ?: 0
@@ -146,7 +149,8 @@ class TrainingViewModel @Inject constructor(
                     squat = it.squatReps,
                     abc = it.sitUpReps,
                     extens = it.extensReps,
-                    headText = "3 set"
+                    headText = "3 set",
+                    flag = 4
                 )
             }
             val pull: Long = dataStore.readValue("pullMax") ?: 0
@@ -180,7 +184,8 @@ class TrainingViewModel @Inject constructor(
 //                    squatSets = it.squatSets,
 //                    sitUpSets = it.sitUpSets,
 //                    extensSets = it.extensSets,
-                    headText = "4 set"
+                    headText = "4 set",
+                    flag = 1
                 )
             }
             val pull: Long = dataStore.readValue("pullMax") ?: 0

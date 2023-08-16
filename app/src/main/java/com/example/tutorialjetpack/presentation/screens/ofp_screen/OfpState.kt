@@ -8,7 +8,12 @@ import com.example.tutorialjetpack.domain.model.OfpFieldModel
 data class OfpState(
     val name: String = "",
     val userId: Int = -1,
-    val userPhysLevel: Long = -1,
+    val userPhysLevel: Long = -1L,
+    val push: Int = -1,
+    val pull: Int = -1,
+    val squat: Int = -1,
+    val abs: Int = -1,
+    val extens: Int = -1,
     val list: SnapshotStateList<OfpFieldModel> = mutableStateListOf(
         OfpFieldModel(
             icon = R.drawable.ic_launcher_foreground,

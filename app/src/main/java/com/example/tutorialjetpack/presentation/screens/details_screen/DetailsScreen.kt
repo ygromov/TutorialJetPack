@@ -17,12 +17,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.tutorialjetpack.R
@@ -40,7 +44,13 @@ fun DetailsScreen(state: DetailsState, onEvent: (DetailsScreenEvent) -> Unit) {
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
     ) {
-
+        androidx.compose.foundation.Image(
+            painter = painterResource(id = R.drawable.background_gradient),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize(),
+            alpha = 0.4f
+        )
         Column(modifier = Modifier.fillMaxSize()) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -56,10 +66,10 @@ fun DetailsScreen(state: DetailsState, onEvent: (DetailsScreenEvent) -> Unit) {
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = MaterialTheme.colors.primaryVariant,
                         contentColor = MaterialTheme.colors.primary
-                    ), onClick = { onEvent.invoke(DetailsScreenEvent.ToOfpScreen) }) {
+                    ),
+                    onClick = { onEvent.invoke(DetailsScreenEvent.ToOfpScreen) }) {
                     Column() {
-                        Text(text = "OfpTest")
-                        //Text(text = "Change you results", Modifier.size(2.dp))
+                        Text(text = "OfpTest", color = MaterialTheme.colors.primary)
                     }
 
                 }
@@ -71,7 +81,7 @@ fun DetailsScreen(state: DetailsState, onEvent: (DetailsScreenEvent) -> Unit) {
                         backgroundColor = MaterialTheme.colors.primaryVariant,
                         contentColor = MaterialTheme.colors.primary
                     ), onClick = { onEvent.invoke(DetailsScreenEvent.ToTrainingScreen) }) {
-                    Text(text = "Training")
+                    Text(text = "Workouts", color = MaterialTheme.colors.primary)
                 }
 
                 Button(elevation = ButtonDefaults.elevation(
@@ -82,179 +92,277 @@ fun DetailsScreen(state: DetailsState, onEvent: (DetailsScreenEvent) -> Unit) {
                         backgroundColor = MaterialTheme.colors.primaryVariant,
                         contentColor = MaterialTheme.colors.primary
                     ), onClick = { onEvent.invoke(DetailsScreenEvent.ToJournalScreen) }) {
-                    Text(text = "Journal")
+                    Text(text = "Settings", color = MaterialTheme.colors.primary)
                 }
             }
-            Row(
+            Card(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
+                    .alpha(0.7f)
+                    .padding(start = 16.dp, top = 8.dp, end = 16.dp),
+                elevation = 8.dp,
+                backgroundColor = MaterialTheme.colors.background
             ) {
-                Card(
+                Row(
                     modifier = Modifier
-                        .size(100.dp)
-                        .padding(start = 16.dp), elevation = 8.dp
+                        .fillMaxWidth()
                 ) {
-                    Box(modifier = Modifier.background(Color.White)) {
+                    Box(modifier = Modifier.size(100.dp)) {
                         Image(
                             painter = painterResource(id = R.drawable.pullup),
                             contentDescription = ""
                         )
                     }
+
+
+                    Column(modifier = Modifier.padding(start = 16.dp)) {
+
+                        Text(
+                            text = "name: ${state.name}", color = MaterialTheme.colors.primary,
+                            modifier = Modifier.padding(top = 4.dp),
+                            maxLines = 5,
+                            overflow = TextOverflow.Visible
+                        )
+
+                        Text(
+                            text = "age: ${state.age}",
+                            color = MaterialTheme.colors.primary,
+                            modifier = Modifier.padding(top = 4.dp)
+                        )
+                        Text(
+                            text = "height: ${state.height}", color = MaterialTheme.colors.primary,
+                            modifier = Modifier.padding(top = 4.dp)
+                        )
+                        Text(
+                            text = "weight: ${state.weight}", color = MaterialTheme.colors.primary,
+                            modifier = Modifier.padding(top = 4.dp)
+                        )
+                        Text(
+                            text = "gender: ${state.gender}", color = MaterialTheme.colors.primary,
+                            modifier = Modifier.padding(top = 4.dp)
+                        )
+                    }
                 }
-                Column(modifier = Modifier.padding(start = 16.dp)) {
-                    Text(text = "name: ${state.name}", modifier = Modifier.padding(top = 4.dp), color = Color.White)
-                    Text(text = "age: ${state.age}", modifier = Modifier.padding(top = 4.dp))
-                    Text(text = "height: ${state.height}", modifier = Modifier.padding(top = 4.dp))
-                    Text(text = "weight: ${state.weight}", modifier = Modifier.padding(top = 4.dp))
-                    Text(text = "gender: ${state.gender}", modifier = Modifier.padding(top = 4.dp))
-                }
+
+
+            }
+            Card(
+                modifier = Modifier
+                    .padding(start = 16.dp, top = 8.dp, end = 16.dp)
+                    .alpha(0.7f),
+                elevation = 8.dp,
+                backgroundColor = MaterialTheme.colors.background
+            ) {
                 Column(
                     modifier = Modifier
-                        .padding(start = 16.dp)
-                        .background(MaterialTheme.colors.secondary)
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
                 ) {
-                    Text(text = "${state.countTraining}/5", fontSize = 40.sp)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(text = "my Ofp level:", color = MaterialTheme.colors.primary)
+                        Text(text = "Level", color = MaterialTheme.colors.primary)
+                    }
+                    Row(
+                        modifier = Modifier.padding(top = 10.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Card(
+                            modifier = Modifier
+                                .width(70.dp)
+                                .height(20.dp),
+                            elevation = 8.dp
+                        ) {
+                            Text(
+                                text = "Pull ups: ", color = MaterialTheme.colors.primary,
+                                fontSize = 15.sp,
+                                modifier = Modifier
+                                    .background(MaterialTheme.colors.background)
+                            )
+                        }
+                        Card(
+                            modifier = Modifier.padding(start = 4.dp),
+                            elevation = 8.dp
+                        ) {
+                            CustomLinearProgressIndicator(
+                                progress = (state.pullMax % 10).toFloat(),
+                                max = max
+                            )
+                        }
+                        Card(
+                            modifier = Modifier
+                                .padding(start = 4.dp),
+                            elevation = 8.dp
+                        ) {
+                            Text(
+                                text = "${state.pullMax / 10}",
+                                color = MaterialTheme.colors.primary,
+                                maxLines = 1
+                            )
+                            //will add a result of analizeMax
+                        }
+                    }
+                    Row(modifier = Modifier.padding(top = 10.dp)) {
+                        Card(
+                            modifier = Modifier
+                                .width(70.dp)
+                                .height(20.dp),
+                            elevation = 8.dp
+                        ) {
+                            Text(
+                                text = "Push ups: ", color = MaterialTheme.colors.primary,
+                                fontSize = 15.sp,
+                                modifier = Modifier
+                                    .background(MaterialTheme.colors.background)
+                            )
+                        }
+                        Card(
+                            modifier = Modifier.padding(start = 4.dp),
+                            elevation = 8.dp
+                        ) {
+                            CustomLinearProgressIndicator(
+                                progress = (state.pushMax % 10).toFloat(),
+                                max = max
+                            )
+                        }
+                        Card(
+                            modifier = Modifier
+                                .padding(start = 4.dp),
+                            elevation = 8.dp
+                        ) {
+                            Text(
+                                text = "${state.pushMax / 10}", color = MaterialTheme.colors.primary
+                            )
+                        }
+                    }
+                    Row(modifier = Modifier.padding(top = 10.dp)) {
+                        Card(
+                            modifier = Modifier
+                                .width(70.dp)
+                                .height(20.dp),
+                            elevation = 8.dp
+                        ) {
+                            Text(
+                                text = "Squats: ", color = MaterialTheme.colors.primary,
+                                fontSize = 15.sp,
+                                modifier = Modifier
+                                    .background(MaterialTheme.colors.background)
+                            )
+                        }
+                        Card(
+                            modifier = Modifier.padding(start = 4.dp),
+                            elevation = 8.dp
+                        ) {
+                            CustomLinearProgressIndicator(
+                                progress = (state.squatMax % 10).toFloat(),
+                                max = max
+                            )
+                        }
+                        Card(
+                            modifier = Modifier
+                                .padding(start = 4.dp),
+                            elevation = 8.dp
+                        ) {
+                            Text(
+                                text = "${state.squatMax / 10}",
+                                color = MaterialTheme.colors.primary
+                            )
+                        }
+                    }
+                    Row(modifier = Modifier.padding(top = 10.dp)) {
+                        Card(
+                            modifier = Modifier
+                                .width(70.dp)
+                                .height(20.dp),
+                            elevation = 8.dp
+                        ) {
+                            Text(
+                                text = "Sit ups: ", color = MaterialTheme.colors.primary,
+                                fontSize = 15.sp,
+                                modifier = Modifier
+                                    .background(MaterialTheme.colors.background)
+                            )
+                        }
+                        Card(
+                            modifier = Modifier.padding(start = 4.dp),
+                            elevation = 8.dp
+                        ) {
+                            CustomLinearProgressIndicator(
+                                progress = (state.absMax % 10).toFloat(),
+                                max = max
+                            )
+                        }
+                        Card(
+                            modifier = Modifier
+                                .padding(start = 4.dp),
+                            elevation = 8.dp
+                        ) {
+                            Text(
+                                text = "${state.absMax / 10}", color = MaterialTheme.colors.primary
+                            )
+                        }
+                    }
+                    Row(modifier = Modifier.padding(top = 10.dp)) {
+                        Card(
+                            modifier = Modifier
+                                .width(70.dp)
+                                .height(20.dp),
+                            elevation = 8.dp
+                        ) {
+                            Text(
+                                text = "Back ext: ", color = MaterialTheme.colors.primary,
+                                fontSize = 15.sp,
+                                modifier = Modifier
+                                    .background(MaterialTheme.colors.background)
+                            )
+                        }
+                        Card(
+                            modifier = Modifier.padding(start = 4.dp),
+                            elevation = 8.dp
+                        ) {
+                            CustomLinearProgressIndicator(
+                                progress = (state.extensMax % 10).toFloat(),
+                                max = max
+                            )
+                        }
+                        Card(
+                            modifier = Modifier
+                                .padding(start = 4.dp),
+                            elevation = 8.dp
+                        ) {
+                            Text(
+                                text = "${state.extensMax / 10}",
+                                color = MaterialTheme.colors.primary
+                            )
+                        }
+                    }
+                }
+            }
+            Card(
+                modifier = Modifier
+                    .padding(start = 16.dp, top = 8.dp, end = 16.dp)
+                    .alpha(0.7f)
+                    .fillMaxWidth(),
+                elevation = 8.dp,
+                backgroundColor = MaterialTheme.colors.background
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "${state.countTraining}/5",
+                        fontSize = 40.sp,
+                        color = MaterialTheme.colors.primary
+                    )
                     if (state.countTraining == 5L) {
                         Text(text = "get tested: Ofp Test", color = Color.Red)
                     } else Text(text = "completed workouts")
-                }
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, top = 8.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(end = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(text = "my Ofp level:")
-                    Text(text = "Level")
-                }
-                Row(modifier = Modifier.padding(top =10.dp)) {
-                    Card(
-                        modifier = Modifier
-                            .width(70.dp)
-                            .height(20.dp)
-                    ) {
-                        Text(
-                            text = "Pull ups: ",
-                            fontSize = 15.sp,
-                            modifier = Modifier
-                                .background(MaterialTheme.colors.secondary)
-                        )
-                    }
-                    CustomLinearProgressIndicator(
-                        progress = (state.pullMax % 10).toFloat(),
-                        max = max
-                    )
-
-                    Text(
-                        text = "${state.pullMax / 10}",
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                    )
-                    //will add a result of analizeMax
-                }
-                Row(modifier = Modifier.padding(top =10.dp)) {
-                    Card(
-                        modifier = Modifier
-                            .width(70.dp)
-                            .height(20.dp)
-                    ) {
-                        Text(
-                            text = "Push ups: ",
-                            fontSize = 15.sp,
-                            modifier = Modifier
-                                .background(MaterialTheme.colors.secondary)
-                        )
-                    }
-                    CustomLinearProgressIndicator(
-                        progress = (state.pushMax % 10).toFloat(),
-                        max = max
-                    )
-                    Text(
-                        text = "${state.pushMax / 10}",
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                    )
-                    //will add a result of analizeMax
-                }
-                Row(modifier = Modifier.padding(top =10.dp)) {
-                    Card(
-                        modifier = Modifier
-                            .width(70.dp)
-                            .height(20.dp)
-                    ) {
-                        Text(
-                            text = "Squats: ",
-                            fontSize = 15.sp,
-                            modifier = Modifier
-                                .background(MaterialTheme.colors.secondary)
-                        )
-                    }
-                    CustomLinearProgressIndicator(
-                        progress = (state.squatMax % 10).toFloat(),
-                        max = max
-                    )
-                    Text(
-                        text = "${state.squatMax/10}",
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                    )
-                    //will add a result of analizeMax
-                }
-                Row(modifier = Modifier.padding(top =10.dp)) {
-                    Card(
-                        modifier = Modifier
-                            .width(70.dp)
-                            .height(20.dp)
-                    ) {
-                        Text(
-                            text = "Sit ups: ",
-                            fontSize = 15.sp,
-                            modifier = Modifier
-                                .background(MaterialTheme.colors.secondary)
-                        )
-                    }
-                    CustomLinearProgressIndicator(
-                        progress = (state.absMax % 10).toFloat(),
-                        max = max
-                    )
-                    Text(
-                        text = "${state.absMax/10}",
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                    )
-                    //will add a result of analizeMax
-                }
-                Row(modifier = Modifier.padding(top =10.dp)) {
-                    Card(
-                        modifier = Modifier
-                            .width(70.dp)
-                            .height(20.dp)
-                    ) {
-                        Text(
-                            text = "Back ext: ",
-                            fontSize = 15.sp,
-                            modifier = Modifier
-                                .background(MaterialTheme.colors.secondary)
-                        )
-                    }
-                    CustomLinearProgressIndicator(
-                        progress = (state.extensMax % 10).toFloat(),
-                        max = max
-                    )
-                    Text(
-                        text = "${state.extensMax/10}",
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                    )
-
-                    //will add a result of analizeMax
                 }
             }
         }
@@ -270,7 +378,7 @@ fun CustomLinearProgressIndicator(
     LinearProgressIndicator(
         progress = progress / max,
         modifier = modifier
-            .padding(start = 15.dp, end = 12.dp)
+            //.padding(start = 15.dp, end = 12.dp)
             .drawWithContent {
                 drawContent()
                 val paint = Paint().apply {
@@ -282,7 +390,7 @@ fun CustomLinearProgressIndicator(
                 drawContext.canvas.nativeCanvas.drawText(text, 0f, size.height / 2f, paint)
             }
             .fillMaxHeight(0.05f),
-        color = Color.Green,
+        color = MaterialTheme.colors.surface,
         backgroundColor = MaterialTheme.colors.secondary
     )
 }
