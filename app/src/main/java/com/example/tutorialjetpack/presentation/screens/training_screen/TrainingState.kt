@@ -10,6 +10,7 @@ data class TrainingState(
     val abc: Int=-1,
     val extens: Int=-1,
     val flag: Int = -1,
+    val level: Long = -1,
 
     var pushUpSets: Int = -1,
     var pullUpSets: Int = -1,

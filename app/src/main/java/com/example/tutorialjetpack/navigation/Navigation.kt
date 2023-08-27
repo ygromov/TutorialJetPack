@@ -27,7 +27,6 @@ import com.example.tutorialjetpack.presentation.screens.ofp_screen.NavigationOfp
 import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpViewModel
 import com.example.tutorialjetpack.presentation.screens.retry_ofp.NavigationRetryOfpScreen
 import com.example.tutorialjetpack.presentation.screens.retry_ofp.RetryOfpViewModel
-import com.example.tutorialjetpack.presentation.screens.training_screen.TrainingRepair
 import com.example.tutorialjetpack.presentation.screens.training_screen.TrainingViewModel
 import com.example.tutorialjetpack.utils.Routers
 
@@ -126,9 +125,6 @@ fun Navigation(navController: NavHostController,
         }
         composable(Routers.INTERMEDIATEANALIZE.route){
             IntermediateAnalizeScreen(navController = navController)
-        }
-        composable(Routers.TRAININGREPAIR.route){
-            TrainingRepair(navController = navController)
         }
     }
 }

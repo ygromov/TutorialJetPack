@@ -26,7 +26,7 @@ class TrainingViewModel @Inject constructor(
 
     init {
         getTrainPrograms()
-        viewModelScope.launch {
+        viewModelScope.launch {                                     //do not use
             val name = repository.getUserData().collect {
                 it.data?.let {
                     state = state.copy(name = it.name)
@@ -39,6 +39,10 @@ class TrainingViewModel @Inject constructor(
             val cos = dataStore.readValue("countTraining")
             count.value = cos?.toInt() ?: 0
             Log.d(TAG, "trainingCount: $cos")
+        }
+        viewModelScope.launch {
+            val level = dataStore.readValue("UserPhysLevel") ?: 0
+            state = state.copy(level = level)
         }
 
         //Log.d(TAG, "count: $count")
