@@ -1,6 +1,7 @@
 package com.example.tutorialjetpack.presentation
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -27,13 +28,6 @@ fun JournalScreen(navController: NavController, state: MonthValue) {         //Ð
     var settingsVisible by remember { mutableStateOf(false) }
 
     Scaffold() {
-        androidx.compose.foundation.Image(
-            painter = painterResource(id = R.drawable.background_gradient),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize(),
-            alpha = 0.4f
-        )
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -75,27 +69,38 @@ fun JournalScreen(navController: NavController, state: MonthValue) {         //Ð
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(top = 16.dp)
+                        .background(MaterialTheme.colors.primaryVariant),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Text(text = "name")
-                    Text(text = "height")
-                    Text(text = "weight")
-                    Text(text = "year")
-                    Text(text = "level")
-                    Text(text = "active")
-                    Text(text = "body")
+                    Text(text = "name",
+                        color = MaterialTheme.colors.primary)
+                    Text(text = "height",
+                        color = MaterialTheme.colors.primary)
+                    Text(text = "weight",
+                        color = MaterialTheme.colors.primary)
+                    Text(text = "year",
+                        color = MaterialTheme.colors.primary)
+                    Text(text = "level",
+                        color = MaterialTheme.colors.primary)
+                    Text(text = "active",
+                        color = MaterialTheme.colors.primary)
+                    Text(text = "body",
+                        color = MaterialTheme.colors.primary)
                 }
             } else {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp),
+                        .padding(top = 16.dp)
+                        .background(MaterialTheme.colors.primaryVariant),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                    Text(text = "Themes")
-                    Text(text = "Language")
+                    Text(text = "Themes",
+                        color = MaterialTheme.colors.primary)
+                    Text(text = "Language",
+                        color = MaterialTheme.colors.primary)
 
                 }
             }
@@ -115,9 +120,9 @@ fun JournalScreen(navController: NavController, state: MonthValue) {         //Ð
                 }) {
                 Text(text = "back", color = MaterialTheme.colors.primary)
             }
-            Button(onClick = {navController.navigate(Routers.EXERCISE.route) }) {
-                Text(text = "test")
-            }
+//            Button(onClick = {navController.navigate(Routers.EXERCISE.route) }) {
+//                Text(text = "test")
+//            }
 
         }
     }

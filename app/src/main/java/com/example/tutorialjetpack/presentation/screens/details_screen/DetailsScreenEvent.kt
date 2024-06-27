@@ -6,5 +6,6 @@ sealed class DetailsScreenEvent {
     object ToOfpScreen: DetailsScreenEvent()
     object ToTrainingScreen: DetailsScreenEvent()
     object ToJournalScreen: DetailsScreenEvent()
+    object ToFirstScreen: DetailsScreenEvent()
     //add a ChangeWeight() and ChangeHeight()
 }

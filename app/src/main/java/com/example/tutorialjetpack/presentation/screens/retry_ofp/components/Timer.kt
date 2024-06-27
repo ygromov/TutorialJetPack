@@ -110,13 +110,13 @@ fun RetryTimer(
                 )
             }
 
-            Column() {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = (currentTime / 1000L).toString(),
                     fontSize = 44.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black,
-                    modifier = Modifier.padding(top = 60.dp)
+                    color = MaterialTheme.colors.primary,
+                    modifier = Modifier.padding(top = 20.dp)
                 )
                 Button(
                     onClick = {
@@ -139,7 +139,8 @@ fun RetryTimer(
                     Text(
                         text = if (isTimerRunning && currentTime >= 0L) "Try"
                         else if (!isTimerRunning && currentTime >= 0L) "Start"
-                        else "Restart"
+                        else "Restart",
+                        color = MaterialTheme.colors.primary
                     )
                 }
                 Button(
@@ -155,7 +156,8 @@ fun RetryTimer(
                     )
                 ) {
                     Text(
-                        text = "Stop"
+                        text = "Stop",
+                        color = MaterialTheme.colors.primary
                     )
                 }
             }

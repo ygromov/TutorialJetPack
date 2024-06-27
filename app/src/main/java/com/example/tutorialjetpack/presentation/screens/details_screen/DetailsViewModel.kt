@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tutorialjetpack.data.datastore.AppDataStore
 import com.example.tutorialjetpack.domain.analize.Analyze
 import com.example.tutorialjetpack.domain.repository.Repository
+import com.example.tutorialjetpack.presentation.screens.first_screen.FirstScreenEvent
 import com.example.tutorialjetpack.utils.Routers
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -32,7 +33,7 @@ class DetailsViewModel @Inject constructor(
     init {
         getOfp()
         getUserInfo()
-        //getOfpGoal()
+        getOfpGoal()
         viewModelScope.launch {
            state = state.copy(countTraining = datastore.readValue("countTraining") ?: 0)
             state = state.copy(pushMax = datastore.readValue("pushMax") ?: 0)
@@ -67,6 +68,9 @@ class DetailsViewModel @Inject constructor(
             is DetailsScreenEvent.ToJournalScreen -> {
                 toJournalScreen()
             }
+            is DetailsScreenEvent.ToFirstScreen -> {
+                toFirstScreen()
+            }
         }
     }
 
@@ -89,6 +93,13 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
+    private fun toFirstScreen() {
+        viewModelScope.launch {
+            _eventFlow.emit(
+                NavigationDetailsScreen.DetailsScreenNavigation(Routers.OFP.route)
+            )
+        }
+    }
     private fun toJournalScreen() {
         viewModelScope.launch {
             _eventFlow.emit(

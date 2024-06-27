@@ -44,6 +44,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.tutorialjetpack.R
@@ -57,13 +59,13 @@ fun FirstScreen(
     onEvent: (FirstScreenEvent) -> Unit,
     appDataStoreManager: AppDataStoreManager
 ) {
-    androidx.compose.foundation.Image(
-        painter = painterResource(id = R.drawable.background_gradient),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = Modifier.fillMaxSize(),
-        alpha = 0.4f
-    )
+//    androidx.compose.foundation.Image(
+//        painter = painterResource(id = R.drawable.background_gradient),
+//        contentDescription = null,
+//        contentScale = ContentScale.Crop,
+//        modifier = Modifier.fillMaxSize(),
+//        alpha = 0.4f
+//    )
     var weightKg by remember { mutableStateOf(0) }
     var weightGrams by remember { mutableStateOf(0) }
     var weightLbs by remember { mutableStateOf(0) }
@@ -91,6 +93,10 @@ fun FirstScreen(
     val softwareKeyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
+    var ageColor by remember { mutableStateOf(false) }
+    var heightColor by remember { mutableStateOf(false) }
+    var weightColor by remember { mutableStateOf(false) }
+
 
     Column(
         modifier = Modifier
@@ -99,26 +105,28 @@ fun FirstScreen(
             .clickable { focusManager.clearFocus() },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // card с названием приложения
         Card(
             modifier = Modifier
                 .padding(top = 16.dp)
-                .background(MaterialTheme.colors.background),
+                .background(MaterialTheme.colors.primaryVariant),
             elevation = 8.dp,
 
         ) {
             Text(
-                text = "Smart Workout", color = MaterialTheme.colors.primary,
+                text = "Smart Workout", color = MaterialTheme.colors.primaryVariant,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.background(MaterialTheme.colors.background),
                 fontSize = 40.sp
             )
         }
 
+        //чек бокс с выбором пола
         Card(
             modifier = Modifier
                 .padding(top = 16.dp, start = 8.dp, end = 8.dp)
                 .fillMaxWidth(),
-            backgroundColor = MaterialTheme.colors.background,
+            backgroundColor = MaterialTheme.colors.primaryVariant,
             elevation = 8.dp
         ) {
             Row(
@@ -142,8 +150,8 @@ fun FirstScreen(
                         }
                     },
                     colors = CheckboxDefaults.colors(
-                        checkedColor = MaterialTheme.colors.primary,
-                        uncheckedColor = MaterialTheme.colors.primaryVariant
+                        checkedColor = MaterialTheme.colors.primaryVariant,
+                        uncheckedColor = MaterialTheme.colors.primary
                     ),
                     modifier = Modifier.padding(5.dp)
                 )
@@ -159,8 +167,8 @@ fun FirstScreen(
                         }
                     },
                     colors = CheckboxDefaults.colors(
-                        checkedColor = MaterialTheme.colors.primary,
-                        uncheckedColor = MaterialTheme.colors.primaryVariant
+                        checkedColor = MaterialTheme.colors.primaryVariant,
+                        uncheckedColor = MaterialTheme.colors.primary
                     ),
                     modifier = Modifier.padding(5.dp)
                 )
@@ -170,11 +178,12 @@ fun FirstScreen(
 
         //-------------------------------------------------------------------------------------
 
+        //ввод имени
         Card(
             modifier = Modifier
                 .padding(top = 16.dp, start = 8.dp, end = 8.dp)
                 .fillMaxWidth(),
-            backgroundColor = MaterialTheme.colors.background,
+            backgroundColor = MaterialTheme.colors.primaryVariant,
             elevation = 8.dp
         ) {
         Row(
@@ -204,20 +213,27 @@ fun FirstScreen(
                     ),
                     colors = TextFieldDefaults.textFieldColors(
                         textColor = MaterialTheme.colors.primary,
-                        backgroundColor = MaterialTheme.colors.background
+                        backgroundColor = MaterialTheme.colors.primaryVariant
                     ),
-                    label = { Text(text = "Input your name") }
+                    label = {
+                        Text(
+                            text = "Input your name",
+                            color = MaterialTheme.colors.primary
+
+                        )
+                    }
                 )
             }
         }
         }
 //.................................................................................................
 
+        //выбор возраста, роста, веса
         Card(
             modifier = Modifier
                 .padding(top = 16.dp, start = 8.dp, end = 8.dp)
                 .fillMaxWidth(),
-            backgroundColor = MaterialTheme.colors.background,
+            backgroundColor = MaterialTheme.colors.primaryVariant,
             elevation = 8.dp
         ) {
             Column() {      //age,height,weight
@@ -229,7 +245,9 @@ fun FirstScreen(
                         .padding(start = 8.dp, end = 8.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text(text = "Age:", color = MaterialTheme.colors.primary)
+                    Text(text = "Age:", color = if(ageColor == false) {MaterialTheme.colors.primary} else {
+                        MaterialTheme.colors.primaryVariant
+                    })
                     Text(text = age.toString(), color = MaterialTheme.colors.primary,
                         modifier = Modifier
                             .padding(start = 8.dp)
@@ -261,24 +279,28 @@ fun FirstScreen(
                                         onClick = {
                                             isKgSelected = true
                                             age = it
+                                            val value = age.toString()
+                                            onEvent.invoke(FirstScreenEvent.ChangeAge(value))
+                                            visibleAge = false
                                         }
                                     )
                                 }
                             }
                         }
                     }
-                        Button(onClick = {
-                            val value = age.toString()
-                            onEvent.invoke(FirstScreenEvent.ChangeAge(value))
-                            visibleAge = false
-                        },
-                            colors = ButtonDefaults.buttonColors(
-                                backgroundColor = MaterialTheme.colors.primaryVariant,
-                                contentColor = MaterialTheme.colors.primary
-                            ),
-                        ) {
-                            Text(text = "Complete", color = MaterialTheme.colors.primary)
-                        }
+//                        Button(onClick = {
+//                            val value = age.toString()
+//                            onEvent.invoke(FirstScreenEvent.ChangeAge(value))
+//                            visibleAge = false
+//                            ageColor = true
+//                        },
+//                            colors = ButtonDefaults.buttonColors(
+//                                backgroundColor = MaterialTheme.colors.primaryVariant,
+//                                contentColor = MaterialTheme.colors.primary
+//                            ),
+//                        ) {
+//                            Text(text = "Complete", color = MaterialTheme.colors.primary)
+//                        }
 
 
                 }
@@ -292,8 +314,9 @@ fun FirstScreen(
                         .padding(start = 8.dp, top = 8.dp, end = 8.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text(text = "Height:", color = MaterialTheme.colors.primary)
-                    Text(text = "${heightSm}.$weightGrams", color = MaterialTheme.colors.primary,
+                    Text(text = "Height:", color = if(heightColor == false) {MaterialTheme.colors.primary}
+                    else MaterialTheme.colors.error)
+                    Text(text = "$heightSm", color = MaterialTheme.colors.primary,
                         modifier = Modifier
                             .padding(start = 8.dp)
                             .clickable {
@@ -324,24 +347,28 @@ fun FirstScreen(
                                         onClick = {
                                             isKgSelected = true
                                             heightSm = sm
+                                            val value = ("${heightSm}")
+                                            onEvent.invoke(FirstScreenEvent.ChangeHeight(value))
+                                            visibleHeight = false
                                         }
                                     )
                                 }
                             }
                         }
                     }
-                        Button(onClick = {
-                            val value = ("${heightSm}")
-                            onEvent.invoke(FirstScreenEvent.ChangeHeight(value))
-                            visibleHeight = false
-                        },
-                            colors = ButtonDefaults.buttonColors(
-                                backgroundColor = MaterialTheme.colors.primaryVariant,
-                                contentColor = MaterialTheme.colors.primary
-                            ),
-                        ) {
-                            Text(text = "Complete", color = MaterialTheme.colors.primary)
-                        }
+//                        Button(onClick = {
+//                            val value = ("${heightSm}")
+//                            onEvent.invoke(FirstScreenEvent.ChangeHeight(value))
+//                            visibleHeight = false
+//                            heightColor = true
+//                        },
+//                            colors = ButtonDefaults.buttonColors(
+//                                backgroundColor = MaterialTheme.colors.primaryVariant,
+//                                contentColor = MaterialTheme.colors.primary
+//                            ),
+//                        ) {
+//                            Text(text = "Complete", color = MaterialTheme.colors.primary)
+//                        }
 
 
                 }
@@ -354,7 +381,8 @@ fun FirstScreen(
                         .padding(start = 8.dp, top = 8.dp, end = 8.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text(text = "Weight:", color = MaterialTheme.colors.primary)
+                    Text(text = "Weight:", color = if(weightColor == false) {MaterialTheme.colors.primary}
+                    else MaterialTheme.colors.primaryVariant)
 //            TextField(
 //                value = imtState.weight, onValueChange = {
 //                    onEvent.invoke(FirstScreenEvent.ChangeWeight(it))
@@ -414,6 +442,9 @@ fun FirstScreen(
                                         onClick = {
                                             isKgSelected = true
                                             weightGrams = gr
+                                            val value = ("${weightKg}.$weightGrams")
+                                            onEvent.invoke(FirstScreenEvent.ChangeWeight(value))
+                                            visibleWeight = false
                                         }
                                     )
                                 }
@@ -422,18 +453,19 @@ fun FirstScreen(
 
                         }
                     }
-                        Button(onClick = {
-                            val value = ("${weightKg}.$weightGrams")
-                            onEvent.invoke(FirstScreenEvent.ChangeWeight(value))
-                            visibleWeight = false
-                        },
-                            colors = ButtonDefaults.buttonColors(
-                                backgroundColor = MaterialTheme.colors.primaryVariant,
-                                contentColor = MaterialTheme.colors.primary
-                            ),
-                        ) {
-                            Text(text = "Complete", color = MaterialTheme.colors.primary)
-                        }
+//                        Button(onClick = {
+//                            val value = ("${weightKg}.$weightGrams")
+//                            onEvent.invoke(FirstScreenEvent.ChangeWeight(value))
+//                            visibleWeight = false
+//                            weightColor = true
+//                        },
+//                            colors = ButtonDefaults.buttonColors(
+//                                backgroundColor = MaterialTheme.colors.primaryVariant,
+//                                contentColor = MaterialTheme.colors.primary
+//                            ),
+//                        ) {
+//                            Text(text = "Complete", color = MaterialTheme.colors.primary)
+//                        }
 
 
                 }
@@ -443,11 +475,12 @@ fun FirstScreen(
         //------------------------------------------------------------------------------------------
 
         //Text(text = "Choose your physique:", modifier = Modifier.padding(top = 12.dp))
+        //выбор типа телосложения
         Card(
             modifier = Modifier
                 .padding(top = 16.dp, start = 8.dp, end = 8.dp)
                 .fillMaxWidth(),
-            backgroundColor = MaterialTheme.colors.background,
+            backgroundColor = MaterialTheme.colors.primaryVariant,
             elevation = 8.dp
         ) {
         Row(
@@ -473,8 +506,8 @@ fun FirstScreen(
                         }
                     },
                     colors = CheckboxDefaults.colors(
-                        checkedColor = MaterialTheme.colors.primary,
-                        uncheckedColor = MaterialTheme.colors.primaryVariant
+                        checkedColor = MaterialTheme.colors.primaryVariant,
+                        uncheckedColor = MaterialTheme.colors.primary
                     ),
                     // modifier = Modifier.padding(5.dp)
                 )
@@ -496,8 +529,8 @@ fun FirstScreen(
                         }
                     },
                     colors = CheckboxDefaults.colors(
-                        checkedColor = MaterialTheme.colors.primary,
-                        uncheckedColor = MaterialTheme.colors.primaryVariant
+                        checkedColor = MaterialTheme.colors.primaryVariant,
+                        uncheckedColor = MaterialTheme.colors.primary
                     ),
                     //modifier = Modifier.padding(5.dp)
                 )
@@ -519,8 +552,8 @@ fun FirstScreen(
                         }
                     },
                     colors = CheckboxDefaults.colors(
-                        checkedColor = MaterialTheme.colors.primary,
-                        uncheckedColor = MaterialTheme.colors.primaryVariant
+                        checkedColor = MaterialTheme.colors.primaryVariant,
+                        uncheckedColor = MaterialTheme.colors.primary
                     ),
                     // modifier = Modifier.padding(5.dp)
                 )
@@ -541,8 +574,8 @@ fun FirstScreen(
                         }
                     },
                     colors = CheckboxDefaults.colors(
-                        checkedColor = MaterialTheme.colors.primary,
-                        uncheckedColor = MaterialTheme.colors.primaryVariant
+                        checkedColor = MaterialTheme.colors.primaryVariant,
+                        uncheckedColor = MaterialTheme.colors.primary
                     ),
                     //modifier = Modifier.padding(5.dp)
 
@@ -553,11 +586,12 @@ fun FirstScreen(
 
 //--------------------------------------------------------------------------------------------
 
+        //выбор вида твоей активности(чек боксы)
         Card(
             modifier = Modifier
                 .padding(top = 16.dp, start = 8.dp, end = 8.dp)
                 .fillMaxWidth(),
-            backgroundColor = MaterialTheme.colors.background,
+            backgroundColor = MaterialTheme.colors.primaryVariant,
             elevation = 8.dp
         ) {
             Column(horizontalAlignment = CenterHorizontally) {
@@ -579,8 +613,8 @@ fun FirstScreen(
                         }
                     },
                     colors = CheckboxDefaults.colors(
-                        checkedColor = MaterialTheme.colors.primary,
-                        uncheckedColor = MaterialTheme.colors.primaryVariant
+                        checkedColor = MaterialTheme.colors.primaryVariant,
+                        uncheckedColor = MaterialTheme.colors.primary
                     ),
                     //modifier = Modifier.padding(5.dp)
                 )
@@ -597,8 +631,8 @@ fun FirstScreen(
                         }
                     },
                     colors = CheckboxDefaults.colors(
-                        checkedColor = MaterialTheme.colors.primary,
-                        uncheckedColor = MaterialTheme.colors.primaryVariant
+                        checkedColor = MaterialTheme.colors.primaryVariant,
+                        uncheckedColor = MaterialTheme.colors.primary
                     ),
                     //modifier = Modifier.padding(5.dp)
                 )
@@ -609,17 +643,20 @@ fun FirstScreen(
 
         //--------------------------------------------------------------------------------------
 
+        //ваыбор чекбокса уровня твоей подготовки
         Card(
             modifier = Modifier
                 .padding(top = 16.dp, start = 8.dp, end = 8.dp)
                 .fillMaxWidth(),
-            backgroundColor = MaterialTheme.colors.background,
+            backgroundColor = MaterialTheme.colors.primaryVariant,
             elevation = 8.dp
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
                 Text(text = "Rate your fitness level:", color = MaterialTheme.colors.primary)
-                Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly,
 
@@ -640,8 +677,8 @@ fun FirstScreen(
                                 }
                             },
                             colors = CheckboxDefaults.colors(
-                                checkedColor = MaterialTheme.colors.primary,
-                                uncheckedColor = MaterialTheme.colors.primaryVariant
+                                checkedColor = MaterialTheme.colors.primaryVariant,
+                                uncheckedColor = MaterialTheme.colors.primary
                             ),
                             //modifier = Modifier.padding(5.dp)
                         )
@@ -664,8 +701,8 @@ fun FirstScreen(
                                 }
                             },
                             colors = CheckboxDefaults.colors(
-                                checkedColor = MaterialTheme.colors.primary,
-                                uncheckedColor = MaterialTheme.colors.primaryVariant
+                                checkedColor = MaterialTheme.colors.primaryVariant,
+                                uncheckedColor = MaterialTheme.colors.primary
                             ),
                             //modifier = Modifier.padding(5.dp)
                         )
@@ -688,8 +725,8 @@ fun FirstScreen(
                                 }
                             },
                             colors = CheckboxDefaults.colors(
-                                checkedColor = MaterialTheme.colors.primary,
-                                uncheckedColor = MaterialTheme.colors.primaryVariant
+                                checkedColor = MaterialTheme.colors.primaryVariant,
+                                uncheckedColor = MaterialTheme.colors.primary
                             ),
                             //modifier = Modifier.padding(5.dp)
                         )
@@ -701,6 +738,7 @@ fun FirstScreen(
 
 //-------------------------------------------------------------------------------------------------
 
+        //переход на IntermediateFirstScreen, если все данные заполнены и заполнены правильно
         OutlinedButton(
             modifier = Modifier.padding(8.dp),
             colors = ButtonDefaults.buttonColors(
@@ -716,6 +754,7 @@ fun FirstScreen(
 
     }
 }
+
 @Composable
 fun WeightItem(
     text: String,
@@ -724,11 +763,12 @@ fun WeightItem(
 ) {
     Text(
         text = text,
+        color = MaterialTheme.colors.primary,
         fontSize = 16.sp,
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 16.dp)
-            .background(if (isSelected) Color.Gray else Color.Transparent)
+            .background(if (isSelected) Color.Gray else MaterialTheme.colors.primaryVariant)
             .clickable { onClick() }
     )
 }

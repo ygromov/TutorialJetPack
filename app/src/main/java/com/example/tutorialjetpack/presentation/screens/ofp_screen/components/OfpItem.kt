@@ -20,9 +20,9 @@ fun OfpItem(ofp: List<OfpFieldModel>, onEvent: (OfpScreenEvent) -> Unit) {
             .background(MaterialTheme.colors.background)
     ) {
         itemsIndexed(ofp) { index, ofpModel ->
-            OfpField(
-                index = index, ofpModel = ofpModel, onEvent = onEvent
-            )
+//            OfpField(
+//                index = index, ofpModel = ofpModel, onEvent = onEvent
+//            )
         }
     }
 }

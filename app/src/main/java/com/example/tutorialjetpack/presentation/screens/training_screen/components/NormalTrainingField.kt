@@ -411,7 +411,7 @@ fun NormalTrainingField(
                     }
                     Card(
                         modifier = Modifier
-                            .clickable {
+                            .clickable {                    //когда доходит до этого item, то вызывает следующий ивент
                                 isVisibleExtens = false
                                 isVisiblePull = true
                                 if (state.headText == "1 set") {

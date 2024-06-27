@@ -3,16 +3,17 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id "com.google.gms.google-services"
 }
 
 android {
     namespace 'com.example.tutorialjetpack'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.tutorialjetpack"
         minSdk 28
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -89,5 +90,20 @@ dependencies {
     implementation("io.coil-kt:coil-compose:1.4.0")
     implementation("io.coil-kt:coil-gif:1.4.0")
     //implementation("io.coil-kt:coil-compose:2.2.2")
+
+    // Preview
+    debugImplementation("androidx.compose.ui:ui-tooling:1.6.7")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.6.7")
+
+    //Firebase Analytics
+    implementation 'com.google.firebase:firebase-core:21.1.1'
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+    // Add the dependency for the Firebase SDK for Google Analytics
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+    // Firebase Authentification
+    implementation 'com.google.firebase:firebase-auth-ktx'          //авторизация
+    implementation 'com.google.firebase:firebase-firestore-ktx'     //для noSQL Firebase
+
 
 }

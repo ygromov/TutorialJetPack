@@ -17,22 +17,22 @@ data class OfpState(
     val list: SnapshotStateList<OfpFieldModel> = mutableStateListOf(
         OfpFieldModel(
             icon = R.drawable.ic_launcher_foreground,
-            textNameExersize = "push up",
+            textNameExersize = "push ups",
             value = "0"
         ),
         OfpFieldModel(
             icon = R.drawable.ic_launcher_foreground,
-            textNameExersize = "pull up",
+            textNameExersize = "pull ups",
             value = "0"
         ),
         OfpFieldModel(
             icon = R.drawable.ic_launcher_foreground,
-            textNameExersize = "squats",
+            textNameExersize = "sit ups",
             value = "0"
         ),
         OfpFieldModel(
             icon = R.drawable.ic_launcher_foreground,
-            textNameExersize = "sit up",
+            textNameExersize = "abs",
             value = "0"
         ),
         OfpFieldModel(

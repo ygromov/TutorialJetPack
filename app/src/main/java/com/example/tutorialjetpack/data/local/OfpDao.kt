@@ -10,10 +10,12 @@ import com.example.tutorialjetpack.local.OfpEntity
 
 @Dao
 interface OfpDao {
-    // Добавление строчки данных в бд
+
+    // Добавление результатов офп(отжимания, приседы, пресс..) в бд
     @Insert
     suspend fun insertOfpEntity(ofpEntity: OfpEntity)
 
+    //добавление юзера в бд
     @Insert
     suspend fun insertUserEntity(userEntity: UserEntity): Long
 
@@ -26,16 +28,23 @@ interface OfpDao {
 //    @Query("SELECT * FROM ofpEntity where id= :id")
 //    suspend fun getAllOfp(id:Int): List<UserWithOfp>
 
+
+    //получение данных(имя, вес, рост..) по айди
     @Query("SELECT * FROM userEntity where id = :id ")
     suspend fun getUserInfoById(id: Int): UserEntity
 
-    //    @Transaction
+
+    //    @Transaction получение данных(количсетво отжиманий, приседа, пресс..) по айди
     @Query("SELECT * FROM ofpEntity where userId = :userId ORDER BY id DESC LIMIT 1")
     suspend fun getUserOfp(userId: Int): OfpEntity
 
+
+    //получение кол-ва повторений для создания тренировки
     @Query("SELECT * FROM ofpEntity ORDER BY id DESC LIMIT 1")
     suspend fun forCreateTrain(): OfpEntity
 
+
+    //получение инфы юзера(имя, рост, вес..) для создания тренировки
     @Query("SELECT * FROM userEntity ORDER BY id DESC LIMIT 1")
     suspend fun forCreateTrainUser(): UserEntity
 
@@ -61,6 +70,8 @@ interface OfpDao {
 
     // 2023-06-08 20 20 20
 
+
+    //получение самых больших результатов в отжиманиях, приседах, прессе...
     @Query(
         """
             SELECT strftime('%m-%Y', pull.created / 1000, 'unixepoch') as created, pull.maxPull, push.maxPush, squat.maxSquat, abc.maxAbc, extens.maxExtens

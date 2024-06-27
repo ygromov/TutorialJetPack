@@ -8,7 +8,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.tutorialjetpack.domain.model.OfpFieldModel
-import com.example.tutorialjetpack.presentation.screens.ofp_screen.components.OfpField
 import com.example.tutorialjetpack.presentation.screens.retry_ofp.RetryOfpEvent
 
 @Composable

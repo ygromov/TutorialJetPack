@@ -52,6 +52,11 @@ import com.example.tutorialjetpack.presentation.screens.retry_ofp.components.Ret
 
 private const val TAG = "RetryOfpScreen"
 
+
+/*
+
+ */
+//экран с тестом офп доступный из details screen
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun RetryOfpScreen(state: RetryOfpState, onEvent: (RetryOfpEvent) -> Unit) {
@@ -59,24 +64,18 @@ fun RetryOfpScreen(state: RetryOfpState, onEvent: (RetryOfpEvent) -> Unit) {
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
     ) {
-        androidx.compose.foundation.Image(
-            painter = painterResource(id = R.drawable.background_gradient),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize(),
-            alpha = 0.4f
-        )
         var test by remember {
             mutableStateOf(1)
         }
         var isPushSelected by remember { mutableStateOf(false) }
 
 
-        Column(modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 8.dp).alpha(0.7f)) {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-               , horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically) {
+        Column(modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 8.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(), horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(text = "Hello, ${state.name}")
                 RetryOfpMainItem(onEvent)      //переходы на тренировки, журнал, офпТест
 
@@ -85,32 +84,48 @@ fun RetryOfpScreen(state: RetryOfpState, onEvent: (RetryOfpEvent) -> Unit) {
 
                 Card(
                     modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp),
-                    backgroundColor = MaterialTheme.colors.background
+                    backgroundColor = MaterialTheme.colors.primaryVariant
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
                         when (test) {
-                            1 -> InputPush("Pull ups", R.drawable.pullupsgif, state.userPhysiqLevel) {
+                            1 -> InputPush(
+                                "pull ups",
+                                R.drawable.pullupgifs,
+                                state.userPhysiqLevel
+                            ) {
                                 isPushSelected = true
                                 onEvent.invoke(RetryOfpEvent.ChangePull(it))
                             }
 
-                            2 -> InputPush("Push ps", R.drawable.pushups, state.userPhysiqLevel) {
+                            2 -> InputPush(
+                                "push ups",
+                                R.drawable.pullupgifs,
+                                state.userPhysiqLevel
+                            ) {
                                 isPushSelected = true
                                 onEvent.invoke(RetryOfpEvent.ChangePush(it))
                             }
 
-                            3 -> InputPush("Squats", R.drawable.squatsgif, state.userPhysiqLevel) {
+                            3 -> InputPush(
+                                "sit ups",
+                                R.drawable.pullupgifs,
+                                state.userPhysiqLevel
+                            ) {
                                 isPushSelected = true
                                 onEvent.invoke(RetryOfpEvent.ChangeSquat(it))
                             }
 
-                            4 -> InputPush("Sit ups", R.drawable.situpsgif, state.userPhysiqLevel) {
+                            4 -> InputPush("abs", R.drawable.pullupgifs, state.userPhysiqLevel) {
                                 isPushSelected = true
                                 onEvent.invoke(RetryOfpEvent.ChangeAbs(it))
                             }
 
-                            5 -> InputPush("Back extension", R.drawable.backextensiongif, state.userPhysiqLevel) {
+                            5 -> InputPush(
+                                "back extensions",
+                                R.drawable.pullupgifs,
+                                state.userPhysiqLevel
+                            ) {
                                 isPushSelected = true
                                 onEvent.invoke(RetryOfpEvent.ChangeExtens(it))
                             }
@@ -122,29 +137,33 @@ fun RetryOfpScreen(state: RetryOfpState, onEvent: (RetryOfpEvent) -> Unit) {
                         }
                     }
                 }
-//                Card(
-//                    modifier = Modifier
-//                        .padding(start = 8.dp, end = 8.dp, top = 16.dp)
-//                        .fillMaxWidth(),
-//                    backgroundColor = MaterialTheme.colors.background
-//
-//                ) {
-                    Button(
-                        onClick = {
-                            if (isPushSelected) {
-                                test = test + 1
-                                isPushSelected=false
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MaterialTheme.colors.primaryVariant,
-                            contentColor = MaterialTheme.colors.primary
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(text = "next")
-                    }
-               // }
+                Button(
+                    onClick = {
+                        if (isPushSelected) {
+                            test = test + 1
+                            isPushSelected = false
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.primaryVariant,
+                        contentColor = MaterialTheme.colors.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "next")
+                }
+                Button(
+                    onClick = {
+                        onEvent.invoke(RetryOfpEvent.BtnDetails)
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.primaryVariant,
+                        contentColor = MaterialTheme.colors.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "skip the test")
+                }
             }
         }
     }
@@ -232,23 +251,16 @@ fun InputPush(name: String, image: Int, timer: Long, onEvent: (Int) -> Unit) {
                                 onClick = {
                                     //isKgSelected = true
                                     push = it
+
+
+                                    //реализация без кнопки complete
+                                    onEvent.invoke(push)
+                                    visiblePush = false
                                 }
                             )
                         }
                     }
                 }
-            }
-            Button(
-                onClick = {
-                        onEvent.invoke(push)
-                        visiblePush = false
-                },
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colors.primaryVariant,
-                    contentColor = MaterialTheme.colors.primary
-                ),
-            ) {
-                Text(text = "Complete", color = MaterialTheme.colors.primary)
             }
         }
         RetryTimer(
@@ -260,6 +272,7 @@ fun InputPush(name: String, image: Int, timer: Long, onEvent: (Int) -> Unit) {
         )
     }
 }
+
 @Composable
 fun WeightItems(
     text: String,
@@ -268,6 +281,7 @@ fun WeightItems(
 ) {
     Text(
         text = text,
+        color = MaterialTheme.colors.primaryVariant,
         fontSize = 16.sp,
         modifier = Modifier
             .fillMaxWidth()

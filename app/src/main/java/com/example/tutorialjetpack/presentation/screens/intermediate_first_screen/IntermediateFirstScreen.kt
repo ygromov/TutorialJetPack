@@ -1,9 +1,11 @@
 package com.example.tutorialjetpack.presentation.screens.intermediate_first_screen
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ProgressIndicatorDefaults
@@ -18,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.tutorialjetpack.R
 import com.example.tutorialjetpack.utils.Routers
@@ -25,13 +28,6 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun IntermediateFirstScreen(navController: NavController) {
-    androidx.compose.foundation.Image(
-        painter = painterResource(id = R.drawable.background_gradient),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = Modifier.fillMaxSize(),
-        alpha = 0.4f
-    )
     var downloadProgressAbs by remember { mutableStateOf(0.1f) }
     val animatedDownloadProgressPush by animateFloatAsState(
         targetValue = downloadProgressAbs,
@@ -44,7 +40,7 @@ fun IntermediateFirstScreen(navController: NavController) {
         }
     }
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -52,7 +48,11 @@ fun IntermediateFirstScreen(navController: NavController) {
             color = MaterialTheme.colors.surface,
             progress = animatedDownloadProgressPush
         )
-        Text(text = "An analize your BMI ...", color = MaterialTheme.colors.primary)
+        Text(
+            text = "An analize your BMI ...",
+            color = MaterialTheme.colors.primaryVariant,
+            modifier = Modifier.padding(top = 8.dp)
+            )
         Timer(navController = navController)                    //3 секундная задержка и переход на ofpScreen
     }
 
@@ -67,6 +67,6 @@ fun Timer(navController: NavController) {
             delay(1000)
             value -= 1
         }
-        navController.navigate(Routers.OFP.route)
+        navController.navigate(Routers.RETRYOFP.route)
     }
 }

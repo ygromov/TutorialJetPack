@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -49,6 +50,8 @@ import com.example.tutorialjetpack.presentation.screens.ofp_screen.OfpState
 import com.example.tutorialjetpack.presentation.screens.retry_ofp.components.RetryTimer
 
 
+
+//экран с первоначальным тестом офп, после создания аккаунта
 //@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun OfpScreen(
@@ -60,57 +63,60 @@ fun OfpScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
+        color = MaterialTheme.colors.background // общий цвет фона
     ) {
-        androidx.compose.foundation.Image(
-            painter = painterResource(id = R.drawable.background_gradient),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize(),
-            alpha = 0.4f
-        )
         var test by remember {
             mutableStateOf(1)
         }
         var isPushSelected by remember { mutableStateOf(false) }
 
 
-        Column(modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 8.dp)) {
-            Text(text = "Hello, ${state.name}")
+        Column(
+            modifier = Modifier
+                .padding(start = 8.dp, top = 8.dp, end = 8.dp)
+                .background(MaterialTheme.colors.background)                                 //цвет фона списка из item и кнопки next
+                .fillMaxHeight()
+            ,verticalArrangement = Arrangement.SpaceAround
+        ) {
+            Text(
+                text = "Hello, ${state.name}",
+                color = MaterialTheme.colors.primaryVariant,
+                style = MaterialTheme.typography.body1)
 
             // OfpMainItem(onEvent)      //переходы на тренировки, журнал, офпТест
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-
-                Card(
-                    modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp),
-                    backgroundColor = MaterialTheme.colors.background
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier
+                    .background(MaterialTheme.colors.background)                 ////цвет фона списка из item и timer
+                    .fillMaxHeight()
+                    ,verticalArrangement = Arrangement.Bottom,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
                         when (test) {
-                            1 -> Input("pull Ups", R.drawable.pullupsgif, state.userPhysLevel) {
+                            1 -> Input("pull ups", R.drawable.pullupgifs, state.userPhysLevel) {reps ->
                                 isPushSelected = true
-                                onEvent.invoke(OfpScreenEvent.ChangePull(it))
+                                onEvent.invoke(OfpScreenEvent.ChangePull(reps))
                             }
 
-                            2 -> Input("push Ups", R.drawable.pushups, state.userPhysLevel) {
+
+                            2 -> Input("push ups", R.drawable.pullupgifs, state.userPhysLevel) {reps ->
                                 isPushSelected = true
-                                onEvent.invoke(OfpScreenEvent.ChangePush(it))
+                                onEvent.invoke(OfpScreenEvent.ChangePush(reps))
                             }
 
-                            3 -> Input("squats", R.drawable.squatsgif, state.userPhysLevel) {
+                            3 -> Input("sit ups", R.drawable.pullupgifs, state.userPhysLevel) {reps ->
                                 isPushSelected = true
-                                onEvent.invoke(OfpScreenEvent.ChangeSquat(it))
+                                onEvent.invoke(OfpScreenEvent.ChangeSquat(reps))
                             }
 
-                            4 -> Input("sit ups", R.drawable.situpsgif, state.userPhysLevel) {
+                            4 -> Input("abs", R.drawable.pullupgifs, state.userPhysLevel) {reps ->
                                 isPushSelected = true
-                                onEvent.invoke(OfpScreenEvent.ChangeAbs(it))
+                                onEvent.invoke(OfpScreenEvent.ChangeAbs(reps))
                             }
 
-                            5 -> Input("extens", R.drawable.backextensiongif, state.userPhysLevel) {
+                            5 -> Input("back extensions", R.drawable.pullupgifs, state.userPhysLevel) {reps ->
                                 isPushSelected = true
-                                onEvent.invoke(OfpScreenEvent.ChangeExtens(it))
+                                onEvent.invoke(OfpScreenEvent.ChangeExtens(reps))
                             }
 
                             else -> {
@@ -118,13 +124,11 @@ fun OfpScreen(
                                 onEvent.invoke(OfpScreenEvent.BtnAnalize)
                             }
                         }
-                    }
-                }
 
                 Button(
                     onClick = {
                         if (isPushSelected) {
-                            test = test + 1
+                            test += 1
                             isPushSelected = false
                         }
                     },
@@ -134,7 +138,22 @@ fun OfpScreen(
                     ),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = "next")
+                    Text(
+                        text = "next exercise",
+                        style = MaterialTheme.typography.button
+                    )
+                }
+                Button(
+                    onClick = {
+
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.primaryVariant,
+                        contentColor = MaterialTheme.colors.primary
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "skip the test")
                 }
 
             }
@@ -160,7 +179,10 @@ fun Input(name: String, image: Int, timer: Long, onEvent: (Int) -> Unit) {
         .build()
 
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {      //age
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.background(MaterialTheme.colors.primaryVariant)
+    ) {      //age
         Text(text = name, modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp))
         Text(
             text = "do as many $name as you can in ${timer} seconds",
@@ -225,24 +247,28 @@ fun Input(name: String, image: Int, timer: Long, onEvent: (Int) -> Unit) {
                                 onClick = {
                                     //isKgSelected = true
                                     push = it
+
+                                    //реализация без кнопки complete
+                                    onEvent.invoke(push)
+                                    visiblePush = false
                                 }
                             )
                         }
                     }
                 }
             }
-            Button(
-                onClick = {
-                    onEvent.invoke(push)
-                    visiblePush = false
-                },
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colors.primaryVariant,
-                    contentColor = MaterialTheme.colors.primary
-                ),
-            ) {
-                Text(text = "Complete", color = MaterialTheme.colors.primary)
-            }
+//            Button(
+//                onClick = {
+//                    onEvent.invoke(push)
+//                    visiblePush = false
+//                },
+//                colors = ButtonDefaults.buttonColors(
+//                    backgroundColor = MaterialTheme.colors.primaryVariant,
+//                    contentColor = MaterialTheme.colors.primary
+//                ),
+//            ) {
+//                Text(text = "Complete", color = MaterialTheme.colors.primary)
+//            }
         }
         RetryTimer(
             totalTime = timer * 1000L,
@@ -262,6 +288,7 @@ fun WeightItem(
 ) {
     Text(
         text = text,
+        color = MaterialTheme.colors.primaryVariant,
         fontSize = 16.sp,
         modifier = Modifier
             .fillMaxWidth()

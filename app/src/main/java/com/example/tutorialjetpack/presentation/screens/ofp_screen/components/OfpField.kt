@@ -17,6 +17,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -35,7 +36,10 @@ fun OfpField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 10.dp, top = 8.dp, end = 10.dp)
-            .background(MaterialTheme.colors.background),
+            .background(
+                Color.Green
+               //MaterialTheme.colors.primaryVariant
+            ),
         horizontalArrangement = Arrangement.SpaceBetween,
 
         ) {
@@ -47,30 +51,33 @@ fun OfpField(
             contentDescription = "ic_test",
 
             )
-        Card(
-            modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 8.dp), elevation = 5.dp
-        ) {
-            TextField(
-                value = ofpModel.value,
-                onValueChange = { newValue ->
-                    onEvent.invoke(OfpScreenEvent.ChangeOfpItem(newValue, index))
-                },
-                maxLines = 1,
-                modifier = Modifier
-                    .height(50.dp)
-                    .width(60.dp),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                colors = TextFieldDefaults.textFieldColors(
-                    textColor = MaterialTheme.colors.primary,
-                    backgroundColor = MaterialTheme.colors.secondary
-                )         //(textColor = Color.Red)
-            )
-        }
+    Card(
+        modifier = Modifier
+            .padding(start = 8.dp, top = 8.dp, end = 8.dp)
+            .background(MaterialTheme.colors.primaryVariant),
+        elevation = 5.dp
+    ) {
+        TextField(
+            value = ofpModel.value,
+            onValueChange = { newValue ->
+                onEvent.invoke(OfpScreenEvent.ChangeOfpItem(newValue, index))
+            },
+            maxLines = 1,
+            modifier = Modifier
+                .height(50.dp)
+                .width(60.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = MaterialTheme.colors.primaryVariant,
+                backgroundColor = MaterialTheme.colors.secondary
+            )         //(textColor = Color.Red)
+        )
+    }
         Text(
             modifier = Modifier
                 .weight(1f)
                 .align(Alignment.CenterVertically),
-            text = ofpModel.textNameExersize, color = MaterialTheme.colors.primary
+            text = ofpModel.textNameExersize, color = MaterialTheme.colors.primaryVariant
         )
-    }
+     }
 }

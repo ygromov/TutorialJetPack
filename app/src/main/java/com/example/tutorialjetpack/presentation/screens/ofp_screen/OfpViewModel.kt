@@ -19,21 +19,28 @@ import javax.inject.Inject
 
 private const val TAG = "OfpViewModel"
 
+/*
+!!!данные в Room попадают нулевыми значениями!!!
+ */
 @HiltViewModel
 class OfpViewModel @Inject constructor(
-    private val repository: Repository,
-    private val dataStore: AppDataStore
+    private val repository: Repository, // Репозиторий для работы с данными
+    private val dataStore: AppDataStore // DataStore для хранения данных
 ) : ViewModel() {
+    // Состояние ViewModel
     var state by mutableStateOf(OfpState())
 
+    // SharedFlow для навигации
     private val _eventFlow = MutableSharedFlow<NavigationOfpScreen>()
     val eventFlow = _eventFlow.asSharedFlow()
 
     init {
+        // Получаем ID пользователя из репозитория и обновляем состояние
         viewModelScope.launch {
             val id = repository.getId()
             state = state.copy(userId = id!!.toInt())
         }
+        // Получаем имя пользователя из репозитория и обновляем состояние
         viewModelScope.launch {
             val name = repository.getUserData().collect {
                 it.data?.let {
@@ -41,53 +48,56 @@ class OfpViewModel @Inject constructor(
                 }
             }
         }
+        // Получаем уровень физической подготовки пользователя из DataStore и обновляем состояние
         viewModelScope.launch {
-            val value = dataStore.readValue("UserPhysLevel") ?: 35L
+            val value = dataStore.readValue("UserPhysLevel") ?: 30L
             state = state.copy(userPhysLevel = value)
             Log.d(TAG, "viewModelOfp: $value")
         }
     }
 
+    // Обработка событий экрана OfpScreen
     fun onEvent(event: OfpScreenEvent) {
         when (event) {
+            // Изменение значения в списке упражнений
             is OfpScreenEvent.ChangeOfpItem -> {
                 changeOfpItem(event.value, event.index)
             }
-//            is OfpScreenEvent.ChangePush -> {
-//                setPush(event.value)
 
+            // Нажатие на кнопку "Analize"
             is OfpScreenEvent.BtnAnalize -> {
                 changeNavigation()                      //add opfData to DB
             }
 
+            // Нажатие на кнопку "Тренировка"
             is OfpScreenEvent.BtnTraining -> {
                 toTrainingScreen()
             }
-
+            // Нажатие на кнопку "Журнал"
             is OfpScreenEvent.BtnJournal -> {
                 changeNavigationToJournal()
             }
-
+            // Нажатие на кнопку "Подробнее"
             is OfpScreenEvent.BtnDetails -> {
                 changeNavigationToDetails()
             }
-
+            // Изменение количества отжиманий
             is OfpScreenEvent.ChangePush -> {
                 changePush(event.value)
             }
-
+            // Изменение количества подтягиваний
             is OfpScreenEvent.ChangePull -> {
                 changePull(event.value)
             }
-
+            // Изменение количества приседаний
             is OfpScreenEvent.ChangeSquat -> {
                 changeSquat(event.value)
             }
-
+            // Изменение количества повторений на пресс
             is OfpScreenEvent.ChangeAbs -> {
                 changeAbs(event.value)
             }
-
+            // Изменение количества гиперэкстензий
             is OfpScreenEvent.ChangeExtens -> {
                 changeExtens(event.value)
             }
@@ -95,6 +105,7 @@ class OfpViewModel @Inject constructor(
         }
     }
 
+    // Функции для изменения значений упражнений в состоянии
     private fun changeExtens(value: Int) {
         state = state.copy(extens = value)
     }
@@ -115,6 +126,7 @@ class OfpViewModel @Inject constructor(
         state = state.copy(push = value)
     }
 
+    // Функции для навигации
     private fun toTrainingScreen() {
         viewModelScope.launch {
             _eventFlow.emit(
@@ -139,8 +151,20 @@ class OfpViewModel @Inject constructor(
         }
     }
 
+    fun isValid(): Boolean {
+        return state.name.isNotBlank() && state.push >= 0 && state.pull >= 0 && state.squat >= 0 && state.abs >= 0 && state.extens >= 0
+    }
+
+    // Функция для добавления данных ОФП в БД и перехода на экран анализа
     private fun changeNavigation() {
+        if (isValid()){
         viewModelScope.launch {
+            // Логируем значения перед отправкой в репозиторий
+            Log.d(
+                "OfpViewModel",
+                "Записываем в БД: push = ${state.push}, pull = ${state.pull}, ..."
+            )
+
             repository.addOfpData(
                 ofp = OfpModel(
                     userId = state.userId, //TODO get id from shared pref
@@ -153,10 +177,15 @@ class OfpViewModel @Inject constructor(
             ).collect {
                 when (it) {
                     is Resource.Error -> {
+                        // Обработка ошибки
                     }
 
-                    is Resource.Loading -> {}
+                    is Resource.Loading -> {
+                        // Показ индикатора загрузки
+                    }
+
                     is Resource.Success -> {
+                        // Переход на экран промежуточного анализа
                         _eventFlow.emit(
                             NavigationOfpScreen.OfpScreenNavigation(Routers.INTERMEDIATEANALIZE.route)
                         )
@@ -165,16 +194,22 @@ class OfpViewModel @Inject constructor(
             }
 
         }
+    } else{
+
+        }
     }
 
     //[ ("0","push"), ("0","pull") ]
     // [(10,push) , ]
+
+    // Функция для изменения значения упражнения в списке
     private fun changeOfpItem(value: String, index: Int) {
         val element = state.list.get(index) // (0,push)
         state.list.set(index = index, element = element.copy(value = value)) // (10,push)
     }
 }
 
+// Запечатанный класс для описания событий навигации
 sealed class NavigationOfpScreen {
     data class OfpScreenNavigation(val route: String) : NavigationOfpScreen()
 }

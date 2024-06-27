@@ -1,6 +1,7 @@
 package com.example.tutorialjetpack.presentation.screens.intermediate_analize_screen
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,25 +22,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.tutorialjetpack.R
 import com.example.tutorialjetpack.utils.Routers
 import kotlinx.coroutines.delay
 
+//@Preview
 @Composable
-fun IntermediateAnalizeScreen(navController: NavController) {
+fun IntermediateAnalizeScreen(
+    navController: NavController
+) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
     ) {
-        androidx.compose.foundation.Image(
-            painter = painterResource(id = R.drawable.background_gradient),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize(),
-            alpha = 0.4f
-        )
+
         var downloadProgressPush by remember { mutableStateOf(0.1f) }
         var downloadProgressPull by remember { mutableStateOf(0.1f) }
         var downloadProgressAbs by remember { mutableStateOf(0.1f) }
@@ -79,16 +78,18 @@ fun IntermediateAnalizeScreen(navController: NavController) {
 
         Column(
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row() {
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.background(MaterialTheme.colors.background)
 
-                Column() {
-                    Text(text = "Push up", color = MaterialTheme.colors.primary)
-                    Text(text = "Pull up", color = MaterialTheme.colors.primary)
-                    Text(text = "Squats", color = MaterialTheme.colors.primary)
-                    Text(text = "Sit up", color = MaterialTheme.colors.primary)
-                    Text(text = "Back extension", color = MaterialTheme.colors.primary)
+        ) {
+            Row(modifier = Modifier.background(MaterialTheme.colors.background)) {
+
+                Column(modifier = Modifier.background(MaterialTheme.colors.background)) {
+                    Text(text = "Push up", color = MaterialTheme.colors.primaryVariant)
+                    Text(text = "Pull up", color = MaterialTheme.colors.primaryVariant)
+                    Text(text = "Squats", color = MaterialTheme.colors.primaryVariant)
+                    Text(text = "Sit up", color = MaterialTheme.colors.primaryVariant)
+                    Text(text = "Back extension", color = MaterialTheme.colors.primaryVariant)
                 }
                 Column() {
                     LinearProgressIndicator(
@@ -126,7 +127,7 @@ fun IntermediateAnalizeScreen(navController: NavController) {
             Text(
                 text = "Your results are more than 70% of users!",
                 modifier = Modifier.padding(top = 10.dp),
-                color = MaterialTheme.colors.primary
+                color = MaterialTheme.colors.primaryVariant
             )
             Timer(navController = navController)
 
